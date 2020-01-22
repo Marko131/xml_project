@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+
+    <xs:element name="paper">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="paper_title" type="xs:string"/>
+                <xs:element name="authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="author" type="t_author"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="abstract">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="1" name="keywords">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="keyword"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="abstract_element">
+                                <xs:complexType>
+                                    <xs:simpleContent>
+                                        <xs:extension base="xs:string">
+                                            <xs:attribute name="title" type="xs:string"/>
+                                        </xs:extension>
+                                    </xs:simpleContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="t_quote"/>
+                <xs:element maxOccurs="unbounded" name="section" type="t_section"/>
+                <xs:element name="references">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="reference" type="t_reference"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="corresponding_authors">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="1"
+                                name="corresponding_author" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="citations">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="citation" type="t_citation"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="date_received" type="xs:date"/>
+            <xs:attribute name="date_revised" type="xs:date"/>
+            <xs:attribute name="date_accepted" type="xs:date"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="t_author">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="university" type="xs:string"/>
+            <xs:element minOccurs="1" name="city" type="xs:string"/>
+            <xs:element minOccurs="0" name="state" type="xs:string"/>
+            <xs:element name="country" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="t_section">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="paragraph" type="t_paragraph"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="section" type="t_section"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="box" type="t_box"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="t_quote"/>
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="t_quote">
+        <xs:sequence>
+            <xs:element name="quote_text" type="xs:string"/>
+            <xs:element name="source">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="source_author" type="xs:string"/>
+                        <xs:element minOccurs="0" name="source_title" type="xs:string"/>
+                        <xs:element minOccurs="0" name="source_page" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="t_ref">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="id" type="xs:positiveInteger"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="t_reference">
+        <xs:sequence>
+            <xs:element name="authors" type="xs:string"/>
+            <xs:element name="year" type="xs:positiveInteger"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="pages" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:positiveInteger"/>
+    </xs:complexType>
+    <xs:complexType name="t_image">
+        <xs:simpleContent>
+            <xs:extension base="xs:base64Binary">
+                <xs:attribute name="title" type="xs:string"/>
+                <xs:attribute name="description" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:complexType name="t_link" mixed="true">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="image" type="t_image"/>
+        </xs:sequence>
+        <xs:attribute name="href" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="t_box">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="link" type="t_link"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="image" type="t_image"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="textbox" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="title" type="xs:string"/>
+        <xs:attribute name="description" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="t_citation">
+        <xs:sequence>
+            <xs:element name="authors" type="xs:string"/>
+            <xs:element name="year" type="xs:positiveInteger"/>
+            <xs:element name="title" type="xs:string"/>
+            <xs:element name="magazine" type="xs:string"/>
+            <xs:element maxOccurs="3" minOccurs="3" name="link" type="t_link"/>
+        </xs:sequence>
+        <xs:attribute name="number" type="xs:positiveInteger"/>
+    </xs:complexType>
+    <xs:complexType name="t_paragraph" mixed="true">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="ref" type="t_ref"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="list" type="t_list"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="image" type="t_image"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="link" type="t_link"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="t_quote"/>
+            <xs:element name="text" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="t_list">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="item" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

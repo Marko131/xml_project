@@ -47,6 +47,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TAuthor }
+     * 
+     */
+    public TAuthor createTAuthor() {
+        return new TAuthor();
+    }
+
+    /**
      * Create an instance of {@link TQuote }
      * 
      */
@@ -60,6 +68,22 @@ public class ObjectFactory {
      */
     public Paper.Abstract createPaperAbstract() {
         return new Paper.Abstract();
+    }
+
+    /**
+     * Create an instance of {@link Paper.Abstract.Keywords }
+     * 
+     */
+    public Paper.Abstract.Keywords createPaperAbstractKeywords() {
+        return new Paper.Abstract.Keywords();
+    }
+
+    /**
+     * Create an instance of {@link Paper.PaperTitle }
+     * 
+     */
+    public Paper.PaperTitle createPaperPaperTitle() {
+        return new Paper.PaperTitle();
     }
 
     /**
@@ -108,14 +132,6 @@ public class ObjectFactory {
      */
     public TParagraph createTParagraph() {
         return new TParagraph();
-    }
-
-    /**
-     * Create an instance of {@link TAuthor }
-     * 
-     */
-    public TAuthor createTAuthor() {
-        return new TAuthor();
     }
 
     /**
@@ -175,6 +191,46 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TAuthor.Name }
+     * 
+     */
+    public TAuthor.Name createTAuthorName() {
+        return new TAuthor.Name();
+    }
+
+    /**
+     * Create an instance of {@link TAuthor.University }
+     * 
+     */
+    public TAuthor.University createTAuthorUniversity() {
+        return new TAuthor.University();
+    }
+
+    /**
+     * Create an instance of {@link TAuthor.City }
+     * 
+     */
+    public TAuthor.City createTAuthorCity() {
+        return new TAuthor.City();
+    }
+
+    /**
+     * Create an instance of {@link TAuthor.State }
+     * 
+     */
+    public TAuthor.State createTAuthorState() {
+        return new TAuthor.State();
+    }
+
+    /**
+     * Create an instance of {@link TAuthor.Country }
+     * 
+     */
+    public TAuthor.Country createTAuthorCountry() {
+        return new TAuthor.Country();
+    }
+
+    /**
      * Create an instance of {@link TQuote.Source }
      * 
      */
@@ -183,19 +239,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link Paper.Abstract.Keywords }
-     * 
-     */
-    public Paper.Abstract.Keywords createPaperAbstractKeywords() {
-        return new Paper.Abstract.Keywords();
-    }
-
-    /**
      * Create an instance of {@link Paper.Abstract.AbstractElement }
      * 
      */
     public Paper.Abstract.AbstractElement createPaperAbstractAbstractElement() {
         return new Paper.Abstract.AbstractElement();
+    }
+
+    /**
+     * Create an instance of {@link Paper.Abstract.Keywords.Keyword }
+     * 
+     */
+    public Paper.Abstract.Keywords.Keyword createPaperAbstractKeywordsKeyword() {
+        return new Paper.Abstract.Keywords.Keyword();
     }
 
     /**

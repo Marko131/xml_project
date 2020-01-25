@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
-    vc:minVersion="1.0" vc:maxVersion="1.1">
+    vc:minVersion="1.0" vc:maxVersion="1.1"
+    xmlns:pred="http://www.ftn.uns.ac.rs/rdf/examples/predicate/">
 
     <xs:element name="paper">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="paper_title" type="xs:string"/>
+                <xs:element name="paper_title">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="xs:string">
+                                <xs:attribute fixed="pred:title" name="property" type="xs:string"/>
+                            </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="authors">
                     <xs:complexType>
                         <xs:sequence>
@@ -20,8 +29,16 @@
                             <xs:element maxOccurs="1" name="keywords">
                                 <xs:complexType>
                                     <xs:sequence>
-                                        <xs:element maxOccurs="unbounded" name="keyword"
-                                            type="xs:string"/>
+                                        <xs:element maxOccurs="unbounded" name="keyword">
+                                            <xs:complexType>
+                                                <xs:simpleContent>
+                                                  <xs:extension base="xs:string">
+                                                  <xs:attribute name="property" fixed="pred:keyword"
+                                                  type="xs:string"/>
+                                                  </xs:extension>
+                                                </xs:simpleContent>
+                                            </xs:complexType>
+                                        </xs:element>
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
@@ -69,12 +86,54 @@
     </xs:element>
     <xs:complexType name="t_author">
         <xs:sequence>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="university" type="xs:string"/>
-            <xs:element minOccurs="1" name="city" type="xs:string"/>
-            <xs:element minOccurs="0" name="state" type="xs:string"/>
-            <xs:element name="country" type="xs:string"/>
+            <xs:element name="name">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute fixed="pred:name" form="unqualified" name="property"
+                                type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="university">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute fixed="pred:works" name="property" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="1" name="city">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute fixed="pred:city" name="property" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="state">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute fixed="pred:state" name="property" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="country">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute fixed="pred:country" name="property" type="xs:string"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
+        <xs:attribute name="about"/>
     </xs:complexType>
     <xs:complexType name="t_section">
         <xs:sequence>
@@ -98,6 +157,9 @@
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
+        <xs:attribute name="about" type="xs:string"/>
+        <xs:attribute fixed="pred:referenceOf" name="rel" type="xs:string"/>
+        <xs:attribute name="href" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="t_ref">
         <xs:simpleContent>

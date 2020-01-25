@@ -3,6 +3,7 @@ package tim10.project.model.scientific_paper;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -32,6 +33,9 @@ import javax.xml.bind.annotation.XmlType;
  *           &lt;/complexType>
  *         &lt;/element>
  *       &lt;/sequence>
+ *       &lt;attribute name="about" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *       &lt;attribute name="rel" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:referenceOf" />
+ *       &lt;attribute name="href" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
@@ -50,6 +54,12 @@ public class TQuote {
     protected String quoteText;
     @XmlElement(required = true)
     protected TQuote.Source source;
+    @XmlAttribute(name = "about")
+    protected String about;
+    @XmlAttribute(name = "rel")
+    protected String rel;
+    @XmlAttribute(name = "href")
+    protected String href;
 
     /**
      * Gets the value of the quoteText property.
@@ -97,6 +107,82 @@ public class TQuote {
      */
     public void setSource(TQuote.Source value) {
         this.source = value;
+    }
+
+    /**
+     * Gets the value of the about property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getAbout() {
+        return about;
+    }
+
+    /**
+     * Sets the value of the about property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setAbout(String value) {
+        this.about = value;
+    }
+
+    /**
+     * Gets the value of the rel property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getRel() {
+        if (rel == null) {
+            return "pred:referenceOf";
+        } else {
+            return rel;
+        }
+    }
+
+    /**
+     * Sets the value of the rel property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setRel(String value) {
+        this.rel = value;
+    }
+
+    /**
+     * Gets the value of the href property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    public String getHref() {
+        return href;
+    }
+
+    /**
+     * Sets the value of the href property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    public void setHref(String value) {
+        this.href = value;
     }
 
 

@@ -35,7 +35,7 @@ public class ScientificPaperRepository implements IScientificPaper {
     }
 
 
-    public ScientificPaperRepository(@Value("${conn.user}") String username, @Value("${conn.password}") String password, @Value("${conn.driver}") String driver, @Value("${conn.connectionUri}") String connectionUri, @Value("${conn.host}") String host, @Value("${conn.port}") int port) throws ClassNotFoundException, IllegalAccessException, InstantiationException, XMLDBException, IOException {
+    public ScientificPaperRepository(@Value("${xml.user}") String username, @Value("${xml.password}") String password, @Value("${xml.driver}") String driver, @Value("${xml.connectionUri}") String connectionUri, @Value("${xml.host}") String host, @Value("${xml.port}") int port) throws ClassNotFoundException, IllegalAccessException, InstantiationException, XMLDBException, IOException {
         this.dbUsername = username;
         this.dbPassword = password;
         this.driver = driver;

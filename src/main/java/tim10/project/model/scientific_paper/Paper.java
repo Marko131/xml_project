@@ -24,7 +24,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="paper_title" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="paper_title">
+ *           &lt;complexType>
+ *             &lt;simpleContent>
+ *               &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *                 &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:title" />
+ *               &lt;/extension>
+ *             &lt;/simpleContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="authors">
  *           &lt;complexType>
  *             &lt;complexContent>
@@ -46,7 +54,15 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *                       &lt;complexContent>
  *                         &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *                           &lt;sequence>
- *                             &lt;element name="keyword" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+ *                             &lt;element name="keyword" maxOccurs="unbounded">
+ *                               &lt;complexType>
+ *                                 &lt;simpleContent>
+ *                                   &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+ *                                     &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:keyword" />
+ *                                   &lt;/extension>
+ *                                 &lt;/simpleContent>
+ *                               &lt;/complexType>
+ *                             &lt;/element>
  *                           &lt;/sequence>
  *                         &lt;/restriction>
  *                       &lt;/complexContent>
@@ -127,7 +143,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class Paper {
 
     @XmlElement(name = "paper_title", required = true)
-    protected String paperTitle;
+    protected Paper.PaperTitle paperTitle;
     @XmlElement(required = true)
     protected Paper.Authors authors;
     @XmlElement(name = "abstract", required = true)
@@ -156,10 +172,10 @@ public class Paper {
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Paper.PaperTitle }
      *     
      */
-    public String getPaperTitle() {
+    public Paper.PaperTitle getPaperTitle() {
         return paperTitle;
     }
 
@@ -168,10 +184,10 @@ public class Paper {
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Paper.PaperTitle }
      *     
      */
-    public void setPaperTitle(String value) {
+    public void setPaperTitle(Paper.PaperTitle value) {
         this.paperTitle = value;
     }
 
@@ -441,7 +457,15 @@ public class Paper {
      *             &lt;complexContent>
      *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *                 &lt;sequence>
-     *                   &lt;element name="keyword" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+     *                   &lt;element name="keyword" maxOccurs="unbounded">
+     *                     &lt;complexType>
+     *                       &lt;simpleContent>
+     *                         &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+     *                           &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:keyword" />
+     *                         &lt;/extension>
+     *                       &lt;/simpleContent>
+     *                     &lt;/complexType>
+     *                   &lt;/element>
      *                 &lt;/sequence>
      *               &lt;/restriction>
      *             &lt;/complexContent>
@@ -619,7 +643,15 @@ public class Paper {
          *   &lt;complexContent>
          *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
          *       &lt;sequence>
-         *         &lt;element name="keyword" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded"/>
+         *         &lt;element name="keyword" maxOccurs="unbounded">
+         *           &lt;complexType>
+         *             &lt;simpleContent>
+         *               &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+         *                 &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:keyword" />
+         *               &lt;/extension>
+         *             &lt;/simpleContent>
+         *           &lt;/complexType>
+         *         &lt;/element>
          *       &lt;/sequence>
          *     &lt;/restriction>
          *   &lt;/complexContent>
@@ -635,7 +667,7 @@ public class Paper {
         public static class Keywords {
 
             @XmlElement(required = true)
-            protected List<String> keyword;
+            protected List<Paper.Abstract.Keywords.Keyword> keyword;
 
             /**
              * Gets the value of the keyword property.
@@ -655,15 +687,98 @@ public class Paper {
              * 
              * <p>
              * Objects of the following type(s) are allowed in the list
-             * {@link String }
+             * {@link Paper.Abstract.Keywords.Keyword }
              * 
              * 
              */
-            public List<String> getKeyword() {
+            public List<Paper.Abstract.Keywords.Keyword> getKeyword() {
                 if (keyword == null) {
-                    keyword = new ArrayList<String>();
+                    keyword = new ArrayList<Paper.Abstract.Keywords.Keyword>();
                 }
                 return this.keyword;
+            }
+
+
+            /**
+             * <p>Java class for anonymous complex type.
+             * 
+             * <p>The following schema fragment specifies the expected content contained within this class.
+             * 
+             * <pre>
+             * &lt;complexType>
+             *   &lt;simpleContent>
+             *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+             *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:keyword" />
+             *     &lt;/extension>
+             *   &lt;/simpleContent>
+             * &lt;/complexType>
+             * </pre>
+             * 
+             * 
+             */
+            @XmlAccessorType(XmlAccessType.FIELD)
+            @XmlType(name = "", propOrder = {
+                "value"
+            })
+            public static class Keyword {
+
+                @XmlValue
+                protected String value;
+                @XmlAttribute(name = "property")
+                protected String property;
+
+                /**
+                 * Gets the value of the value property.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getValue() {
+                    return value;
+                }
+
+                /**
+                 * Sets the value of the value property.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setValue(String value) {
+                    this.value = value;
+                }
+
+                /**
+                 * Gets the value of the property property.
+                 * 
+                 * @return
+                 *     possible object is
+                 *     {@link String }
+                 *     
+                 */
+                public String getProperty() {
+                    if (property == null) {
+                        return "pred:keyword";
+                    } else {
+                        return property;
+                    }
+                }
+
+                /**
+                 * Sets the value of the property property.
+                 * 
+                 * @param value
+                 *     allowed object is
+                 *     {@link String }
+                 *     
+                 */
+                public void setProperty(String value) {
+                    this.property = value;
+                }
+
             }
 
         }
@@ -858,6 +973,89 @@ public class Paper {
      * 
      * <pre>
      * &lt;complexType>
+     *   &lt;simpleContent>
+     *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>string">
+     *       &lt;attribute name="property" type="{http://www.w3.org/2001/XMLSchema}string" fixed="pred:title" />
+     *     &lt;/extension>
+     *   &lt;/simpleContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "value"
+    })
+    public static class PaperTitle {
+
+        @XmlValue
+        protected String value;
+        @XmlAttribute(name = "property")
+        protected String property;
+
+        /**
+         * Gets the value of the value property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getValue() {
+            return value;
+        }
+
+        /**
+         * Sets the value of the value property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setValue(String value) {
+            this.value = value;
+        }
+
+        /**
+         * Gets the value of the property property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getProperty() {
+            if (property == null) {
+                return "pred:title";
+            } else {
+                return property;
+            }
+        }
+
+        /**
+         * Sets the value of the property property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setProperty(String value) {
+            this.property = value;
+        }
+
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType>
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
      *       &lt;sequence>
@@ -909,8 +1107,6 @@ public class Paper {
         }
 
     }
-
-
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("");
@@ -923,4 +1119,5 @@ public class Paper {
 
         return builder.toString();
     }
+
 }

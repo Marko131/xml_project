@@ -317,4 +317,13 @@ public class ObjectFactory {
         return new JAXBElement<TImage>(_TParagraphImage_QNAME, TImage.class, TLink.class, value);
     }
 
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "text", scope = TLink.class)
+    public JAXBElement<String> createTLinkText(String value) {
+        return new JAXBElement<String>(_TParagraphText_QNAME, String.class, TLink.class, value);
+    }
+
 }

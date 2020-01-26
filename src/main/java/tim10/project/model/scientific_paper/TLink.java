@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlType;
 
@@ -22,9 +23,10 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;complexType name="t_link">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element name="image" type="{}t_image" minOccurs="0"/>
- *       &lt;/sequence>
+ *       &lt;choice>
+ *         &lt;element name="image" type="{}t_image"/>
+ *         &lt;element name="text" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *       &lt;/choice>
  *       &lt;attribute name="href" type="{http://www.w3.org/2001/XMLSchema}string" />
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +41,10 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class TLink {
 
-    @XmlElementRef(name = "image", type = JAXBElement.class, required = false)
+    @XmlElementRefs({
+        @XmlElementRef(name = "image", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "text", type = JAXBElement.class, required = false)
+    })
     @XmlMixed
     protected List<Serializable> content;
     @XmlAttribute(name = "href")
@@ -65,6 +70,7 @@ public class TLink {
      * Objects of the following type(s) are allowed in the list
      * {@link String }
      * {@link JAXBElement }{@code <}{@link TImage }{@code >}
+     * {@link JAXBElement }{@code <}{@link String }{@code >}
      * 
      * 
      */

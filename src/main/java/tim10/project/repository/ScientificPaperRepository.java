@@ -1,5 +1,6 @@
 package tim10.project.repository;
 
+import org.apache.commons.io.IOUtils;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.model.scientific_paper.TAuthor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -78,37 +80,26 @@ public class ScientificPaperRepository implements IScientificPaper {
         return paper;
     }
 
+    public String getXMLResourceById(String collectionId, String documentId) throws XMLDBException, JAXBException {
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        return res.getContent().toString();
+    }
+
     public void save(String collectionId, String documentId, Reader inputReader) throws XMLDBException, IOException, JAXBException {
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();
         try {
-
+            IOUtils.copy(inputReader, os);
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
             col = getOrCreateCollection(collectionId);
 
-            /*
-             *  create new XMLResource with a given id
-             *  an id is assigned to the new resource if left empty (null)
-             */
             System.out.println("[INFO] Inserting the document: " + documentId);
             res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-
-            System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
-            JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
-
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-
-
-            Paper paper = (Paper) unmarshaller.unmarshal(inputReader);
-
-            System.out.println(paper);
-
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            // marshal the contents to an output stream
-            marshaller.marshal(paper, os);
 
             // link the stream to the XML resource
             res.setContent(os);

@@ -24,6 +24,19 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
+ *         &lt;element name="status">
+ *           &lt;complexType>
+ *             &lt;complexContent>
+ *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *                 &lt;choice>
+ *                   &lt;element name="published" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                   &lt;element name="waiting" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                   &lt;element name="archived" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *                 &lt;/choice>
+ *               &lt;/restriction>
+ *             &lt;/complexContent>
+ *           &lt;/complexType>
+ *         &lt;/element>
  *         &lt;element name="paper_title">
  *           &lt;complexType>
  *             &lt;simpleContent>
@@ -130,6 +143,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
+    "status",
     "paperTitle",
     "authors",
     "_abstract",
@@ -142,6 +156,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlRootElement(name = "paper")
 public class Paper {
 
+    @XmlElement(required = true)
+    protected Paper.Status status;
     @XmlElement(name = "paper_title", required = true)
     protected Paper.PaperTitle paperTitle;
     @XmlElement(required = true)
@@ -166,6 +182,30 @@ public class Paper {
     @XmlAttribute(name = "date_accepted")
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar dateAccepted;
+
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Paper.Status }
+     *     
+     */
+    public Paper.Status getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Paper.Status }
+     *     
+     */
+    public void setStatus(Paper.Status value) {
+        this.status = value;
+    }
 
     /**
      * Gets the value of the paperTitle property.
@@ -1104,6 +1144,114 @@ public class Paper {
                 reference = new ArrayList<TReference>();
             }
             return this.reference;
+        }
+
+    }
+
+
+    /**
+     * <p>Java class for anonymous complex type.
+     * 
+     * <p>The following schema fragment specifies the expected content contained within this class.
+     * 
+     * <pre>
+     * &lt;complexType>
+     *   &lt;complexContent>
+     *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+     *       &lt;choice>
+     *         &lt;element name="published" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *         &lt;element name="waiting" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *         &lt;element name="archived" type="{http://www.w3.org/2001/XMLSchema}string"/>
+     *       &lt;/choice>
+     *     &lt;/restriction>
+     *   &lt;/complexContent>
+     * &lt;/complexType>
+     * </pre>
+     * 
+     * 
+     */
+    @XmlAccessorType(XmlAccessType.FIELD)
+    @XmlType(name = "", propOrder = {
+        "published",
+        "waiting",
+        "archived"
+    })
+    public static class Status {
+
+        protected String published;
+        protected String waiting;
+        protected String archived;
+
+        /**
+         * Gets the value of the published property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getPublished() {
+            return published;
+        }
+
+        /**
+         * Sets the value of the published property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setPublished(String value) {
+            this.published = value;
+        }
+
+        /**
+         * Gets the value of the waiting property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getWaiting() {
+            return waiting;
+        }
+
+        /**
+         * Sets the value of the waiting property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setWaiting(String value) {
+            this.waiting = value;
+        }
+
+        /**
+         * Gets the value of the archived property.
+         * 
+         * @return
+         *     possible object is
+         *     {@link String }
+         *     
+         */
+        public String getArchived() {
+            return archived;
+        }
+
+        /**
+         * Sets the value of the archived property.
+         * 
+         * @param value
+         *     allowed object is
+         *     {@link String }
+         *     
+         */
+        public void setArchived(String value) {
+            this.archived = value;
         }
 
     }

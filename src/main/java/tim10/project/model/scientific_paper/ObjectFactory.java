@@ -79,6 +79,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link Paper.Status }
+     * 
+     */
+    public Paper.Status createPaperStatus() {
+        return new Paper.Status();
+    }
+
+    /**
      * Create an instance of {@link Paper.PaperTitle }
      * 
      */

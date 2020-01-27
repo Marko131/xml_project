@@ -44,12 +44,12 @@ import javax.xml.bind.annotation.XmlType;
 public class TParagraph {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "link", type = JAXBElement.class),
-        @XmlElementRef(name = "image", type = JAXBElement.class),
-        @XmlElementRef(name = "list", type = JAXBElement.class),
         @XmlElementRef(name = "ref", type = JAXBElement.class),
+        @XmlElementRef(name = "link", type = JAXBElement.class),
         @XmlElementRef(name = "quote", type = JAXBElement.class),
-        @XmlElementRef(name = "text", type = JAXBElement.class)
+        @XmlElementRef(name = "text", type = JAXBElement.class),
+        @XmlElementRef(name = "list", type = JAXBElement.class),
+        @XmlElementRef(name = "image", type = JAXBElement.class)
     })
     @XmlMixed
     protected List<Serializable> content;
@@ -72,13 +72,13 @@ public class TParagraph {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link JAXBElement }{@code <}{@link TLink }{@code >}
-     * {@link JAXBElement }{@code <}{@link TImage }{@code >}
-     * {@link JAXBElement }{@code <}{@link TList }{@code >}
      * {@link JAXBElement }{@code <}{@link TRef }{@code >}
-     * {@link String }
+     * {@link JAXBElement }{@code <}{@link TLink }{@code >}
      * {@link JAXBElement }{@code <}{@link TQuote }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
+     * {@link JAXBElement }{@code <}{@link TList }{@code >}
+     * {@link JAXBElement }{@code <}{@link TImage }{@code >}
+     * {@link String }
      * 
      * 
      */

@@ -7,12 +7,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
+import tim10.project.model.cover_letter.CoverLetter;
+import tim10.project.model.review.Review;
+import tim10.project.model.scientific_paper.Paper;
 import tim10.project.util.MetadataExtractor;
 
 import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -22,13 +26,19 @@ public class Test {
     private ScientificPaperRepository scientificPaperRepository;
 
     @Autowired
+    private ReviewRepository reviewRepository;
+
+    @Autowired
+    private  CoverLetterRepository coverLetterRepository;
+
+    @Autowired
     private RDFRepository rdfRepository;
 
 
 
     @org.junit.Test
     public void testGetById() throws XMLDBException, JAXBException {
-        System.out.println(scientificPaperRepository.getById("/db/sample/library", "paper1.xml").getAbstract().toString().toString().toString().toString());
+        System.out.println(scientificPaperRepository.getById("/db/sample/library/paper", "paper1.xml").getAbstract().toString().toString().toString().toString());
     }
 
     @org.junit.Test
@@ -40,7 +50,7 @@ public class Test {
                 "    <paper_title>paper_title0</paper_title>\n" +
                 "    <authors>\n" +
                 "        <author>\n" +
-                "            <name>name0</name>\n" +
+                "            <name>strajabog</name>\n" +
                 "            <university>university0</university>\n" +
                 "            <city>city0</city>\n" +
                 "            <state>state0</state>\n" +
@@ -361,7 +371,7 @@ public class Test {
                 "        </citation>\n" +
                 "    </citations>\n" +
                 "</paper>\n");
-        scientificPaperRepository.save("/db/sample/library", "paper2.xml", reader);
+        scientificPaperRepository.save("/db/sample/library/paper", "paper2.xml", reader);
     }
 
 
@@ -756,5 +766,51 @@ public class Test {
         metadataExtractor.extractMetadata(inputStream, outputStream);
         rdfRepository.save(new ByteArrayInputStream(outputStream.toByteArray()));
 
+    }
+
+    @org.junit.Test
+    public void testSaveReview() throws IOException, XMLDBException, JAXBException {
+        Reader reader = new FileReader(new File("C:\\Users\\Strahinja\\Desktop\\xml_project\\data\\review1.xml"));
+        reviewRepository.save("/db/sample/library/review", "review2.xml", reader);
+    }
+
+    @org.junit.Test
+    public void testSaveLetter() throws IOException, XMLDBException, JAXBException {
+        Reader reader = new FileReader(new File("C:\\Users\\Strahinja\\Desktop\\xml_project\\data\\cover_letter1.xml"));
+        coverLetterRepository.save("/db/sample/library/cover_letter", "cover_letter2.xml", reader);
+    }
+
+    @org.junit.Test
+    public void testGetByIdReview() throws XMLDBException, JAXBException {
+        reviewRepository.getById("/db/sample/library/review", "review1.xml");
+    }
+
+    @org.junit.Test
+    public void testDeleteLetter() throws XMLDBException {
+        coverLetterRepository.delete("/db/sample/library/cover_letter", "cover_letter1.xml");
+    }
+
+    @org.junit.Test
+    public void testGetAllLetter() throws XMLDBException, JAXBException {
+        ArrayList<CoverLetter> list = coverLetterRepository.getAll("/db/sample/library/cover_letter");
+        for (CoverLetter el: list) {
+            System.out.println(el.getSender().getName());
+        }
+    }
+
+    @org.junit.Test
+    public void testGetAllReview() throws XMLDBException, JAXBException {
+        ArrayList<Review> list = reviewRepository.getAll("/db/sample/library/review");
+        for (Review el: list) {
+            System.out.println(el.getReviewer().getName());
+        }
+    }
+
+    @org.junit.Test
+    public void testGetAllPaper() throws XMLDBException, JAXBException {
+        ArrayList<Paper> list = scientificPaperRepository.getAll("/db/sample/library/paper");
+        for (Paper el: list) {
+            System.out.println(el.toString());
+        }
     }
 }

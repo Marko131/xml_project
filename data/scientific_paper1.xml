@@ -1,0 +1,1305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paper xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns:pred="http://www.ftn.uns.ac.rs/rdf/examples/predicate/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/C:/Users/Marko/Desktop/Scientific_Paper.xsd" date_received="2006-05-04" date_revised="2006-05-04" date_accepted="2006-05-04">
+    <paper_title property="pred:title">paper_title0</paper_title>
+    <authors>
+        <author about="about0">
+            <name property="pred:name">name0</name>
+            <university property="pred:works">university0</university>
+            <city property="pred:city">city0</city>
+            <state property="pred:state">state0</state>
+            <country property="pred:country">country0</country>
+        </author>
+        <author about="about1">
+            <name property="pred:name">name1</name>
+            <university property="pred:works">university1</university>
+            <city property="pred:city">city1</city>
+            <state property="pred:state">state1</state>
+            <country property="pred:country">country1</country>
+        </author>
+    </authors>
+    <abstract>
+        <keywords>
+            <keyword property="pred:keyword">keyword0</keyword>
+            <keyword property="pred:keyword">keyword1</keyword>
+        </keywords>
+        <abstract_element title="title0">abstract_element0</abstract_element>
+        <abstract_element title="title1">abstract_element1</abstract_element>
+    </abstract>
+    <quote about="about2" rel="pred:referenceOf" href="href0">
+        <quote_text>quote_text0</quote_text>
+        <source>
+            <source_author>source_author0</source_author>
+            <source_title>source_title0</source_title>
+            <source_page>source_page0</source_page>
+        </source>
+    </quote>
+    <quote about="about3" rel="pred:referenceOf" href="href1">
+        <quote_text>quote_text1</quote_text>
+        <source>
+            <source_author>source_author1</source_author>
+            <source_title>source_title1</source_title>
+            <source_page>source_page1</source_page>
+        </source>
+    </quote>
+    <section title="title2">
+        <paragraph>
+            <ref id="50">ref0</ref>
+            <ref id="50">ref1</ref>
+            <list>
+                <item>item0</item>
+                <item>item1</item>
+            </list>
+            <list>
+                <item>item2</item>
+                <item>item3</item>
+            </list>
+            <image title="title3" description="description0">ZGVmYXVsdA==</image>
+            <image title="title4" description="description1">ZGVmYXVsdA==</image>
+            <link href="href2">
+                <image title="title5" description="description2">ZGVmYXVsdA==</image>
+            </link>
+            <link href="href3">
+                <text>text0</text>
+            </link>
+            <quote about="about4" rel="pred:referenceOf" href="href4">
+                <quote_text>quote_text2</quote_text>
+                <source>
+                    <source_author>source_author2</source_author>
+                    <source_title>source_title2</source_title>
+                    <source_page>source_page2</source_page>
+                </source>
+            </quote>
+            <quote about="about5" rel="pred:referenceOf" href="href5">
+                <quote_text>quote_text3</quote_text>
+                <source>
+                    <source_author>source_author3</source_author>
+                    <source_title>source_title3</source_title>
+                    <source_page>source_page3</source_page>
+                </source>
+            </quote>
+            <text>text1</text>
+        </paragraph>
+        <paragraph>
+            <ref id="50">ref2</ref>
+            <ref id="50">ref3</ref>
+            <list>
+                <item>item4</item>
+                <item>item5</item>
+            </list>
+            <list>
+                <item>item6</item>
+                <item>item7</item>
+            </list>
+            <image title="title6" description="description3">ZGVmYXVsdA==</image>
+            <image title="title7" description="description4">ZGVmYXVsdA==</image>
+            <link href="href6">
+                <image title="title8" description="description5">ZGVmYXVsdA==</image>
+            </link>
+            <link href="href7">
+                <image title="title9" description="description6">ZGVmYXVsdA==</image>
+            </link>
+            <quote about="about6" rel="pred:referenceOf" href="href8">
+                <quote_text>quote_text4</quote_text>
+                <source>
+                    <source_author>source_author4</source_author>
+                    <source_title>source_title4</source_title>
+                    <source_page>source_page4</source_page>
+                </source>
+            </quote>
+            <quote about="about7" rel="pred:referenceOf" href="href9">
+                <quote_text>quote_text5</quote_text>
+                <source>
+                    <source_author>source_author5</source_author>
+                    <source_title>source_title5</source_title>
+                    <source_page>source_page5</source_page>
+                </source>
+            </quote>
+            <text>text2</text>
+        </paragraph>
+        <section title="title10">
+            <paragraph>
+                <ref id="50">ref4</ref>
+                <ref id="50">ref5</ref>
+                <list>
+                    <item>item8</item>
+                    <item>item9</item>
+                </list>
+                <list>
+                    <item>item10</item>
+                    <item>item11</item>
+                </list>
+                <image title="title11" description="description7">ZGVmYXVsdA==</image>
+                <image title="title12" description="description8">ZGVmYXVsdA==</image>
+                <link href="href10">
+                    <text>text3</text>
+                </link>
+                <link href="href11">
+                    <text>text4</text>
+                </link>
+                <quote about="about8" rel="pred:referenceOf" href="href12">
+                    <quote_text>quote_text6</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about9" rel="pred:referenceOf" href="href13">
+                    <quote_text>quote_text7</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text5</text>
+            </paragraph>
+            <paragraph>
+                <ref id="50">ref6</ref>
+                <ref id="50">ref7</ref>
+                <list>
+                    <item>item12</item>
+                    <item>item13</item>
+                </list>
+                <list>
+                    <item>item14</item>
+                    <item>item15</item>
+                </list>
+                <image title="title13" description="description9">ZGVmYXVsdA==</image>
+                <image title="title14" description="description10">ZGVmYXVsdA==</image>
+                <link href="href14">
+                    <image title="title15" description="description11">ZGVmYXVsdA==</image>
+                </link>
+                <link href="href15">
+                    <image title="title16" description="description12">ZGVmYXVsdA==</image>
+                </link>
+                <quote about="about10" rel="pred:referenceOf" href="href16">
+                    <quote_text>quote_text8</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about11" rel="pred:referenceOf" href="href17">
+                    <quote_text>quote_text9</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text6</text>
+            </paragraph>
+            <section title="title17">
+                <paragraph>
+                    <ref id="50">ref8</ref>
+                    <ref id="50">ref9</ref>
+                    <list>
+                        <item>item16</item>
+                        <item>item17</item>
+                    </list>
+                    <list>
+                        <item>item18</item>
+                        <item>item19</item>
+                    </list>
+                    <image title="title18" description="description13">ZGVmYXVsdA==</image>
+                    <image title="title19" description="description14">ZGVmYXVsdA==</image>
+                    <link href="href18">
+                        <image title="title20" description="description15">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href19">
+                        <text>text7</text>
+                    </link>
+                    <quote about="about12" rel="pred:referenceOf" href="href20">
+                        <quote_text>quote_text10</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about13" rel="pred:referenceOf" href="href21">
+                        <quote_text>quote_text11</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text8</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref10</ref>
+                    <ref id="50">ref11</ref>
+                    <list>
+                        <item>item20</item>
+                        <item>item21</item>
+                    </list>
+                    <list>
+                        <item>item22</item>
+                        <item>item23</item>
+                    </list>
+                    <image title="title21" description="description16">ZGVmYXVsdA==</image>
+                    <image title="title22" description="description17">ZGVmYXVsdA==</image>
+                    <link href="href22">
+                        <text>text9</text>
+                    </link>
+                    <link href="href23">
+                        <image title="title23" description="description18">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about14" rel="pred:referenceOf" href="href24">
+                        <quote_text>quote_text12</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about15" rel="pred:referenceOf" href="href25">
+                        <quote_text>quote_text13</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text10</text>
+                </paragraph>
+                <box title="title24" description="description19">
+                    <image title="title25" description="description20">ZGVmYXVsdA==</image>
+                    <textbox>textbox0</textbox>
+                </box>
+                <box title="title26" description="description21">
+                    <image title="title27" description="description22">ZGVmYXVsdA==</image>
+                    <textbox>textbox1</textbox>
+                </box>
+                <quote about="about16" rel="pred:referenceOf" href="href26">
+                    <quote_text>quote_text14</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about17" rel="pred:referenceOf" href="href27">
+                    <quote_text>quote_text15</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <section title="title28">
+                <paragraph>
+                    <ref id="50">ref12</ref>
+                    <ref id="50">ref13</ref>
+                    <list>
+                        <item>item24</item>
+                        <item>item25</item>
+                    </list>
+                    <list>
+                        <item>item26</item>
+                        <item>item27</item>
+                    </list>
+                    <image title="title29" description="description23">ZGVmYXVsdA==</image>
+                    <image title="title30" description="description24">ZGVmYXVsdA==</image>
+                    <link href="href28">
+                        <image title="title31" description="description25">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href29">
+                        <text>text11</text>
+                    </link>
+                    <quote about="about18" rel="pred:referenceOf" href="href30">
+                        <quote_text>quote_text16</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about19" rel="pred:referenceOf" href="href31">
+                        <quote_text>quote_text17</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text12</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref14</ref>
+                    <ref id="50">ref15</ref>
+                    <list>
+                        <item>item28</item>
+                        <item>item29</item>
+                    </list>
+                    <list>
+                        <item>item30</item>
+                        <item>item31</item>
+                    </list>
+                    <image title="title32" description="description26">ZGVmYXVsdA==</image>
+                    <image title="title33" description="description27">ZGVmYXVsdA==</image>
+                    <link href="href32">
+                        <text>text13</text>
+                    </link>
+                    <link href="href33">
+                        <text>text14</text>
+                    </link>
+                    <quote about="about20" rel="pred:referenceOf" href="href34">
+                        <quote_text>quote_text18</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about21" rel="pred:referenceOf" href="href35">
+                        <quote_text>quote_text19</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text15</text>
+                </paragraph>
+                <box title="title34" description="description28">
+                    <image title="title35" description="description29">ZGVmYXVsdA==</image>
+                    <textbox>textbox2</textbox>
+                </box>
+                <box title="title36" description="description30">
+                    <image title="title37" description="description31">ZGVmYXVsdA==</image>
+                    <textbox>textbox3</textbox>
+                </box>
+                <quote about="about22" rel="pred:referenceOf" href="href36">
+                    <quote_text>quote_text20</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about23" rel="pred:referenceOf" href="href37">
+                    <quote_text>quote_text21</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <box title="title38" description="description32">
+                <image title="title39" description="description33">ZGVmYXVsdA==</image>
+                <textbox>textbox4</textbox>
+            </box>
+            <box title="title40" description="description34">
+                <image title="title41" description="description35">ZGVmYXVsdA==</image>
+                <textbox>textbox5</textbox>
+            </box>
+            <quote about="about24" rel="pred:referenceOf" href="href38">
+                <quote_text>quote_text22</quote_text>
+                <source>
+                    <source_author>source_author6</source_author>
+                    <source_title>source_title6</source_title>
+                    <source_page>source_page6</source_page>
+                </source>
+            </quote>
+            <quote about="about25" rel="pred:referenceOf" href="href39">
+                <quote_text>quote_text23</quote_text>
+                <source>
+                    <source_author>source_author7</source_author>
+                    <source_title>source_title7</source_title>
+                    <source_page>source_page7</source_page>
+                </source>
+            </quote>
+        </section>
+        <section title="title42">
+            <paragraph>
+                <ref id="50">ref16</ref>
+                <ref id="50">ref17</ref>
+                <list>
+                    <item>item32</item>
+                    <item>item33</item>
+                </list>
+                <list>
+                    <item>item34</item>
+                    <item>item35</item>
+                </list>
+                <image title="title43" description="description36">ZGVmYXVsdA==</image>
+                <image title="title44" description="description37">ZGVmYXVsdA==</image>
+                <link href="href40">
+                    <text>text16</text>
+                </link>
+                <link href="href41">
+                    <text>text17</text>
+                </link>
+                <quote about="about26" rel="pred:referenceOf" href="href42">
+                    <quote_text>quote_text24</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about27" rel="pred:referenceOf" href="href43">
+                    <quote_text>quote_text25</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text18</text>
+            </paragraph>
+            <paragraph>
+                <ref id="50">ref18</ref>
+                <ref id="50">ref19</ref>
+                <list>
+                    <item>item36</item>
+                    <item>item37</item>
+                </list>
+                <list>
+                    <item>item38</item>
+                    <item>item39</item>
+                </list>
+                <image title="title45" description="description38">ZGVmYXVsdA==</image>
+                <image title="title46" description="description39">ZGVmYXVsdA==</image>
+                <link href="href44">
+                    <image title="title47" description="description40">ZGVmYXVsdA==</image>
+                </link>
+                <link href="href45">
+                    <text>text19</text>
+                </link>
+                <quote about="about28" rel="pred:referenceOf" href="href46">
+                    <quote_text>quote_text26</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about29" rel="pred:referenceOf" href="href47">
+                    <quote_text>quote_text27</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text20</text>
+            </paragraph>
+            <section title="title48">
+                <paragraph>
+                    <ref id="50">ref20</ref>
+                    <ref id="50">ref21</ref>
+                    <list>
+                        <item>item40</item>
+                        <item>item41</item>
+                    </list>
+                    <list>
+                        <item>item42</item>
+                        <item>item43</item>
+                    </list>
+                    <image title="title49" description="description41">ZGVmYXVsdA==</image>
+                    <image title="title50" description="description42">ZGVmYXVsdA==</image>
+                    <link href="href48">
+                        <image title="title51" description="description43">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href49">
+                        <image title="title52" description="description44">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about30" rel="pred:referenceOf" href="href50">
+                        <quote_text>quote_text28</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about31" rel="pred:referenceOf" href="href51">
+                        <quote_text>quote_text29</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text21</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref22</ref>
+                    <ref id="50">ref23</ref>
+                    <list>
+                        <item>item44</item>
+                        <item>item45</item>
+                    </list>
+                    <list>
+                        <item>item46</item>
+                        <item>item47</item>
+                    </list>
+                    <image title="title53" description="description45">ZGVmYXVsdA==</image>
+                    <image title="title54" description="description46">ZGVmYXVsdA==</image>
+                    <link href="href52">
+                        <text>text22</text>
+                    </link>
+                    <link href="href53">
+                        <image title="title55" description="description47">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about32" rel="pred:referenceOf" href="href54">
+                        <quote_text>quote_text30</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about33" rel="pred:referenceOf" href="href55">
+                        <quote_text>quote_text31</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text23</text>
+                </paragraph>
+                <box title="title56" description="description48">
+                    <image title="title57" description="description49">ZGVmYXVsdA==</image>
+                    <textbox>textbox6</textbox>
+                </box>
+                <box title="title58" description="description50">
+                    <image title="title59" description="description51">ZGVmYXVsdA==</image>
+                    <textbox>textbox7</textbox>
+                </box>
+                <quote about="about34" rel="pred:referenceOf" href="href56">
+                    <quote_text>quote_text32</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about35" rel="pred:referenceOf" href="href57">
+                    <quote_text>quote_text33</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <section title="title60">
+                <paragraph>
+                    <ref id="50">ref24</ref>
+                    <ref id="50">ref25</ref>
+                    <list>
+                        <item>item48</item>
+                        <item>item49</item>
+                    </list>
+                    <list>
+                        <item>item50</item>
+                        <item>item51</item>
+                    </list>
+                    <image title="title61" description="description52">ZGVmYXVsdA==</image>
+                    <image title="title62" description="description53">ZGVmYXVsdA==</image>
+                    <link href="href58">
+                        <text>text24</text>
+                    </link>
+                    <link href="href59">
+                        <text>text25</text>
+                    </link>
+                    <quote about="about36" rel="pred:referenceOf" href="href60">
+                        <quote_text>quote_text34</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about37" rel="pred:referenceOf" href="href61">
+                        <quote_text>quote_text35</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text26</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref26</ref>
+                    <ref id="50">ref27</ref>
+                    <list>
+                        <item>item52</item>
+                        <item>item53</item>
+                    </list>
+                    <list>
+                        <item>item54</item>
+                        <item>item55</item>
+                    </list>
+                    <image title="title63" description="description54">ZGVmYXVsdA==</image>
+                    <image title="title64" description="description55">ZGVmYXVsdA==</image>
+                    <link href="href62">
+                        <image title="title65" description="description56">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href63">
+                        <text>text27</text>
+                    </link>
+                    <quote about="about38" rel="pred:referenceOf" href="href64">
+                        <quote_text>quote_text36</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about39" rel="pred:referenceOf" href="href65">
+                        <quote_text>quote_text37</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text28</text>
+                </paragraph>
+                <box title="title66" description="description57">
+                    <image title="title67" description="description58">ZGVmYXVsdA==</image>
+                    <textbox>textbox8</textbox>
+                </box>
+                <box title="title68" description="description59">
+                    <image title="title69" description="description60">ZGVmYXVsdA==</image>
+                    <textbox>textbox9</textbox>
+                </box>
+                <quote about="about40" rel="pred:referenceOf" href="href66">
+                    <quote_text>quote_text38</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about41" rel="pred:referenceOf" href="href67">
+                    <quote_text>quote_text39</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <box title="title70" description="description61">
+                <image title="title71" description="description62">ZGVmYXVsdA==</image>
+                <textbox>textbox10</textbox>
+            </box>
+            <box title="title72" description="description63">
+                <image title="title73" description="description64">ZGVmYXVsdA==</image>
+                <textbox>textbox11</textbox>
+            </box>
+            <quote about="about42" rel="pred:referenceOf" href="href68">
+                <quote_text>quote_text40</quote_text>
+                <source>
+                    <source_author>source_author8</source_author>
+                    <source_title>source_title8</source_title>
+                    <source_page>source_page8</source_page>
+                </source>
+            </quote>
+            <quote about="about43" rel="pred:referenceOf" href="href69">
+                <quote_text>quote_text41</quote_text>
+                <source>
+                    <source_author>source_author9</source_author>
+                    <source_title>source_title9</source_title>
+                    <source_page>source_page9</source_page>
+                </source>
+            </quote>
+        </section>
+        <box title="title74" description="description65">
+            <image title="title75" description="description66">ZGVmYXVsdA==</image>
+            <textbox>textbox12</textbox>
+        </box>
+        <box title="title76" description="description67">
+            <image title="title77" description="description68">ZGVmYXVsdA==</image>
+            <textbox>textbox13</textbox>
+        </box>
+        <quote about="about44" rel="pred:referenceOf" href="href70">
+            <quote_text>quote_text42</quote_text>
+            <source>
+                <source_author>source_author10</source_author>
+                <source_title>source_title10</source_title>
+                <source_page>source_page10</source_page>
+            </source>
+        </quote>
+        <quote about="about45" rel="pred:referenceOf" href="href71">
+            <quote_text>quote_text43</quote_text>
+            <source>
+                <source_author>source_author11</source_author>
+                <source_title>source_title11</source_title>
+                <source_page>source_page11</source_page>
+            </source>
+        </quote>
+    </section>
+    <section title="title78">
+        <paragraph>
+            <ref id="50">ref28</ref>
+            <ref id="50">ref29</ref>
+            <list>
+                <item>item56</item>
+                <item>item57</item>
+            </list>
+            <list>
+                <item>item58</item>
+                <item>item59</item>
+            </list>
+            <image title="title79" description="description69">ZGVmYXVsdA==</image>
+            <image title="title80" description="description70">ZGVmYXVsdA==</image>
+            <link href="href72">
+                <text>text29</text>
+            </link>
+            <link href="href73">
+                <text>text30</text>
+            </link>
+            <quote about="about46" rel="pred:referenceOf" href="href74">
+                <quote_text>quote_text44</quote_text>
+                <source>
+                    <source_author>source_author12</source_author>
+                    <source_title>source_title12</source_title>
+                    <source_page>source_page12</source_page>
+                </source>
+            </quote>
+            <quote about="about47" rel="pred:referenceOf" href="href75">
+                <quote_text>quote_text45</quote_text>
+                <source>
+                    <source_author>source_author13</source_author>
+                    <source_title>source_title13</source_title>
+                    <source_page>source_page13</source_page>
+                </source>
+            </quote>
+            <text>text31</text>
+        </paragraph>
+        <paragraph>
+            <ref id="50">ref30</ref>
+            <ref id="50">ref31</ref>
+            <list>
+                <item>item60</item>
+                <item>item61</item>
+            </list>
+            <list>
+                <item>item62</item>
+                <item>item63</item>
+            </list>
+            <image title="title81" description="description71">ZGVmYXVsdA==</image>
+            <image title="title82" description="description72">ZGVmYXVsdA==</image>
+            <link href="href76">
+                <text>text32</text>
+            </link>
+            <link href="href77">
+                <image title="title83" description="description73">ZGVmYXVsdA==</image>
+            </link>
+            <quote about="about48" rel="pred:referenceOf" href="href78">
+                <quote_text>quote_text46</quote_text>
+                <source>
+                    <source_author>source_author14</source_author>
+                    <source_title>source_title14</source_title>
+                    <source_page>source_page14</source_page>
+                </source>
+            </quote>
+            <quote about="about49" rel="pred:referenceOf" href="href79">
+                <quote_text>quote_text47</quote_text>
+                <source>
+                    <source_author>source_author15</source_author>
+                    <source_title>source_title15</source_title>
+                    <source_page>source_page15</source_page>
+                </source>
+            </quote>
+            <text>text33</text>
+        </paragraph>
+        <section title="title84">
+            <paragraph>
+                <ref id="50">ref32</ref>
+                <ref id="50">ref33</ref>
+                <list>
+                    <item>item64</item>
+                    <item>item65</item>
+                </list>
+                <list>
+                    <item>item66</item>
+                    <item>item67</item>
+                </list>
+                <image title="title85" description="description74">ZGVmYXVsdA==</image>
+                <image title="title86" description="description75">ZGVmYXVsdA==</image>
+                <link href="href80">
+                    <image title="title87" description="description76">ZGVmYXVsdA==</image>
+                </link>
+                <link href="href81">
+                    <image title="title88" description="description77">ZGVmYXVsdA==</image>
+                </link>
+                <quote about="about50" rel="pred:referenceOf" href="href82">
+                    <quote_text>quote_text48</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about51" rel="pred:referenceOf" href="href83">
+                    <quote_text>quote_text49</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text34</text>
+            </paragraph>
+            <paragraph>
+                <ref id="50">ref34</ref>
+                <ref id="50">ref35</ref>
+                <list>
+                    <item>item68</item>
+                    <item>item69</item>
+                </list>
+                <list>
+                    <item>item70</item>
+                    <item>item71</item>
+                </list>
+                <image title="title89" description="description78">ZGVmYXVsdA==</image>
+                <image title="title90" description="description79">ZGVmYXVsdA==</image>
+                <link href="href84">
+                    <text>text35</text>
+                </link>
+                <link href="href85">
+                    <text>text36</text>
+                </link>
+                <quote about="about52" rel="pred:referenceOf" href="href86">
+                    <quote_text>quote_text50</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about53" rel="pred:referenceOf" href="href87">
+                    <quote_text>quote_text51</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text37</text>
+            </paragraph>
+            <section title="title91">
+                <paragraph>
+                    <ref id="50">ref36</ref>
+                    <ref id="50">ref37</ref>
+                    <list>
+                        <item>item72</item>
+                        <item>item73</item>
+                    </list>
+                    <list>
+                        <item>item74</item>
+                        <item>item75</item>
+                    </list>
+                    <image title="title92" description="description80">ZGVmYXVsdA==</image>
+                    <image title="title93" description="description81">ZGVmYXVsdA==</image>
+                    <link href="href88">
+                        <text>text38</text>
+                    </link>
+                    <link href="href89">
+                        <text>text39</text>
+                    </link>
+                    <quote about="about54" rel="pred:referenceOf" href="href90">
+                        <quote_text>quote_text52</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about55" rel="pred:referenceOf" href="href91">
+                        <quote_text>quote_text53</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text40</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref38</ref>
+                    <ref id="50">ref39</ref>
+                    <list>
+                        <item>item76</item>
+                        <item>item77</item>
+                    </list>
+                    <list>
+                        <item>item78</item>
+                        <item>item79</item>
+                    </list>
+                    <image title="title94" description="description82">ZGVmYXVsdA==</image>
+                    <image title="title95" description="description83">ZGVmYXVsdA==</image>
+                    <link href="href92">
+                        <text>text41</text>
+                    </link>
+                    <link href="href93">
+                        <image title="title96" description="description84">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about56" rel="pred:referenceOf" href="href94">
+                        <quote_text>quote_text54</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about57" rel="pred:referenceOf" href="href95">
+                        <quote_text>quote_text55</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text42</text>
+                </paragraph>
+                <box title="title97" description="description85">
+                    <image title="title98" description="description86">ZGVmYXVsdA==</image>
+                    <textbox>textbox14</textbox>
+                </box>
+                <box title="title99" description="description87">
+                    <image title="title100" description="description88">ZGVmYXVsdA==</image>
+                    <textbox>textbox15</textbox>
+                </box>
+                <quote about="about58" rel="pred:referenceOf" href="href96">
+                    <quote_text>quote_text56</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about59" rel="pred:referenceOf" href="href97">
+                    <quote_text>quote_text57</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <section title="title101">
+                <paragraph>
+                    <ref id="50">ref40</ref>
+                    <ref id="50">ref41</ref>
+                    <list>
+                        <item>item80</item>
+                        <item>item81</item>
+                    </list>
+                    <list>
+                        <item>item82</item>
+                        <item>item83</item>
+                    </list>
+                    <image title="title102" description="description89">ZGVmYXVsdA==</image>
+                    <image title="title103" description="description90">ZGVmYXVsdA==</image>
+                    <link href="href98">
+                        <image title="title104" description="description91">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href99">
+                        <text>text43</text>
+                    </link>
+                    <quote about="about60" rel="pred:referenceOf" href="href100">
+                        <quote_text>quote_text58</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about61" rel="pred:referenceOf" href="href101">
+                        <quote_text>quote_text59</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text44</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref42</ref>
+                    <ref id="50">ref43</ref>
+                    <list>
+                        <item>item84</item>
+                        <item>item85</item>
+                    </list>
+                    <list>
+                        <item>item86</item>
+                        <item>item87</item>
+                    </list>
+                    <image title="title105" description="description92">ZGVmYXVsdA==</image>
+                    <image title="title106" description="description93">ZGVmYXVsdA==</image>
+                    <link href="href102">
+                        <image title="title107" description="description94">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href103">
+                        <text>text45</text>
+                    </link>
+                    <quote about="about62" rel="pred:referenceOf" href="href104">
+                        <quote_text>quote_text60</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about63" rel="pred:referenceOf" href="href105">
+                        <quote_text>quote_text61</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text46</text>
+                </paragraph>
+                <box title="title108" description="description95">
+                    <image title="title109" description="description96">ZGVmYXVsdA==</image>
+                    <textbox>textbox16</textbox>
+                </box>
+                <box title="title110" description="description97">
+                    <image title="title111" description="description98">ZGVmYXVsdA==</image>
+                    <textbox>textbox17</textbox>
+                </box>
+                <quote about="about64" rel="pred:referenceOf" href="href106">
+                    <quote_text>quote_text62</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about65" rel="pred:referenceOf" href="href107">
+                    <quote_text>quote_text63</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <box title="title112" description="description99">
+                <image title="title113" description="description100">ZGVmYXVsdA==</image>
+                <textbox>textbox18</textbox>
+            </box>
+            <box title="title114" description="description101">
+                <image title="title115" description="description102">ZGVmYXVsdA==</image>
+                <textbox>textbox19</textbox>
+            </box>
+            <quote about="about66" rel="pred:referenceOf" href="href108">
+                <quote_text>quote_text64</quote_text>
+                <source>
+                    <source_author>source_author16</source_author>
+                    <source_title>source_title16</source_title>
+                    <source_page>source_page16</source_page>
+                </source>
+            </quote>
+            <quote about="about67" rel="pred:referenceOf" href="href109">
+                <quote_text>quote_text65</quote_text>
+                <source>
+                    <source_author>source_author17</source_author>
+                    <source_title>source_title17</source_title>
+                    <source_page>source_page17</source_page>
+                </source>
+            </quote>
+        </section>
+        <section title="title116">
+            <paragraph>
+                <ref id="50">ref44</ref>
+                <ref id="50">ref45</ref>
+                <list>
+                    <item>item88</item>
+                    <item>item89</item>
+                </list>
+                <list>
+                    <item>item90</item>
+                    <item>item91</item>
+                </list>
+                <image title="title117" description="description103">ZGVmYXVsdA==</image>
+                <image title="title118" description="description104">ZGVmYXVsdA==</image>
+                <link href="href110">
+                    <image title="title119" description="description105">ZGVmYXVsdA==</image>
+                </link>
+                <link href="href111">
+                    <image title="title120" description="description106">ZGVmYXVsdA==</image>
+                </link>
+                <quote about="about68" rel="pred:referenceOf" href="href112">
+                    <quote_text>quote_text66</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about69" rel="pred:referenceOf" href="href113">
+                    <quote_text>quote_text67</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text47</text>
+            </paragraph>
+            <paragraph>
+                <ref id="50">ref46</ref>
+                <ref id="50">ref47</ref>
+                <list>
+                    <item>item92</item>
+                    <item>item93</item>
+                </list>
+                <list>
+                    <item>item94</item>
+                    <item>item95</item>
+                </list>
+                <image title="title121" description="description107">ZGVmYXVsdA==</image>
+                <image title="title122" description="description108">ZGVmYXVsdA==</image>
+                <link href="href114">
+                    <image title="title123" description="description109">ZGVmYXVsdA==</image>
+                </link>
+                <link href="href115">
+                    <text>text48</text>
+                </link>
+                <quote about="about70" rel="pred:referenceOf" href="href116">
+                    <quote_text>quote_text68</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about71" rel="pred:referenceOf" href="href117">
+                    <quote_text>quote_text69</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <text>text49</text>
+            </paragraph>
+            <section title="title124">
+                <paragraph>
+                    <ref id="50">ref48</ref>
+                    <ref id="50">ref49</ref>
+                    <list>
+                        <item>item96</item>
+                        <item>item97</item>
+                    </list>
+                    <list>
+                        <item>item98</item>
+                        <item>item99</item>
+                    </list>
+                    <image title="title125" description="description110">ZGVmYXVsdA==</image>
+                    <image title="title126" description="description111">ZGVmYXVsdA==</image>
+                    <link href="href118">
+                        <image title="title127" description="description112">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href119">
+                        <image title="title128" description="description113">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about72" rel="pred:referenceOf" href="href120">
+                        <quote_text>quote_text70</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about73" rel="pred:referenceOf" href="href121">
+                        <quote_text>quote_text71</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text50</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref50</ref>
+                    <ref id="50">ref51</ref>
+                    <list>
+                        <item>item100</item>
+                        <item>item101</item>
+                    </list>
+                    <list>
+                        <item>item102</item>
+                        <item>item103</item>
+                    </list>
+                    <image title="title129" description="description114">ZGVmYXVsdA==</image>
+                    <image title="title130" description="description115">ZGVmYXVsdA==</image>
+                    <link href="href122">
+                        <text>text51</text>
+                    </link>
+                    <link href="href123">
+                        <text>text52</text>
+                    </link>
+                    <quote about="about74" rel="pred:referenceOf" href="href124">
+                        <quote_text>quote_text72</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about75" rel="pred:referenceOf" href="href125">
+                        <quote_text>quote_text73</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text53</text>
+                </paragraph>
+                <box title="title131" description="description116">
+                    <image title="title132" description="description117">ZGVmYXVsdA==</image>
+                    <textbox>textbox20</textbox>
+                </box>
+                <box title="title133" description="description118">
+                    <image title="title134" description="description119">ZGVmYXVsdA==</image>
+                    <textbox>textbox21</textbox>
+                </box>
+                <quote about="about76" rel="pred:referenceOf" href="href126">
+                    <quote_text>quote_text74</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about77" rel="pred:referenceOf" href="href127">
+                    <quote_text>quote_text75</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <section title="title135">
+                <paragraph>
+                    <ref id="50">ref52</ref>
+                    <ref id="50">ref53</ref>
+                    <list>
+                        <item>item104</item>
+                        <item>item105</item>
+                    </list>
+                    <list>
+                        <item>item106</item>
+                        <item>item107</item>
+                    </list>
+                    <image title="title136" description="description120">ZGVmYXVsdA==</image>
+                    <image title="title137" description="description121">ZGVmYXVsdA==</image>
+                    <link href="href128">
+                        <image title="title138" description="description122">ZGVmYXVsdA==</image>
+                    </link>
+                    <link href="href129">
+                        <image title="title139" description="description123">ZGVmYXVsdA==</image>
+                    </link>
+                    <quote about="about78" rel="pred:referenceOf" href="href130">
+                        <quote_text>quote_text76</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about79" rel="pred:referenceOf" href="href131">
+                        <quote_text>quote_text77</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text54</text>
+                </paragraph>
+                <paragraph>
+                    <ref id="50">ref54</ref>
+                    <ref id="50">ref55</ref>
+                    <list>
+                        <item>item108</item>
+                        <item>item109</item>
+                    </list>
+                    <list>
+                        <item>item110</item>
+                        <item>item111</item>
+                    </list>
+                    <image title="title140" description="description124">ZGVmYXVsdA==</image>
+                    <image title="title141" description="description125">ZGVmYXVsdA==</image>
+                    <link href="href132">
+                        <text>text55</text>
+                    </link>
+                    <link href="href133">
+                        <text>text56</text>
+                    </link>
+                    <quote about="about80" rel="pred:referenceOf" href="href134">
+                        <quote_text>quote_text78</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <quote about="about81" rel="pred:referenceOf" href="href135">
+                        <quote_text>quote_text79</quote_text>
+                        <source>
+                        </source>
+                    </quote>
+                    <text>text57</text>
+                </paragraph>
+                <box title="title142" description="description126">
+                    <image title="title143" description="description127">ZGVmYXVsdA==</image>
+                    <textbox>textbox22</textbox>
+                </box>
+                <box title="title144" description="description128">
+                    <image title="title145" description="description129">ZGVmYXVsdA==</image>
+                    <textbox>textbox23</textbox>
+                </box>
+                <quote about="about82" rel="pred:referenceOf" href="href136">
+                    <quote_text>quote_text80</quote_text>
+                    <source>
+                    </source>
+                </quote>
+                <quote about="about83" rel="pred:referenceOf" href="href137">
+                    <quote_text>quote_text81</quote_text>
+                    <source>
+                    </source>
+                </quote>
+            </section>
+            <box title="title146" description="description130">
+                <image title="title147" description="description131">ZGVmYXVsdA==</image>
+                <textbox>textbox24</textbox>
+            </box>
+            <box title="title148" description="description132">
+                <image title="title149" description="description133">ZGVmYXVsdA==</image>
+                <textbox>textbox25</textbox>
+            </box>
+            <quote about="about84" rel="pred:referenceOf" href="href138">
+                <quote_text>quote_text82</quote_text>
+                <source>
+                    <source_author>source_author18</source_author>
+                    <source_title>source_title18</source_title>
+                    <source_page>source_page18</source_page>
+                </source>
+            </quote>
+            <quote about="about85" rel="pred:referenceOf" href="href139">
+                <quote_text>quote_text83</quote_text>
+                <source>
+                    <source_author>source_author19</source_author>
+                    <source_title>source_title19</source_title>
+                    <source_page>source_page19</source_page>
+                </source>
+            </quote>
+        </section>
+        <box title="title150" description="description134">
+            <image title="title151" description="description135">ZGVmYXVsdA==</image>
+            <textbox>textbox26</textbox>
+        </box>
+        <box title="title152" description="description136">
+            <image title="title153" description="description137">ZGVmYXVsdA==</image>
+            <textbox>textbox27</textbox>
+        </box>
+        <quote about="about86" rel="pred:referenceOf" href="href140">
+            <quote_text>quote_text84</quote_text>
+            <source>
+                <source_author>source_author20</source_author>
+                <source_title>source_title20</source_title>
+                <source_page>source_page20</source_page>
+            </source>
+        </quote>
+        <quote about="about87" rel="pred:referenceOf" href="href141">
+            <quote_text>quote_text85</quote_text>
+            <source>
+                <source_author>source_author21</source_author>
+                <source_title>source_title21</source_title>
+                <source_page>source_page21</source_page>
+            </source>
+        </quote>
+    </section>
+    <references>
+        <reference id="50">
+            <authors>authors0</authors>
+            <year>50</year>
+            <title>title154</title>
+            <pages>pages0</pages>
+        </reference>
+        <reference id="50">
+            <authors>authors1</authors>
+            <year>50</year>
+            <title>title155</title>
+            <pages>pages1</pages>
+        </reference>
+    </references>
+    <corresponding_authors>
+        <corresponding_author>corresponding_author0</corresponding_author>
+        <corresponding_author>corresponding_author1</corresponding_author>
+    </corresponding_authors>
+    <citations>
+        <citation number="50">
+            <authors>authors2</authors>
+            <year>50</year>
+            <title>title156</title>
+            <magazine>magazine0</magazine>
+            <link href="href142">
+                <text>text58</text>
+            </link>
+            <link href="href143">
+                <image title="title157" description="description138">ZGVmYXVsdA==</image>
+            </link>
+            <link href="href144">
+                <image title="title158" description="description139">ZGVmYXVsdA==</image>
+            </link>
+        </citation>
+        <citation number="50">
+            <authors>authors3</authors>
+            <year>50</year>
+            <title>title159</title>
+            <magazine>magazine1</magazine>
+            <link href="href145">
+                <image title="title160" description="description140">ZGVmYXVsdA==</image>
+            </link>
+            <link href="href146">
+                <text>text59</text>
+            </link>
+            <link href="href147">
+                <text>text60</text>
+            </link>
+        </citation>
+    </citations>
+</paper>

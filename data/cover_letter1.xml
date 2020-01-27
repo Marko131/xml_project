@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cover_letter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/C:/Users/Strahinja/Desktop/xml_project/data/schema/Cover_Letter.xsd">
+    <sender>
+        <name>novaksisa</name>
+        <email>email0</email>
+        <phone_number>phone_number0</phone_number>
+        <institution>institution0</institution>
+        <address>address0</address>
+    </sender>
+    <receiver>
+        <name>name1</name>
+        <email>email1</email>
+        <phone_number>phone_number1</phone_number>
+        <institution>institution1</institution>
+        <address>address1</address>
+    </receiver>
+    <paragraphs>
+        <paragraph>paragraph0</paragraph>
+        <paragraph>paragraph1</paragraph>
+    </paragraphs>
+    <signature>ZGVmYXVsdA==</signature>
+</cover_letter>

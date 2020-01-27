@@ -10,24 +10,22 @@ import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.model.review.Review;
-import tim10.project.model.scientific_paper.Paper;
-import tim10.project.model.scientific_paper.TAuthor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.crypto.Data;
 import javax.xml.transform.OutputKeys;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 
 @Repository
-public class ScientificPaperRepository implements IScientificPaper {
+public class ReviewRepository {
 
     private String dbUsername;
     private String dbPassword;
@@ -41,8 +39,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         return String.format(this.connectionUri, this.host, this.port);
     }
 
-
-    public ScientificPaperRepository(@Value("${xml.user}") String username, @Value("${xml.password}") String password, @Value("${xml.driver}") String driver, @Value("${xml.connectionUri}") String connectionUri, @Value("${xml.host}") String host, @Value("${xml.port}") int port) throws ClassNotFoundException, IllegalAccessException, InstantiationException, XMLDBException, IOException {
+    public ReviewRepository(@Value("${xml.user}") String username, @Value("${xml.password}") String password, @Value("${xml.driver}") String driver, @Value("${xml.connectionUri}") String connectionUri, @Value("${xml.host}") String host, @Value("${xml.port}") int port) throws ClassNotFoundException, IllegalAccessException, InstantiationException, XMLDBException, IOException {
         this.dbUsername = username;
         this.dbPassword = password;
         this.driver = driver;
@@ -55,10 +52,10 @@ public class ScientificPaperRepository implements IScientificPaper {
         DatabaseManager.registerDatabase(database);
     }
 
-    @Override
-    public Paper getById(String collectionId, String documentId) throws XMLDBException, JAXBException {
-        Paper paper = null;
+    public Review getById(String collectionId, String documentId) throws XMLDBException, JAXBException {
+        Review review = null;
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+
         col.setProperty(OutputKeys.INDENT, "yes");
         XMLResource res = (XMLResource) col.getResource(documentId);
 
@@ -67,15 +64,13 @@ public class ScientificPaperRepository implements IScientificPaper {
         } else {
 
             System.out.println("[INFO] Binding XML resource to an JAXB instance: ");
-            JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
+            JAXBContext context = JAXBContext.newInstance("tim10.project.model.review");
             Unmarshaller unmarshaller = context.createUnmarshaller();
 
-            paper = (Paper) unmarshaller.unmarshal(res.getContentAsDOM());
+            review = (Review) unmarshaller.unmarshal(res.getContentAsDOM());
 
             System.out.println("[INFO] Showing the document as JAXB instance: ");
-            System.out.println(paper);
-            //List<XMLResource> lista = col.listResources();
-            System.out.println(Arrays.toString(col.listResources()));
+            System.out.println(review);
         }
 
         try {
@@ -84,19 +79,11 @@ public class ScientificPaperRepository implements IScientificPaper {
             xe.printStackTrace();
         }
 
-        return paper;
+        return review;
     }
 
-    public String getXMLResourceById(String collectionId, String documentId) throws XMLDBException, JAXBException {
-        OutputStream os = new ByteArrayOutputStream();
-        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
-        col.setProperty(OutputKeys.INDENT, "yes");
-        XMLResource res = (XMLResource) col.getResource(documentId);
-
-        return res.getContent().toString();
-
-    public ArrayList<Paper> getAll(String collectionId) throws XMLDBException, JAXBException {
-        ArrayList<Paper> list = new ArrayList<Paper>(){};
+    public ArrayList<Review> getAll(String collectionId) throws XMLDBException, JAXBException {
+        ArrayList<Review> list = new ArrayList<Review>(){};
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
         for (String element: col.listResources()) {
@@ -107,10 +94,10 @@ public class ScientificPaperRepository implements IScientificPaper {
             } else {
 
                 System.out.println("[INFO] Binding XML resource to an JAXB instance: ");
-                JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
+                JAXBContext context = JAXBContext.newInstance("tim10.project.model.review");
                 Unmarshaller unmarshaller = context.createUnmarshaller();
 
-                list.add((Paper) unmarshaller.unmarshal(res.getContentAsDOM()));
+                list.add((Review) unmarshaller.unmarshal(res.getContentAsDOM()));
             }
         }
         try {

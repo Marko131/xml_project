@@ -12,6 +12,7 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.model.scientific_paper.TAuthor;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -85,6 +86,14 @@ public class ScientificPaperRepository implements IScientificPaper {
 
         return paper;
     }
+
+    public String getXMLResourceById(String collectionId, String documentId) throws XMLDBException, JAXBException {
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        return res.getContent().toString();
 
     public ArrayList<Paper> getAll(String collectionId) throws XMLDBException, JAXBException {
         ArrayList<Paper> list = new ArrayList<Paper>(){};

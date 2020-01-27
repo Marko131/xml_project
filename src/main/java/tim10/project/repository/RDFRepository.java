@@ -1,5 +1,6 @@
 package tim10.project.repository;
 
+import org.apache.commons.io.input.ReaderInputStream;
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.update.UpdateExecutionFactory;
@@ -8,10 +9,13 @@ import org.apache.jena.update.UpdateProcessor;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.xml.sax.SAXException;
+import tim10.project.util.MetadataExtractor;
 import tim10.project.util.SparqlUtil;
 
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
+import javax.xml.transform.TransformerException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 @Repository
 public class RDFRepository {
@@ -28,7 +32,7 @@ public class RDFRepository {
         this.updateEndpoint = String.join("/", endpoint, dataset, update);
     }
 
-    public void save(InputStream rdfInputStream){
+    public void save(InputStream rdfInputStream, String documentId){
 
         Model model = ModelFactory.createDefaultModel();
         model.read(rdfInputStream, null);
@@ -38,7 +42,7 @@ public class RDFRepository {
         model.write(out, SparqlUtil.NTRIPLES);
 
         System.out.println("[INFO] Writing the triples to a named graph \"" + SCIENTIFIC_PAPER_NAMED_GRAPH_URI + "\".");
-        String sparqlUpdate = SparqlUtil.insertData( this.dataEndpoint + SCIENTIFIC_PAPER_NAMED_GRAPH_URI, new String(out.toByteArray()));
+        String sparqlUpdate = SparqlUtil.insertData( this.dataEndpoint + documentId, new String(out.toByteArray()));
         System.out.println(sparqlUpdate);
 
         // UpdateRequest represents a unit of execution
@@ -47,5 +51,14 @@ public class RDFRepository {
         UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, updateEndpoint);
         processor.execute();
 
+    }
+
+    public void addPaper(String xmlDocument, String documentId) throws IOException, SAXException, TransformerException {
+        MetadataExtractor metadataExtractor = new MetadataExtractor();
+        Reader r = new StringReader(xmlDocument);
+        InputStream inputStream = new ReaderInputStream(r, StandardCharsets.UTF_8);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        metadataExtractor.extractMetadata(inputStream, outputStream);
+        save(new ByteArrayInputStream(outputStream.toByteArray()), documentId);
     }
 }

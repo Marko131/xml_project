@@ -42,8 +42,8 @@ import javax.xml.bind.annotation.XmlType;
 public class TLink {
 
     @XmlElementRefs({
-        @XmlElementRef(name = "image", type = JAXBElement.class, required = false),
-        @XmlElementRef(name = "text", type = JAXBElement.class, required = false)
+        @XmlElementRef(name = "text", type = JAXBElement.class, required = false),
+        @XmlElementRef(name = "image", type = JAXBElement.class, required = false)
     })
     @XmlMixed
     protected List<Serializable> content;
@@ -68,9 +68,9 @@ public class TLink {
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link String }
-     * {@link JAXBElement }{@code <}{@link TImage }{@code >}
      * {@link JAXBElement }{@code <}{@link String }{@code >}
+     * {@link JAXBElement }{@code <}{@link TImage }{@code >}
+     * {@link String }
      * 
      * 
      */

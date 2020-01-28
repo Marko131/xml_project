@@ -1255,17 +1255,5 @@ public class Paper {
         }
 
     }
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder("");
-        builder.append("\nTitle: ").append(getPaperTitle());
-
-        for (TAuthor author: getAuthors().getAuthor()) {
-            builder.append("\nAuthor: ").append(author.toString());
-        }
-        builder.append("\nAbstract").append(getAbstract());
-
-        return builder.toString();
-    }
 
 }

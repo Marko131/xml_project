@@ -655,16 +655,5 @@ public class TAuthor {
         }
 
     }
-    @Override
-    public String toString() {
-
-        StringBuilder builder = new StringBuilder("");
-        builder.append("\n\tName: ").append(getName());
-        builder.append("\n\tUniversity: ").append(getUniversity());
-        builder.append("\n\tCity: ").append(getCity());
-        builder.append("\n\tState: ").append(getState());
-        builder.append("\n\tCountry: ").append(getCountry());
-        return builder.toString();
-    }
 
 }

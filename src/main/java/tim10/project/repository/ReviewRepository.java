@@ -1,9 +1,14 @@
 package tim10.project.repository;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.base.Sys;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
@@ -12,17 +17,25 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.model.review.Review;
+import tim10.project.util.DocumentUtil;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.OutputKeys;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Reader;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class ReviewRepository {
@@ -34,6 +47,7 @@ public class ReviewRepository {
     private String connectionUri;
     private String host;
     private int port;
+
 
     public String getUri() {
         return String.format(this.connectionUri, this.host, this.port);
@@ -83,10 +97,11 @@ public class ReviewRepository {
     }
 
     public ArrayList<Review> getAll(String collectionId) throws XMLDBException, JAXBException {
-        ArrayList<Review> list = new ArrayList<Review>(){};
+        ArrayList<Review> list = new ArrayList<Review>() {
+        };
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
-        for (String element: col.listResources()) {
+        for (String element : col.listResources()) {
             XMLResource res = (XMLResource) col.getResource(element);
 
             if (res == null) {
@@ -148,7 +163,7 @@ public class ReviewRepository {
         }
     }
 
-    public void delete(String collectionID, String documentID) throws XMLDBException{
+    public void delete(String collectionID, String documentID) throws XMLDBException {
         Collection col = null;
         XMLResource res = null;
 
@@ -159,21 +174,21 @@ public class ReviewRepository {
             col.setProperty(OutputKeys.INDENT, "yes");
 
             System.out.println("[INFO] Retrieving the document: " + documentID);
-            res = (XMLResource)col.getResource(documentID);
+            res = (XMLResource) col.getResource(documentID);
             System.out.println("[INFO] Removing the document: " + documentID);
             col.removeResource(res);
-        }finally {
+        } finally {
             //don't forget to clean up!
 
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {
@@ -181,6 +196,69 @@ public class ReviewRepository {
                 }
             }
         }
+    }
+
+    public void createAnonymousReview(String collectionId, String documentId) throws XMLDBException, ParserConfigurationException, IOException, JAXBException, SAXException, XPathExpressionException, TransformerException {
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        File temp = File.createTempFile("temp_file", ".xml");
+
+        // Delete temp file when program exits.
+        temp.deleteOnExit();
+
+        // Write to temp file
+        BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+        out.write(getXMLResourceById(collectionId, documentId));
+        out.close();
+
+        Document document = b.parse(temp);
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node name = (Node) xPath.compile("/review/reviewer/name").evaluate(document, XPathConstants.NODE);
+        Node faculty = (Node) xPath.compile("/review/reviewer/faculty").evaluate(document, XPathConstants.NODE);
+        Node university = (Node) xPath.compile("/review/reviewer/university").evaluate(document, XPathConstants.NODE);
+
+        name.setTextContent("Anonymous");
+        faculty.setTextContent("");
+        university.setTextContent("");
+
+        DOMSource domSource = new DOMSource(document);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.transform(domSource, result);
+
+        System.out.println(writer.toString());
+
+        Reader reader = new StringReader(writer.toString());
+        save("/db/sample/library/anonymous", "anonymous_" + documentId, reader);
+    }
+
+    public List<String> getReviewsByPaperTitle(String collectionId, String title) throws XMLDBException, JAXBException, IOException, SAXException, ParserConfigurationException {
+        ArrayList<String> papers = new ArrayList<>();
+
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+
+        for (String element : col.listResources()) {
+            XMLResource res = (XMLResource) col.getResource(element);
+            try{
+                Document d = DocumentUtil.XMLResourceToDocument(getXMLResourceById(collectionId, res.getId()));
+                XPath xpath = XPathFactory.newInstance().newXPath();
+
+                Node paperTitle = (Node) xpath.compile("/review/paper_title").evaluate(d, XPathConstants.NODE);
+                if (paperTitle.getTextContent().equals(title)) papers.add(res.getId());
+
+            }catch (Exception ignored){
+            }
+        }
+        return papers;
     }
 
     private Collection getOrCreateCollection(String collectionUri) throws XMLDBException {
@@ -232,5 +310,14 @@ public class ReviewRepository {
         } else {
             return col;
         }
+    }
+
+    public String getXMLResourceById(String collectionId, String documentId) throws XMLDBException, JAXBException {
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        return res.getContent().toString();
     }
 }

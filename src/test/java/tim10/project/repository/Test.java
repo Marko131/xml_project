@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import tim10.project.model.DocumentStatus;
 import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
@@ -15,13 +16,16 @@ import tim10.project.util.MetadataExtractor;
 
 import javax.xml.bind.JAXBException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -183,6 +187,29 @@ public class Test {
         ArrayList<Paper> list = scientificPaperRepository.getAll("/db/sample/library/paper");
         for (Paper el: list) {
             System.out.println(el.toString());
+        }
+    }
+
+    @org.junit.Test
+    public void testCreateAnonymousScientificPaper() throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException, TransformerException {
+        scientificPaperRepository.createAnonymousDocument("/db/sample/library", "paper1.xml");
+    }
+
+    @org.junit.Test
+    public void testChangeDocumentStatus() throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException, TransformerException {
+        scientificPaperRepository.changeDocumentStatus("/db/sample/library", "instance1.xml", DocumentStatus.published);
+    }
+
+    @org.junit.Test
+    public void testCreateAnonymousReview() throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException, TransformerException {
+        reviewRepository.createAnonymousReview("/db/sample/library", "review1.xml");
+    }
+
+    @org.junit.Test
+    public void testGetReviewsByPaperTitle() throws XMLDBException, IOException, ParserConfigurationException, SAXException, JAXBException {
+        List<String> reviews = reviewRepository.getReviewsByPaperTitle("/db/sample/library", "paper_title1");
+        for (String review: reviews){
+            System.out.println(review);
         }
     }
 

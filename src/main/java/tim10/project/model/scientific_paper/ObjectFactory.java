@@ -28,6 +28,7 @@ public class ObjectFactory {
     private final static QName _TParagraphRef_QNAME = new QName("", "ref");
     private final static QName _TParagraphQuote_QNAME = new QName("", "quote");
     private final static QName _TParagraphLink_QNAME = new QName("", "link");
+    private final static QName _TParagraphAnnotations_QNAME = new QName("", "annotations");
     private final static QName _TParagraphText_QNAME = new QName("", "text");
     private final static QName _TParagraphList_QNAME = new QName("", "list");
 
@@ -52,6 +53,14 @@ public class ObjectFactory {
      */
     public TAuthor createTAuthor() {
         return new TAuthor();
+    }
+
+    /**
+     * Create an instance of {@link TParagraph }
+     * 
+     */
+    public TParagraph createTParagraph() {
+        return new TParagraph();
     }
 
     /**
@@ -132,14 +141,6 @@ public class ObjectFactory {
      */
     public Paper.Citations createPaperCitations() {
         return new Paper.Citations();
-    }
-
-    /**
-     * Create an instance of {@link TParagraph }
-     * 
-     */
-    public TParagraph createTParagraph() {
-        return new TParagraph();
     }
 
     /**
@@ -239,6 +240,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link TParagraph.Annotations }
+     * 
+     */
+    public TParagraph.Annotations createTParagraphAnnotations() {
+        return new TParagraph.Annotations();
+    }
+
+    /**
      * Create an instance of {@link TQuote.Source }
      * 
      */
@@ -296,6 +305,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "", name = "link", scope = TParagraph.class)
     public JAXBElement<TLink> createTParagraphLink(TLink value) {
         return new JAXBElement<TLink>(_TParagraphLink_QNAME, TLink.class, TParagraph.class, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link TParagraph.Annotations }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "", name = "annotations", scope = TParagraph.class)
+    public JAXBElement<TParagraph.Annotations> createTParagraphAnnotations(TParagraph.Annotations value) {
+        return new JAXBElement<TParagraph.Annotations>(_TParagraphAnnotations_QNAME, TParagraph.Annotations.class, TParagraph.class, value);
     }
 
     /**

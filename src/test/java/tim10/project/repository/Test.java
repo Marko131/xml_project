@@ -14,8 +14,11 @@ import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.util.MetadataExtractor;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+
+import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -51,11 +54,11 @@ public class Test {
 
     @org.junit.Test
     public void testSave() throws XMLDBException, JAXBException, IOException {
-        byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\Marko\\Desktop\\paper_instances\\paper1.xml"));
+        byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\Woolfy\\Desktop\\xml_project\\data\\scientific_paper1.xml"));
         String content = new String(encoded, StandardCharsets.UTF_8);
         Reader reader = new StringReader(content);
         System.out.println(content);
-        scientificPaperRepository.save("/db/sample/library", "paper1.xml", reader);
+        scientificPaperRepository.save("/db/sample/library/paper", "paper1.xml", reader);
 
     }
 

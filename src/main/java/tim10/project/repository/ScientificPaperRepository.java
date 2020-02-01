@@ -220,7 +220,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         return list;
     }
 
-    public void save(String collectionId, String documentId, Reader inputReader) throws XMLDBException, IOException, JAXBException {
+    public String save(String collectionId, String documentId, Reader inputReader) throws XMLDBException, IOException, JAXBException {
         Collection col = null;
         XMLResource res = null;
         OutputStream os = new ByteArrayOutputStream();
@@ -238,6 +238,7 @@ public class ScientificPaperRepository implements IScientificPaper {
 
             col.storeResource(res);
             System.out.println("[INFO] Done.");
+
 
         } finally {
 
@@ -257,6 +258,8 @@ public class ScientificPaperRepository implements IScientificPaper {
                     xe.printStackTrace();
                 }
             }
+
+            return documentId;
         }
     }
 

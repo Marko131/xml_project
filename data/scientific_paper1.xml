@@ -3,7 +3,7 @@
  xmlns:pred="http://www.ftn.uns.ac.rs/rdf/examples/predicate/"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="file:/C:/Users/Marko/Desktop/Scientific_Paper.xsd" date_received="2006-05-04" date_revised="2006-05-04" date_accepted="2006-05-04">
-    <paper_title property="pred:title">paper_title0</paper_title>
+    <paper_title property="pred:title">paper_title5</paper_title>
     <authors>
         <author about="about0">
             <name property="pred:name">name0</name>

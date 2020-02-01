@@ -253,6 +253,7 @@
                 <span>
                     <xsl:value-of select="./source/source_page"/>
                 </span>
+
             </p>
         </xsl:for-each>
     </xsl:template>

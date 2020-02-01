@@ -17,6 +17,7 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.util.DocumentUtil;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -27,13 +28,13 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 
 
 @Repository
@@ -131,7 +132,6 @@ public class ScientificPaperRepository implements IScientificPaper {
 
         Node node;
 
-        System.out.println("Broj autora");
         System.out.println(authors.getLength());
 
         for (int i = 0; i < authors.getLength(); i++) {
@@ -148,7 +148,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         System.out.println(writer.toString());
 
         Reader reader = new StringReader(writer.toString());
-        save("/db/sample/library/anonymous", documentId+"_anonymous.xml", reader);
+        save("/db/sample/library/anonymous", documentId + "_anonymous.xml", reader);
 
     }
 
@@ -298,6 +298,37 @@ public class ScientificPaperRepository implements IScientificPaper {
         }
     }
 
+    public Document mergeNotes(String collectionId) throws XMLDBException, ParserConfigurationException, XPathExpressionException, IOException, SAXException {
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = dbf.newDocumentBuilder();
+
+        XMLResource firstResource = (XMLResource) col.getResource(col.listResources()[0]);
+        Document firstDocument = DocumentUtil.XMLStringToDocument(firstResource.getContent().toString());
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        NodeList notes = (NodeList) xpath.compile("//annotations").evaluate(firstDocument, XPathConstants.NODESET);
+
+        for (int i = 1; i < col.getResourceCount(); i++) {
+            XMLResource res = (XMLResource) col.getResource(col.listResources()[i]);
+
+            Document d = DocumentUtil.XMLStringToDocument(res.getContent().toString());
+            XPath xpath1 = XPathFactory.newInstance().newXPath();
+
+            NodeList notes1 = (NodeList) xpath1.compile("//annotations").evaluate(d, XPathConstants.NODESET);
+            int j = 0;
+            for (Node temp : iterable(notes1)) {
+                for (Node child : iterable(temp.getChildNodes())) {
+                    Node importedNode = firstDocument.importNode(child, true);
+                    notes.item(j).appendChild(importedNode);
+                }
+                j++;
+            }
+        }
+        return firstDocument;
+    }
+
     private Collection getOrCreateCollection(String collectionUri) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0);
     }
@@ -348,4 +379,57 @@ public class ScientificPaperRepository implements IScientificPaper {
             return col;
         }
     }
+
+    public static Iterable<Node> iterable(final NodeList nodeList) {
+        return () -> new Iterator<Node>() {
+
+            private int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < nodeList.getLength();
+            }
+
+            @Override
+            public Node next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+                return nodeList.item(index++);
+            }
+        };
+    }
+
+    public List<String> getKeywordsFromPaper(String collectionId, String documentId) throws XMLDBException, ParserConfigurationException, IOException, JAXBException, SAXException, XPathExpressionException {
+        ArrayList<String> keywordsList = new ArrayList<>();
+
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        File temp = File.createTempFile("temp_file", ".xml");
+
+        // Delete temp file when program exits.
+        temp.deleteOnExit();
+
+        // Write to temp file
+        BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+        out.write(getXMLResourceById(collectionId, documentId));
+        out.close();
+
+        Document document = b.parse(temp);
+        XPath xPath = XPathFactory.newInstance().newXPath();
+
+        NodeList keywords = (NodeList) xPath.compile("/paper/abstract/keywords/keyword").evaluate(document, XPathConstants.NODESET);
+
+        for(Node node : iterable(keywords)){
+            keywordsList.add(node.getTextContent());
+        }
+        return keywordsList;
+    }
 }
+
+

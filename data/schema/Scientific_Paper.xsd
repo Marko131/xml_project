@@ -227,6 +227,14 @@
             <xs:element maxOccurs="unbounded" minOccurs="0" name="link" type="t_link"/>
             <xs:element maxOccurs="unbounded" minOccurs="0" name="quote" type="t_quote"/>
             <xs:element name="text" type="xs:string"/>
+            <xs:element name="annotations">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" minOccurs="0" name="annotation"
+                            type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="t_list">

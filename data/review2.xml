@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<review xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:noNamespaceSchemaLocation="file:/C:/Users/Strahinja/Desktop/xml_project/data/schema/Review.xsd">
+    <paper_title>paper_title0</paper_title>
+    <reviewer>
+        <name>stanicsisa</name>
+        <working_title>working_title0</working_title>
+        <faculty>faculty0</faculty>
+        <university>university0</university>
+    </reviewer>
+    <paragraphs>
+        <paragraph>
+            <title>title0</title>
+            <text>text0</text>
+        </paragraph>
+        <paragraph>
+            <title>title1</title>
+            <text>text1</text>
+        </paragraph>
+    </paragraphs>
+</review>

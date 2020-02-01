@@ -1,25 +1,39 @@
 package tim10.project.repository;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.jena.base.Sys;
 import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Database;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-import javax.xml.transform.OutputKeys;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 
 @Repository
@@ -92,11 +106,99 @@ public class ScientificPaperRepository implements IScientificPaper {
         return res.getContent().toString();
     }
 
-    public ArrayList<Paper> getAll(String collectionId) throws XMLDBException, JAXBException {
-        ArrayList<Paper> list = new ArrayList<Paper>(){};
+    public void createAnonymousDocument(String collectionId, String documentId) throws XMLDBException, ParserConfigurationException, JAXBException, IOException, SAXException, XPathExpressionException, TransformerException {
+        OutputStream os = new ByteArrayOutputStream();
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
-        for (String element: col.listResources()) {
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        File temp = File.createTempFile("temp_file", ".xml");
+
+        // Delete temp file when program exits.
+        temp.deleteOnExit();
+
+        // Write to temp file
+        BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+        out.write(getXMLResourceById(collectionId, documentId));
+        out.close();
+
+        Document document = b.parse(temp);
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        NodeList authors = (NodeList) xPath.compile("/paper/authors/author/name").evaluate(document, XPathConstants.NODESET);
+
+        Node node;
+
+        System.out.println("Broj autora");
+        System.out.println(authors.getLength());
+
+        for (int i = 0; i < authors.getLength(); i++) {
+            authors.item(i).setTextContent("Anonymous");
+        }
+
+        DOMSource domSource = new DOMSource(document);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.transform(domSource, result);
+
+        System.out.println(writer.toString());
+
+        Reader reader = new StringReader(writer.toString());
+        save("/db/sample/library/anonymous", documentId+"_anonymous.xml", reader);
+
+    }
+
+    public void changeDocumentStatus(String collectionId, String documentId, DocumentStatus documentStatus) throws XMLDBException, ParserConfigurationException, IOException, JAXBException, SAXException, XPathExpressionException, TransformerException {
+        OutputStream os = new ByteArrayOutputStream();
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentId);
+
+        DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+        DocumentBuilder b = f.newDocumentBuilder();
+
+        File temp = File.createTempFile("temp_file", ".xml");
+
+        // Delete temp file when program exits.
+        temp.deleteOnExit();
+
+        // Write to temp file
+        BufferedWriter out = new BufferedWriter(new FileWriter(temp));
+        out.write(getXMLResourceById(collectionId, documentId));
+        out.close();
+
+        Document document = b.parse(temp);
+        XPath xPath = XPathFactory.newInstance().newXPath();
+
+        Node statusNode = (Node) xPath.compile("/paper/status").evaluate(document, XPathConstants.NODE);
+        Node oldStatus = (Node) xPath.compile("/paper/status/*").evaluate(document, XPathConstants.NODE);
+        Node newStatus = document.createElementNS("", documentStatus.toString());
+        newStatus.setTextContent(documentStatus.toString());
+
+        oldStatus.getParentNode().removeChild(oldStatus);
+        statusNode.appendChild(newStatus);
+
+        DOMSource domSource = new DOMSource(document);
+        StringWriter writer = new StringWriter();
+        StreamResult result = new StreamResult(writer);
+        TransformerFactory tf = TransformerFactory.newInstance();
+        Transformer transformer = tf.newTransformer();
+        transformer.transform(domSource, result);
+
+        Reader reader = new StringReader(writer.toString());
+        save(collectionId, documentId, reader);
+    }
+
+    public ArrayList<Paper> getAll(String collectionId) throws XMLDBException, JAXBException {
+        ArrayList<Paper> list = new ArrayList<Paper>() {
+        };
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        for (String element : col.listResources()) {
             XMLResource res = (XMLResource) col.getResource(element);
 
             if (res == null) {
@@ -161,7 +263,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         }
     }
 
-    public void delete(String collectionID, String documentID) throws XMLDBException{
+    public void delete(String collectionID, String documentID) throws XMLDBException {
         Collection col = null;
         XMLResource res = null;
 
@@ -172,21 +274,21 @@ public class ScientificPaperRepository implements IScientificPaper {
             col.setProperty(OutputKeys.INDENT, "yes");
 
             System.out.println("[INFO] Retrieving the document: " + documentID);
-            res = (XMLResource)col.getResource(documentID);
+            res = (XMLResource) col.getResource(documentID);
             System.out.println("[INFO] Removing the document: " + documentID);
             col.removeResource(res);
-        }finally {
+        } finally {
             //don't forget to clean up!
 
-            if(res != null) {
+            if (res != null) {
                 try {
-                    ((EXistResource)res).freeResources();
+                    ((EXistResource) res).freeResources();
                 } catch (XMLDBException xe) {
                     xe.printStackTrace();
                 }
             }
 
-            if(col != null) {
+            if (col != null) {
                 try {
                     col.close();
                 } catch (XMLDBException xe) {

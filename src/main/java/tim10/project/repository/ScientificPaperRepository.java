@@ -27,6 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -148,7 +149,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         System.out.println(writer.toString());
 
         Reader reader = new StringReader(writer.toString());
-        save("/db/sample/library/anonymous", documentId+"_anonymous.xml", reader);
+        save("/db/sample/library/anonymous", documentId + "_anonymous.xml", reader);
 
     }
 
@@ -345,4 +346,6 @@ public class ScientificPaperRepository implements IScientificPaper {
             return col;
         }
     }
+
+
 }

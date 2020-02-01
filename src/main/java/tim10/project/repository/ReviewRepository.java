@@ -6,6 +6,7 @@ import org.exist.xmldb.EXistResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
@@ -240,26 +241,44 @@ public class ReviewRepository {
         save("/db/sample/library/anonymous", "anonymous_" + documentId, reader);
     }
 
-    public List<String> getReviewsByPaperTitle(String collectionId, String title) throws XMLDBException, JAXBException, IOException, SAXException, ParserConfigurationException {
+    public List<String> getReviewTitlesByPaperTitle(String collectionId, String title) throws Exception {
         ArrayList<String> papers = new ArrayList<>();
 
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
 
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = dbf.newDocumentBuilder();
+        Document doc = builder.newDocument();
+
+        Node root = doc.createElement("reviews");
+
         for (String element : col.listResources()) {
             XMLResource res = (XMLResource) col.getResource(element);
-            try{
-                Document d = DocumentUtil.XMLResourceToDocument(getXMLResourceById(collectionId, res.getId()));
-                XPath xpath = XPathFactory.newInstance().newXPath();
 
-                Node paperTitle = (Node) xpath.compile("/review/paper_title").evaluate(d, XPathConstants.NODE);
-                if (paperTitle.getTextContent().equals(title)) papers.add(res.getId());
+            Document d = DocumentUtil.XMLResourceToDocument(getXMLResourceById(collectionId, res.getId()));
+            XPath xpath = XPathFactory.newInstance().newXPath();
 
-            }catch (Exception ignored){
+            Node paperTitle = (Node) xpath.compile("/review/paper_title").evaluate(d, XPathConstants.NODE);
+            if (paperTitle == null) continue;
+
+            Node reviewNode = (Node) xpath.compile("/review").evaluate(d, XPathConstants.NODE);
+            Node importedNode = doc.importNode(reviewNode, true);
+
+
+            if (paperTitle.getTextContent().equals(title)) {
+                papers.add(res.getId());
+                root.appendChild(importedNode);
             }
+
         }
+        doc.appendChild(root);
+        DocumentUtil.prettyPrint(doc);
+
+
         return papers;
     }
+
 
     private Collection getOrCreateCollection(String collectionUri) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0);

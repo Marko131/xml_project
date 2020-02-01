@@ -206,11 +206,13 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testGetReviewsByPaperTitle() throws XMLDBException, IOException, ParserConfigurationException, SAXException, JAXBException {
-        List<String> reviews = reviewRepository.getReviewsByPaperTitle("/db/sample/library", "paper_title1");
+    public void testGetReviewsByPaperTitle() throws Exception {
+        List<String> reviews = reviewRepository.getReviewTitlesByPaperTitle("/db/sample/library", "paper_title0");
         for (String review: reviews){
             System.out.println(review);
         }
     }
+
+
 
 }

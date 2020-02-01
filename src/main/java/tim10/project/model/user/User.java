@@ -33,6 +33,10 @@ public class User {
     @CollectionTable(name = "expertise")
     private List<String> expertise = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "reviews")
+    private List<String> reviews = new ArrayList<>();
+
     public User(String name, String lastName, @Email(message = "Email should be valid") String email, String password, String role, List<String> expertise) {
         this.name = name;
         this.lastName = lastName;
@@ -40,6 +44,7 @@ public class User {
         this.password = password;
         this.role = role;
         this.expertise = expertise;
+        this.reviews = new ArrayList<>();
     }
 
     public User() {
@@ -99,5 +104,13 @@ public class User {
 
     public void setExpertise(List<String> expertise) {
         this.expertise = expertise;
+    }
+
+    public List<String> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<String> reviews) {
+        this.reviews = reviews;
     }
 }

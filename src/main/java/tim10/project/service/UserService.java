@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import tim10.project.model.user.User;
 import tim10.project.repository.UserRepository;
+import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PasswordsDoNotMatchException;
 import tim10.project.service.exceptions.UserAlreadyExistsException;
 import tim10.project.service.exceptions.UserNotFoundException;
@@ -17,6 +18,7 @@ import tim10.project.service.exceptions.UserNotFoundException;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -56,7 +58,15 @@ public class UserService implements UserDetailsService {
     }
 
     public User findUserByEmail(String email){
-        return userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email);
+        if (user == null) throw new NotFoundException(String.format("User with email:%s does not exist", email));
+        return user;
+    }
+
+    public User findUserById(Integer id){
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) throw new NotFoundException(String.format("User with id:%s does not exist", id));
+        return user;
     }
 
     public User changePassword(User user, String password1, String password2) {
@@ -73,5 +83,17 @@ public class UserService implements UserDetailsService {
         user.setName(newFirstName);
         user.setLastName(newLastName);
         return userRepository.save(user);
+    }
+
+    public User addReview(User user, String paperId){
+        user.getReviews().add(paperId);
+        return userRepository.save(user);
+    }
+
+    public List<User> getReviewersForPaper(String paperId){
+        /*
+        pronalazenje recenzenata po kljucnim recima iz naucnog rada i expertizama
+        */
+        return new ArrayList<>();
     }
 }

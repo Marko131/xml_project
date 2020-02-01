@@ -241,9 +241,7 @@ public class ReviewRepository {
         save("/db/sample/library/anonymous", "anonymous_" + documentId, reader);
     }
 
-    public List<String> getReviewTitlesByPaperTitle(String collectionId, String title) throws Exception {
-        ArrayList<String> papers = new ArrayList<>();
-
+    public Document mergeReviewsByPaperTitle(String collectionId, String title) throws Exception {
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
 
@@ -256,7 +254,7 @@ public class ReviewRepository {
         for (String element : col.listResources()) {
             XMLResource res = (XMLResource) col.getResource(element);
 
-            Document d = DocumentUtil.XMLResourceToDocument(getXMLResourceById(collectionId, res.getId()));
+            Document d = DocumentUtil.XMLStringToDocument(getXMLResourceById(collectionId, res.getId()));
             XPath xpath = XPathFactory.newInstance().newXPath();
 
             Node paperTitle = (Node) xpath.compile("/review/paper_title").evaluate(d, XPathConstants.NODE);
@@ -267,16 +265,12 @@ public class ReviewRepository {
 
 
             if (paperTitle.getTextContent().equals(title)) {
-                papers.add(res.getId());
                 root.appendChild(importedNode);
             }
 
         }
         doc.appendChild(root);
-        DocumentUtil.prettyPrint(doc);
-
-
-        return papers;
+        return doc;
     }
 
 

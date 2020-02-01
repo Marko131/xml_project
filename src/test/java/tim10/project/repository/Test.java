@@ -1,24 +1,23 @@
 package tim10.project.repository;
 
 import org.apache.commons.io.input.ReaderInputStream;
+import org.dom4j.dom.DOMDocument;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 
+import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.util.DocumentUtil;
 import tim10.project.util.MetadataExtractor;
-
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-
-
-import javax.xml.bind.Unmarshaller;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
@@ -209,13 +208,36 @@ public class Test {
     }
 
     @org.junit.Test
-    public void testGetReviewsByPaperTitle() throws Exception {
-        List<String> reviews = reviewRepository.getReviewTitlesByPaperTitle("/db/sample/library", "paper_title0");
-        for (String review: reviews){
-            System.out.println(review);
-        }
+    public void testGetHTMLbyId() throws Exception {
+        String xmlResource= scientificPaperRepository.getXMLResourceById("/db/sample/library", "scientific_paper1.xml");
+        Document document = DocumentUtil.XMLStringToDocument(xmlResource);
+        String html = DocumentUtil.generateHTMLStringFromXMLString(DocumentUtil.DocumentToString(document), "data/xsl/scientific_paper.xsl");
+        System.out.println(html);
     }
 
+    @org.junit.Test
+    public void testGetHTMLReviewsByPaperTitle() throws Exception {
+        Document document = reviewRepository.mergeReviewsByPaperTitle("/db/sample/library", "paper_title0");
+        String html = DocumentUtil.generateHTMLStringFromXMLString(DocumentUtil.DocumentToString(document), "data/xsl/review.xsl");
+        System.out.println(html);
+    }
 
+    @org.junit.Test
+    public void testGetHTMLReviewById() throws XMLDBException, JAXBException, IOException, ParserConfigurationException, SAXException, TransformerException {
+        String review = reviewRepository.getXMLResourceById("/db/sample/library", "review1.xml");
+        String html = DocumentUtil.generateHTMLStringFromXMLString(review, "data/xsl/review.xsl");
+        System.out.println(html);
+    }
 
+    @org.junit.Test
+    public void testMergeAnnotations() throws Exception {
+        Document doc = scientificPaperRepository.mergeNotes("/db/sample/library/anonymous");
+        DocumentUtil.prettyPrint(doc);
+    }
+
+    @org.junit.Test
+    public void testGetKeywordsFromPaper() throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException {
+        ArrayList<String> keywords = (ArrayList<String>) scientificPaperRepository.getKeywordsFromPaper("/db/sample/library", "scientific_paper1.xml");
+        keywords.forEach(System.out::println);
+    }
 }

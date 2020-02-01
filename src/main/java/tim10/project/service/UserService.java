@@ -8,7 +8,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.xml.sax.SAXException;
+import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.user.User;
+import tim10.project.repository.ScientificPaperRepository;
 import tim10.project.repository.UserRepository;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PasswordsDoNotMatchException;
@@ -16,6 +19,10 @@ import tim10.project.service.exceptions.UserAlreadyExistsException;
 import tim10.project.service.exceptions.UserNotFoundException;
 
 import javax.transaction.Transactional;
+import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +35,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ScientificPaperRepository paperRepository;
 
     @Transactional
     public UserDetails loadUserByUsername(String email){
@@ -90,10 +100,18 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public List<User> getReviewersForPaper(String paperId){
-        /*
-        pronalazenje recenzenata po kljucnim recima iz naucnog rada i expertizama
-        */
-        return new ArrayList<>();
+    public List<User> getReviewersForPaper(String paperId) throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException {
+        ArrayList<String> keywords = (ArrayList<String>) paperRepository.getKeywordsFromPaper("/db/sample/library/paper", paperId);
+        ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+        ArrayList<User> reviewers = new ArrayList<>();
+        for (User user: users) {
+            for (String keyword: keywords) {
+                if (user.getExpertise().contains(keyword) && (user.getRole().equals("reviewer") || user.getRole().equals("editor"))) {
+                    reviewers.add(user);
+                }
+            }
+        }
+        if (reviewers.isEmpty()) return users;
+        return reviewers;
     }
 }

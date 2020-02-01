@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.model.user.User;
@@ -28,6 +29,9 @@ import tim10.project.web.dto.UserDetailsDTO;
 
 import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -102,7 +106,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_EDITOR')")
     @GetMapping("/api/getReviewers/{paperId}")
-    public List<User> getReviewersForPaper(@PathVariable("paperId") String paperId) {
+    public List<User> getReviewersForPaper(@PathVariable("paperId") String paperId) throws XMLDBException, ParserConfigurationException, JAXBException, IOException, XPathExpressionException, SAXException {
         return userService.getReviewersForPaper(paperId);
     }
 

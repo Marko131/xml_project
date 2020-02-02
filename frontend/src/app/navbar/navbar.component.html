@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button
+      mat-button
+      *ngFor="let link of navLinks"
+      [routerLink]="link.path"
+      routerLinkActive="active"
+    >
+      {{ link.label }}
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

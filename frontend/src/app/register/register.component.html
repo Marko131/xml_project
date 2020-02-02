@@ -1,0 +1,86 @@
+<form [formGroup]="registerForm" class="register-form">
+  <mat-card>
+    <mat-form-field>
+      <input matInput placeholder="First name" formControlName="name" />
+      <mat-error *ngIf="registerForm.hasError('required', 'firstName')">
+        First name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Lastname" formControlName="lastName" />
+      <mat-error *ngIf="registerForm.hasError('required', 'lastName')">
+        Last name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Email" formControlName="email" />
+      <mat-error *ngIf="registerForm.hasError('required', 'email')">
+        Email is required
+      </mat-error>
+      <mat-error *ngIf="registerForm.hasError('email', 'email')">
+        Email is not valid
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        placeholder="Password"
+        formControlName="password1"
+        type="password"
+      />
+      <mat-error *ngIf="registerForm.hasError('required', 'password1')">
+        Password is required
+      </mat-error>
+      <mat-error *ngIf="registerForm.hasError('minlength', 'password1')">
+        Password must be at least 6 characters long
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+        matInput
+        formControlName="password2"
+        placeholder="Confirm password"
+        [errorStateMatcher]="matcher"
+        type="password"
+      />
+      <mat-error *ngIf="registerForm.hasError('notSame')">
+        Passwords do not match
+      </mat-error>
+    </mat-form-field>
+
+    <mat-radio-group formControlName="role">
+      <mat-radio-button value="author">Author</mat-radio-button>
+      <mat-radio-button value="reviewer">Reviewer</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field>
+      <mat-chip-list #chipList>
+        <mat-chip
+          *ngFor="let e of expertise; index as i"
+          [selectable]="selectable"
+          [removable]="removable"
+          (removed)="remove(i)"
+        >
+          {{ e }}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+        <input
+          matInput
+          placeholder="Expertise..."
+          [matChipInputFor]="chipList"
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="true"
+          (matChipInputTokenEnd)="addExpertise($event)"
+        />
+      </mat-chip-list>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="register()">
+      Register
+    </button>
+  </mat-card>
+</form>

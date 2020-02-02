@@ -1,0 +1,25 @@
+<div class="profile">
+  <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+</div>
+
+<input
+  #fileInput
+  hidden="true"
+  type="file"
+  id="file"
+  (change)="handleFileInput($event.target.files)"
+/>
+<button mat-flat-button color="primary" (click)="fileInput.click()">
+  Choose XML file
+</button>
+<mat-chip-list *ngIf="paper">
+  <mat-chip [removable]="true" (removed)="remove()">
+    {{ paper.name }}
+    <mat-icon matChipRemove>cancel</mat-icon></mat-chip
+  >
+</mat-chip-list>
+<div>
+  <button mat-raised-button color="primary" (click)="uploadFile()">
+    Upload
+  </button>
+</div>

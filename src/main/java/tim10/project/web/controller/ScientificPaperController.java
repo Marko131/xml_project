@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class ScientificPaperController {
 
@@ -24,6 +25,7 @@ public class ScientificPaperController {
 
     @PostMapping("/api/paper")
     public Paper uploadPaper(@RequestParam("file") MultipartFile file) throws IOException, XMLDBException, JAXBException {
+
         byte[] encoded = file.getBytes();
         String content = new String(encoded, StandardCharsets.UTF_8);
         Reader reader = new StringReader(content);

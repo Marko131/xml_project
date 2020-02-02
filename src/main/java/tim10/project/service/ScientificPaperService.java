@@ -29,8 +29,13 @@ public class ScientificPaperService {
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Paper paper = (Paper) unmarshaller.unmarshal(reader);
-        Paper paperFromDatabase = scientificPaperRepository.getById("/db/sample/library/paper", paper.getPaperTitle().getValue() + ".xml");
-        if (paperFromDatabase != null) throw new PaperAlreadyExists();
+        Paper paperFromDatabase = null;
+        try {
+            paperFromDatabase = scientificPaperRepository.getById("/db/sample/library/paper", paper.getPaperTitle().getValue() + ".xml");
+        } catch (Exception ignored) {
+        }
+        if (paperFromDatabase != null)
+            throw new PaperAlreadyExists();
         Reader inputReader = new StringReader(content);
         scientificPaperRepository.save("/db/sample/library/paper", paper.getPaperTitle().getValue() + ".xml", inputReader);
         return paper;
@@ -38,7 +43,8 @@ public class ScientificPaperService {
 
     public Paper getById(String documentId) throws XMLDBException, JAXBException {
         Paper paper = scientificPaperRepository.getById("/db/sample/library/paper", documentId);
-        if (paper == null) throw new NotFoundException(String.format("Scientific paper with id:%s does not exist", documentId));
+        if (paper == null)
+            throw new NotFoundException(String.format("Scientific paper with id:%s does not exist", documentId));
         return paper;
     }
 
@@ -50,7 +56,8 @@ public class ScientificPaperService {
 
     public String getXMLResourceById(String documentId) throws XMLDBException, JAXBException {
         String paper = scientificPaperRepository.getXMLResourceById("/db/sample/library/paper", documentId);
-        if (paper == null) throw new NotFoundException(String.format("Scientific paper with id:%s does not exist", documentId));
+        if (paper == null)
+            throw new NotFoundException(String.format("Scientific paper with id:%s does not exist", documentId));
         return paper;
     }
 

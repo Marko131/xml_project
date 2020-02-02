@@ -17,6 +17,7 @@ import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.model.scientific_paper.TAuthor;
 import tim10.project.util.DocumentUtil;
 
 import javax.xml.bind.JAXBContext;
@@ -96,6 +97,37 @@ public class ScientificPaperRepository implements IScientificPaper {
         }
 
         return paper;
+    }
+
+    public ArrayList<String> getPapersByUserName(String collectionId, String userName) throws XMLDBException, JAXBException {
+        ArrayList<String> papers = new ArrayList<>();
+
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        for (String element : col.listResources()) {
+            XMLResource res = (XMLResource) col.getResource(element);
+
+            if (res == null) {
+                System.out.println("[WARNING] Document '" + element + "' can not be found!");
+            } else {
+
+                System.out.println("[INFO] Binding XML resource to an JAXB instance: ");
+                JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
+                Unmarshaller unmarshaller = context.createUnmarshaller();
+                Paper paper = (Paper) unmarshaller.unmarshal(res.getContentAsDOM());
+                for (TAuthor author : paper.getAuthors().getAuthor()){
+                    if (author.getName().getValue().equals(userName)){
+                        papers.add(element);
+                    }
+                }
+            }
+        }
+        try {
+            col.close();
+        } catch (XMLDBException xe) {
+            xe.printStackTrace();
+        }
+        return papers;
     }
 
     public String getXMLResourceById(String collectionId, String documentId) throws XMLDBException, JAXBException {

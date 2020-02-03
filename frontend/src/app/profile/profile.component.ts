@@ -4,6 +4,8 @@ import { AllowedRoutes } from "../_services/allowedRoutes.service";
 import { AuthService } from "../_services/auth.service";
 import { PaperService } from "../_services/paper.service";
 import { MatSnackBar } from "@angular/material";
+import { CoverLetterService } from "../_services/coverLetter.service";
+import { RdfService } from "../_services/rdf.service";
 
 @Component({
   selector: "app-profile",
@@ -12,17 +14,27 @@ import { MatSnackBar } from "@angular/material";
 })
 export class ProfileComponent implements OnInit {
   paper: File;
+  coverLetter: File;
+  rdf: File;
+
+  userPapers: Array<any>;
+  displayedColumns: string[] = ["title", "status", "archive", "preview", "pdf"];
   constructor(
     private router: Router,
     private allowedRoutes: AllowedRoutes,
-    private authService: AuthService,
+    private coverLetterService: CoverLetterService,
     private paperService: PaperService,
+    private rdfService: RdfService,
     private _snackBar: MatSnackBar
   ) {
     this.paper = null;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.paperService
+      .getByUserName()
+      .subscribe(response => (this.userPapers = response));
+  }
 
   logout() {
     localStorage.removeItem("token");
@@ -30,8 +42,23 @@ export class ProfileComponent implements OnInit {
     this.allowedRoutes.updateRoutes();
   }
 
-  handleFileInput(files: FileList) {
+  handlePaperInput(files: FileList) {
     this.paper = files.item(0);
+  }
+  handleCoverLetterInput(files: FileList) {
+    this.coverLetter = files.item(0);
+  }
+  handleRdfInput(files: FileList) {
+    this.rdf = files.item(0);
+  }
+  removePaper() {
+    this.paper = null;
+  }
+  removeCoverLetter() {
+    this.coverLetter = null;
+  }
+  removeRdf() {
+    this.rdf = null;
   }
 
   uploadFile() {
@@ -48,8 +75,31 @@ export class ProfileComponent implements OnInit {
         });
       }
     );
+    if (this.coverLetter)
+      this.coverLetterService.upload(this.coverLetter).subscribe(
+        response =>
+          this._snackBar.open("File has been successfully uploaded", "", {
+            duration: 2000
+          }),
+        error => console.log(error)
+      );
+    if (this.rdf) {
+      this.rdfService.upload(this.rdf).subscribe(
+        response =>
+          this._snackBar.open("File has been successfully uploaded", "", {
+            duration: 2000
+          }),
+        error => console.log(error)
+      );
+    }
   }
-  remove() {
-    this.paper = null;
+  archive(paperTitle: string) {
+    console.log(paperTitle);
+  }
+  preview(paperTitle: string) {
+    console.log(paperTitle);
+  }
+  downloadPdf(paperTitle: string) {
+    console.log(paperTitle);
   }
 }

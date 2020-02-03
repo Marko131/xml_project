@@ -27,7 +27,7 @@ export class AllowedRoutes {
     decodedToken.roles.forEach(role => {
       if (role.authority == "ROLE_REVIEWER") {
         components.push({
-          path: "profile",
+          path: "reviewer-profile",
           label: `Reviewer: ${decodedToken.sub}`
         });
       }

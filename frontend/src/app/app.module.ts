@@ -25,7 +25,8 @@ import {
   MatGridListModule,
   MatTableModule,
   MatRadioModule,
-  MatChipsModule
+  MatChipsModule,
+  MatMenuModule
 } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -34,6 +35,12 @@ import { MainComponent } from "./main/main.component";
 import { AuthService } from "./_services/auth.service";
 import { ProfileComponent } from "./profile/profile.component";
 import { PaperService } from "./_services/paper.service";
+import { CoverLetterService } from "./_services/coverLetter.service";
+import { RdfService } from "./_services/rdf.service";
+import { ReviwerProfileComponent } from "./reviwer-profile/reviwer-profile.component";
+import { AuthGuard } from "./_helpers/auth.guard";
+import { ReviewerGuard } from "./_helpers/reviewer.guard";
+import { ReviewService } from "./_services/review.service";
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +48,8 @@ import { PaperService } from "./_services/paper.service";
     RegisterComponent,
     NavbarComponent,
     MainComponent,
-    ProfileComponent
+    ProfileComponent,
+    ReviwerProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -68,9 +76,18 @@ import { PaperService } from "./_services/paper.service";
     MatGridListModule,
     MatTableModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    MatMenuModule
   ],
-  providers: [AllowedRoutes, AuthService, PaperService],
+  providers: [
+    AllowedRoutes,
+    AuthService,
+    PaperService,
+    CoverLetterService,
+    RdfService,
+    ReviewService,
+    ReviewerGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,25 +1,117 @@
-<div class="profile">
-  <button mat-raised-button color="primary" (click)="logout()">Logout</button>
+<div class="flex-center">
+  <input
+    #fileInput
+    hidden="true"
+    type="file"
+    id="file"
+    (change)="handlePaperInput($event.target.files)"
+  />
+  <button mat-flat-button color="primary" (click)="fileInput.click()">
+    Select XML file
+  </button>
+  <mat-chip-list *ngIf="paper">
+    <mat-chip [removable]="true" (removed)="removePaper()">
+      {{ paper.name }}
+      <mat-icon matChipRemove>cancel</mat-icon></mat-chip
+    >
+  </mat-chip-list>
+
+  <input
+    #file2Input
+    hidden="true"
+    type="file"
+    id="file2"
+    (change)="handleCoverLetterInput($event.target.files)"
+  />
+  <button mat-flat-button color="primary" (click)="file2Input.click()">
+    Select cover letter
+  </button>
+  <mat-chip-list *ngIf="coverLetter">
+    <mat-chip [removable]="true" (removed)="removeCoverLetter()">
+      {{ coverLetter.name }}
+      <mat-icon matChipRemove>cancel</mat-icon></mat-chip
+    >
+  </mat-chip-list>
+
+  <input
+    #file3Input
+    hidden="true"
+    type="file"
+    id="file3"
+    (change)="handleRdfInput($event.target.files)"
+  />
+  <button mat-flat-button color="primary" (click)="file3Input.click()">
+    Select RDF
+  </button>
+  <mat-chip-list *ngIf="rdf">
+    <mat-chip [removable]="true" (removed)="removeRdf()">
+      {{ rdf.name }}
+      <mat-icon matChipRemove>cancel</mat-icon></mat-chip
+    >
+  </mat-chip-list>
 </div>
 
-<input
-  #fileInput
-  hidden="true"
-  type="file"
-  id="file"
-  (change)="handleFileInput($event.target.files)"
-/>
-<button mat-flat-button color="primary" (click)="fileInput.click()">
-  Choose XML file
-</button>
-<mat-chip-list *ngIf="paper">
-  <mat-chip [removable]="true" (removed)="remove()">
-    {{ paper.name }}
-    <mat-icon matChipRemove>cancel</mat-icon></mat-chip
-  >
-</mat-chip-list>
-<div>
+<div class="flex-center">
   <button mat-raised-button color="primary" (click)="uploadFile()">
     Upload
   </button>
 </div>
+
+<table mat-table [dataSource]="userPapers" class="mat-elevation-z8">
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef>Title</th>
+    <td mat-cell *matCellDef="let element">{{ element.title }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let element">
+      {{ element.status }}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="archive">
+    <th mat-header-cell *matHeaderCellDef>Archive</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        *ngIf="element.status === 'waiting'"
+        mat-stroked-button
+        color="warn"
+        (click)="archive(element)"
+      >
+        Archive
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="preview">
+    <th mat-header-cell *matHeaderCellDef>Preview</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="preview(element.title)"
+      >
+        Preview
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="download">
+    <th mat-header-cell *matHeaderCellDef>Download</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button [matMenuTriggerFor]="menu">
+        <mat-icon>
+          get_app
+        </mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="downloadXml(element.title)">XML</button>
+        <button mat-menu-item (click)="downloadPdf(element.title)">PDF</button>
+      </mat-menu>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>

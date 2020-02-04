@@ -25,7 +25,10 @@ import {
   MatGridListModule,
   MatTableModule,
   MatRadioModule,
-  MatChipsModule
+  MatChipsModule,
+  MatMenuModule,
+  MatDialogModule,
+  MatCheckboxModule
 } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -34,6 +37,19 @@ import { MainComponent } from "./main/main.component";
 import { AuthService } from "./_services/auth.service";
 import { ProfileComponent } from "./profile/profile.component";
 import { PaperService } from "./_services/paper.service";
+import { CoverLetterService } from "./_services/coverLetter.service";
+import { RdfService } from "./_services/rdf.service";
+import { ReviwerProfileComponent } from "./reviwer-profile/reviwer-profile.component";
+import { ReviewerGuard } from "./_helpers/reviewer.guard";
+import { ReviewService } from "./_services/review.service";
+import { EditorProfileComponent } from "./editor-profile/editor-profile.component";
+import { EditorGuard } from "./_helpers/editor.guard";
+import { ReviewerFunctionsComponent } from "./reviewer-functions/reviewer-functions.component";
+import { EditorFunctionsComponent } from "./editor-functions/editor-functions.component";
+import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select-reviewers-dialog.component";
+import { RawInputDialogComponent } from "./raw-input-dialog/raw-input-dialog.component";
+import { XmlEditComponent } from "./xml-edit/xml-edit.component";
+import { PreviewComponent } from './preview/preview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +57,15 @@ import { PaperService } from "./_services/paper.service";
     RegisterComponent,
     NavbarComponent,
     MainComponent,
-    ProfileComponent
+    ProfileComponent,
+    ReviwerProfileComponent,
+    EditorProfileComponent,
+    ReviewerFunctionsComponent,
+    EditorFunctionsComponent,
+    RawInputDialogComponent,
+    SelectReviewersDialogComponent,
+    XmlEditComponent,
+    PreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -68,9 +92,22 @@ import { PaperService } from "./_services/paper.service";
     MatGridListModule,
     MatTableModule,
     MatRadioModule,
-    MatChipsModule
+    MatChipsModule,
+    MatMenuModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
-  providers: [AllowedRoutes, AuthService, PaperService],
+  providers: [
+    AllowedRoutes,
+    AuthService,
+    PaperService,
+    CoverLetterService,
+    RdfService,
+    ReviewService,
+    ReviewerGuard,
+    EditorGuard
+  ],
+  entryComponents: [RawInputDialogComponent, SelectReviewersDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

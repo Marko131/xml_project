@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators, FormArray } from "@angular/forms";
 import { MyErrorStateMatcher } from "../_helpers/myErrorStateMatcher";
 import { AuthService } from "../_services/auth.service";
 import { Router } from "@angular/router";
-import { MatChipInputEvent } from "@angular/material";
+import { MatChipInputEvent, MatSnackBar } from "@angular/material";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 
 @Component({
@@ -22,7 +22,11 @@ export class RegisterComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {
     this.registerForm = new FormGroup(
       {
         name: new FormControl("", [Validators.required]),
@@ -58,7 +62,10 @@ export class RegisterComponent implements OnInit {
     console.log(registerUser);
     if (!this.registerForm.valid) return;
     this.authService.register(registerUser).subscribe(
-      response => console.log(response),
+      response => {
+        this._snackBar.open(response, "", { duration: 2000 });
+        this.router.navigate(["/login"]);
+      },
       errorResponse => console.log(errorResponse)
     );
   }

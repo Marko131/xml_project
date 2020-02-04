@@ -1,0 +1,28 @@
+.mat-cell,
+.mat-header-cell {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.mat-header-cell {
+  text-align: center;
+}
+
+.mat-table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 50px;
+}
+button {
+  margin: 10px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mat-menu-item {
+  width: auto;
+}

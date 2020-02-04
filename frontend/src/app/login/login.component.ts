@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("token", token);
           this.router.navigate(["/"]);
           this.allowedRoutes.updateRoutes();
+          this.allowedRoutes.isLoggedIn();
         },
         response => {
           try {

@@ -1,0 +1,23 @@
+mat-form-field {
+  width: 70%;
+  font-size: 28px;
+  line-height: 32px;
+  font-weight: 400;
+}
+.flex-center {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+}
+mat-card {
+  width: 35%;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 30px;
+}
+
+.flex-center button {
+  margin-left: 20px;
+}

@@ -5,6 +5,8 @@ import * as jwt_decode from "jwt-decode";
 export class AllowedRoutes {
   private routes = new BehaviorSubject([]);
   currentRoutes = this.routes.asObservable();
+  private login = new BehaviorSubject(true);
+  isLoggedInObservable = this.login.asObservable();
   constructor() {
     this.updateRoutes();
   }
@@ -20,6 +22,7 @@ export class AllowedRoutes {
       components.push({ path: "login", label: "Login" });
       components.push({ path: "register", label: "Register" });
       this.routes.next(components);
+      this.login.next(false);
       return;
     }
     let decodedToken = jwt_decode(token);
@@ -27,11 +30,19 @@ export class AllowedRoutes {
     decodedToken.roles.forEach(role => {
       if (role.authority == "ROLE_REVIEWER") {
         components.push({
-          path: "profile",
+          path: "text-edit",
+          label: "XML"
+        });
+        components.push({
+          path: "reviewer-profile",
           label: `Reviewer: ${decodedToken.sub}`
         });
       }
       if (role.authority == "ROLE_AUTHOR") {
+        components.push({
+          path: "text-edit",
+          label: "XML"
+        });
         components.push({
           path: "profile",
           label: `Author: ${decodedToken.sub}`
@@ -39,11 +50,24 @@ export class AllowedRoutes {
       }
       if (role.authority == "ROLE_EDITOR") {
         components.push({
-          path: "profile",
+          path: "text-edit",
+          label: "XML"
+        });
+        components.push({
+          path: "editor-profile",
           label: `Editor: ${decodedToken.sub}`
         });
       }
     });
     this.routes.next(components);
+  }
+
+  isLoggedIn(): void {
+    let token = localStorage.getItem("token");
+    if (!token) this.login.next(false);
+    let decodedToken = jwt_decode(token);
+    let current_time = new Date().getTime() / 1000;
+    if (current_time > decodedToken.exp) this.login.next(false);
+    this.login.next(true);
   }
 }

@@ -1,0 +1,10 @@
+.mat-cell {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+mat-tab-group {
+  width: 60%;
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+}

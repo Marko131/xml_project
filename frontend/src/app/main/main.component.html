@@ -1,1 +1,16 @@
-<p>main works!</p>
+<mat-card>
+  <form
+    [formGroup]="searchForm"
+    (ngSubmit)="onSubmit(searchForm)"
+    class="flex-center"
+  >
+    <mat-form-field>
+      <input matInput formControlName="search" placeholder="Search" />
+    </mat-form-field>
+    <button mat-fab color="primary" type="submit">
+      <mat-icon>
+        search
+      </mat-icon>
+    </button>
+  </form>
+</mat-card>

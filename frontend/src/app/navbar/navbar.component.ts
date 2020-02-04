@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AllowedRoutes } from "../_services/allowedRoutes.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-navbar",
@@ -8,15 +9,26 @@ import { AllowedRoutes } from "../_services/allowedRoutes.service";
 })
 export class NavbarComponent implements OnInit {
   navLinks = [];
-  constructor(private routes: AllowedRoutes) {
-    this.routes.currentRoutes.subscribe(routes => {
+  isLoggedIn: boolean;
+  constructor(private allowedRoutes: AllowedRoutes, private router: Router) {
+    this.allowedRoutes.currentRoutes.subscribe(routes => {
       this.navLinks = routes;
     });
   }
 
   ngOnInit() {
-    this.routes.currentRoutes.subscribe(routes => {
+    this.allowedRoutes.currentRoutes.subscribe(routes => {
       this.navLinks = routes;
     });
+    this.allowedRoutes.isLoggedInObservable.subscribe(
+      isLoggedIn => (this.isLoggedIn = isLoggedIn)
+    );
+  }
+
+  logout() {
+    localStorage.removeItem("token");
+    this.router.navigate(["/login"]);
+    this.allowedRoutes.updateRoutes();
+    this.allowedRoutes.isLoggedIn();
   }
 }

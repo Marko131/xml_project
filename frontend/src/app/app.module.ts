@@ -26,7 +26,9 @@ import {
   MatTableModule,
   MatRadioModule,
   MatChipsModule,
-  MatMenuModule
+  MatMenuModule,
+  MatDialogModule,
+  MatCheckboxModule
 } from "@angular/material";
 import { HttpClientModule } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
@@ -41,6 +43,11 @@ import { ReviwerProfileComponent } from "./reviwer-profile/reviwer-profile.compo
 import { AuthGuard } from "./_helpers/auth.guard";
 import { ReviewerGuard } from "./_helpers/reviewer.guard";
 import { ReviewService } from "./_services/review.service";
+import { EditorProfileComponent } from "./editor-profile/editor-profile.component";
+import { EditorGuard } from "./_helpers/editor.guard";
+import { ReviewerFunctionsComponent } from "./reviewer-functions/reviewer-functions.component";
+import { EditorFunctionsComponent } from "./editor-functions/editor-functions.component";
+import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select-reviewers-dialog.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,7 +56,11 @@ import { ReviewService } from "./_services/review.service";
     NavbarComponent,
     MainComponent,
     ProfileComponent,
-    ReviwerProfileComponent
+    ReviwerProfileComponent,
+    EditorProfileComponent,
+    ReviewerFunctionsComponent,
+    EditorFunctionsComponent,
+    SelectReviewersDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +88,9 @@ import { ReviewService } from "./_services/review.service";
     MatTableModule,
     MatRadioModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [
     AllowedRoutes,
@@ -86,8 +99,10 @@ import { ReviewService } from "./_services/review.service";
     CoverLetterService,
     RdfService,
     ReviewService,
-    ReviewerGuard
+    ReviewerGuard,
+    EditorGuard
   ],
+  entryComponents: [SelectReviewersDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

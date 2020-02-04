@@ -8,5 +8,8 @@
     >
       {{ link.label }}
     </button>
+    <button mat-button *ngIf="isLoggedIn" (click)="logout()">
+      Logout
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>

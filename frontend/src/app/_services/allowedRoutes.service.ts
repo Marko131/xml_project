@@ -5,6 +5,8 @@ import * as jwt_decode from "jwt-decode";
 export class AllowedRoutes {
   private routes = new BehaviorSubject([]);
   currentRoutes = this.routes.asObservable();
+  private login = new BehaviorSubject(true);
+  isLoggedInObservable = this.login.asObservable();
   constructor() {
     this.updateRoutes();
   }
@@ -39,11 +41,20 @@ export class AllowedRoutes {
       }
       if (role.authority == "ROLE_EDITOR") {
         components.push({
-          path: "profile",
+          path: "editor-profile",
           label: `Editor: ${decodedToken.sub}`
         });
       }
     });
     this.routes.next(components);
+  }
+
+  isLoggedIn(): void {
+    let token = localStorage.getItem("token");
+    if (!token) this.login.next(false);
+    let decodedToken = jwt_decode(token);
+    let current_time = new Date().getTime() / 1000;
+    if (current_time > decodedToken.exp) this.login.next(false);
+    this.login.next(true);
   }
 }

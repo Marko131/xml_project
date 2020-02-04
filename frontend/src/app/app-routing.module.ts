@@ -7,6 +7,8 @@ import { ProfileComponent } from "./profile/profile.component";
 import { AuthGuard } from "./_helpers/auth.guard";
 import { ReviwerProfileComponent } from "./reviwer-profile/reviwer-profile.component";
 import { ReviewerGuard } from "./_helpers/reviewer.guard";
+import { EditorProfileComponent } from "./editor-profile/editor-profile.component";
+import { EditorGuard } from "./_helpers/editor.guard";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -16,6 +18,11 @@ const routes: Routes = [
     path: "reviewer-profile",
     component: ReviwerProfileComponent,
     canActivate: [ReviewerGuard]
+  },
+  {
+    path: "editor-profile",
+    component: EditorProfileComponent,
+    canActivate: [EditorGuard]
   },
   { path: "", component: MainComponent, pathMatch: "full" }
 ];

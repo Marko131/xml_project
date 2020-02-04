@@ -1,0 +1,19 @@
+.mat-cell {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.mat-header-cell:not(:first-child) {
+  text-align: center;
+}
+
+.actions {
+  margin: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.actions > button {
+  margin-left: 10px;
+  margin-right: 10px;
+}

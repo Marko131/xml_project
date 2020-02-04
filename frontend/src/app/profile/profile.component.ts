@@ -36,12 +36,6 @@ export class ProfileComponent implements OnInit {
       .subscribe(response => (this.userPapers = response));
   }
 
-  logout() {
-    localStorage.removeItem("token");
-    this.router.navigate(["/login"]);
-    this.allowedRoutes.updateRoutes();
-  }
-
   handlePaperInput(files: FileList) {
     this.paper = files.item(0);
   }

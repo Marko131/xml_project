@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { AuthService } from "../_services/auth.service";
 import { Reviewer } from "../_models/reviewer.model";
 import { SelectionModel } from "@angular/cdk/collections";
+import { ReviewersForPaper } from "../_models/reviewersForPaper.model";
 
 @Component({
   selector: "app-select-reviewers-dialog",
@@ -16,8 +17,9 @@ export class SelectReviewersDialogComponent implements OnInit {
   selection = new SelectionModel<Reviewer>(true, []);
   constructor(
     private authService: AuthService,
-    public dialogRef: MatDialogRef<SelectReviewersDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+
+    private dialogRef: MatDialogRef<SelectReviewersDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private data: any
   ) {
     this.paperTitle = data.paperTitle;
     this.displayedColumns = ["select", "name", "expertise"];
@@ -51,11 +53,23 @@ export class SelectReviewersDialogComponent implements OnInit {
       this.selection.isSelected(row) ? "deselect" : "select"
     } row ${this.reviewers.indexOf(row) + 1}`;
   }
-
+  getRecommended() {
+    this.authService.getRecommendedReviewers(this.paperTitle).subscribe(
+      response => (this.reviewers = response),
+      errorResponse => console.log(errorResponse)
+    );
+  }
   selectReviewers() {
     const selectedReviewers = this.selection.selected.map(
       reviewer => reviewer.name
     );
-    console.log(selectedReviewers);
+    this.dialogRef.close();
+    let r = new ReviewersForPaper();
+    r.paperTitle = this.paperTitle;
+    r.reviewers = selectedReviewers;
+    this.authService.selectReviewersForPaper(r).subscribe(
+      response => console.log(response),
+      errorResponse => console.log(errorResponse)
+    );
   }
 }

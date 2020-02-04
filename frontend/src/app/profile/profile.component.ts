@@ -18,7 +18,13 @@ export class ProfileComponent implements OnInit {
   rdf: File;
 
   userPapers: Array<any>;
-  displayedColumns: string[] = ["title", "status", "archive", "preview", "pdf"];
+  displayedColumns: string[] = [
+    "title",
+    "status",
+    "archive",
+    "preview",
+    "download"
+  ];
   constructor(
     private router: Router,
     private allowedRoutes: AllowedRoutes,
@@ -87,13 +93,29 @@ export class ProfileComponent implements OnInit {
       );
     }
   }
-  archive(paperTitle: string) {
-    console.log(paperTitle);
+  archive(paper: any) {
+    this.paperService
+      .archive(paper.title)
+      .subscribe(
+        response => (
+          (paper.status = "archived"),
+          errorResponse => console.log(errorResponse)
+        )
+      );
   }
   preview(paperTitle: string) {
-    console.log(paperTitle);
+    this.router.navigate(["/preview", paperTitle]);
+  }
+  downloadXml(paperTitle: string) {
+    this.paperService.downloadXml(paperTitle).subscribe(
+      response => console.log(response),
+      errorResponse => console.log(errorResponse)
+    );
   }
   downloadPdf(paperTitle: string) {
-    console.log(paperTitle);
+    this.paperService.downloadPdf(paperTitle).subscribe(
+      response => console.log(response),
+      errorResponse => console.log(errorResponse)
+    );
   }
 }

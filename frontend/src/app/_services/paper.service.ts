@@ -13,7 +13,6 @@ export class PaperService {
     formData.append("file", paper, paper.name);
     return this.http.post(`${environment.apiUrl}/api/paper`, formData);
   }
-
   getByUserName() {
     const paperTitleList = [
       { title: "Paper1.xml", status: "published" },
@@ -27,18 +26,16 @@ export class PaperService {
     ];
     return of(paperTitleList);
   }
-
   getPapersForReview() {
     const papersForReview = [
-      { title: "Paper1.xml" },
-      { title: "Paper2.xml" },
-      { title: "Paper3.xml" },
-      { title: "Paper4.xml" },
-      { title: "Paper5.xml" }
+      { title: "Paper1.xml", status: "acepted" },
+      { title: "Paper2.xml", status: "waiting" },
+      { title: "Paper3.xml", status: "rejected" },
+      { title: "Paper4.xml", status: "waiting" },
+      { title: "Paper5.xml", status: "waiting" }
     ];
     return of(papersForReview);
   }
-
   getPapersForEditor(): Observable<Array<EditorPaper>> {
     const papers = [
       { title: "Paper1.xml", status: "published" },
@@ -55,5 +52,38 @@ export class PaperService {
       paper => new EditorPaper(paper.title, paper.status)
     );
     return of(papersForEditor);
+  }
+  downloadXml(paperTitle: string) {
+    return of("XML successfully downloaded");
+  }
+  downloadPdf(paperTitle: string) {
+    return of("PDF successfully downloaded");
+  }
+  archive(paperTitle: string) {
+    return of("Paper successfully archived");
+  }
+  preview(paperTitle: string) {
+    return of(`<!DOCTYPE html>
+    <html>
+    <body>
+    
+    <h2>An Unordered HTML List</h2>
+    
+    <ul>
+      <li>Coffee</li>
+      <li>Tea</li>
+      <li>Milk</li>
+    </ul>  
+    
+    <h2>An Ordered HTML List</h2>
+    
+    <ol>
+      <li>Coffee</li>
+      <li>Tea</li>
+      <li>Milk</li>
+    </ol> 
+    
+    </body>
+    </html>`);
   }
 }

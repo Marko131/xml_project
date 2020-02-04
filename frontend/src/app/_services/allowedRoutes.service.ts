@@ -22,6 +22,7 @@ export class AllowedRoutes {
       components.push({ path: "login", label: "Login" });
       components.push({ path: "register", label: "Register" });
       this.routes.next(components);
+      this.login.next(false);
       return;
     }
     let decodedToken = jwt_decode(token);
@@ -29,17 +30,29 @@ export class AllowedRoutes {
     decodedToken.roles.forEach(role => {
       if (role.authority == "ROLE_REVIEWER") {
         components.push({
+          path: "text-edit",
+          label: "XML"
+        });
+        components.push({
           path: "reviewer-profile",
           label: `Reviewer: ${decodedToken.sub}`
         });
       }
       if (role.authority == "ROLE_AUTHOR") {
         components.push({
+          path: "text-edit",
+          label: "XML"
+        });
+        components.push({
           path: "profile",
           label: `Author: ${decodedToken.sub}`
         });
       }
       if (role.authority == "ROLE_EDITOR") {
+        components.push({
+          path: "text-edit",
+          label: "XML"
+        });
         components.push({
           path: "editor-profile",
           label: `Editor: ${decodedToken.sub}`

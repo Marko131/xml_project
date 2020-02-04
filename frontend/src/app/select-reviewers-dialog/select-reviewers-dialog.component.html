@@ -1,5 +1,9 @@
 <h2>Select reviewers for {{ paperTitle }}</h2>
-
+<div class="flex-center">
+  <button mat-raised-button color="primary" (click)="getRecommended()">
+    Recommended reviewers
+  </button>
+</div>
 <table mat-table [dataSource]="reviewers">
   <ng-container matColumnDef="select">
     <th mat-header-cell *matHeaderCellDef>

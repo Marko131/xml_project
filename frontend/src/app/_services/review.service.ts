@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { ReviewersForPaper } from "../_models/reviewersForPaper.model";
 import { of } from "rxjs";
+import { Reviewer } from "../_models/reviewer.model";
 
 @Injectable()
 export class ReviewService {
@@ -14,8 +15,7 @@ export class ReviewService {
     return this.http.post(`${environment.apiUrl}/api/review`, formData);
   }
 
-  selectReviewersForPaper(reviewersForPaper: ReviewersForPaper) {
-    const successMessage = "Reviewers successfully selected";
-    return of(successMessage);
+  getReviews(paperTitle: string) {
+    return of("Downloading...");
   }
 }

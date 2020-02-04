@@ -1,15 +1,22 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <button
-      mat-button
-      *ngFor="let link of navLinks"
-      [routerLink]="link.path"
-      routerLinkActive="active"
-    >
-      {{ link.label }}
+    <button mat-button routerLink="/">
+      <mat-icon>
+        home
+      </mat-icon>
     </button>
-    <button mat-button *ngIf="isLoggedIn" (click)="logout()">
-      Logout
-    </button>
+    <div class="right">
+      <button
+        mat-button
+        *ngFor="let link of navLinks"
+        [routerLink]="link.path"
+        routerLinkActive="active"
+      >
+        {{ link.label }}
+      </button>
+      <button mat-button *ngIf="isLoggedIn" (click)="logout()">
+        Logout
+      </button>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>

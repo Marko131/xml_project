@@ -15,6 +15,7 @@ import tim10.project.model.DocumentStatus;
 import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.model.user.User;
 import tim10.project.util.DocumentUtil;
 import tim10.project.util.MetadataExtractor;
 import javax.xml.bind.JAXBException;
@@ -44,6 +45,9 @@ public class Test {
 
     @Autowired
     private RDFRepository rdfRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 
     @org.junit.Test
@@ -239,5 +243,11 @@ public class Test {
     public void testGetKeywordsFromPaper() throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException {
         ArrayList<String> keywords = (ArrayList<String>) scientificPaperRepository.getKeywordsFromPaper("/db/sample/library", "scientific_paper1.xml");
         keywords.forEach(System.out::println);
+    }
+
+    @org.junit.Test
+    public void testFindUserByEmail(){
+        User user = userRepository.findByEmail("admin@gmail.com");
+        System.out.println(user.getName());
     }
 }

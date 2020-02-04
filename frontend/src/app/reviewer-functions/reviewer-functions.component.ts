@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { PaperService } from "../_services/paper.service";
 import { ReviewService } from "../_services/review.service";
 import { MatSnackBar } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-reviewer-functions",
@@ -12,11 +13,12 @@ export class ReviewerFunctionsComponent implements OnInit {
   papersForReview: Array<any>;
   review: File;
 
-  displayedColumns = ["title", "preview", "acceptOrReject"];
+  displayedColumns = ["title", "preview", "status", "acceptOrReject"];
   constructor(
     private paperService: PaperService,
     private reviewService: ReviewService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private router: Router
   ) {
     this.review = null;
   }
@@ -27,11 +29,14 @@ export class ReviewerFunctionsComponent implements OnInit {
       .subscribe(response => (this.papersForReview = response));
   }
 
-  accept(paperTitle: string) {
-    console.log(paperTitle);
+  accept(paper: any) {
+    paper.status = "acepted";
   }
-  reject(paperTitle: string) {
-    console.log(paperTitle);
+  reject(paper: any) {
+    paper.status = "rejected";
+  }
+  preview(paperTitle: string) {
+    this.router.navigate(["/preview", paperTitle]);
   }
 
   handleReviewInput(files: FileList) {

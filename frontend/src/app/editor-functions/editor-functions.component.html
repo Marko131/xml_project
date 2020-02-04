@@ -13,15 +13,49 @@
     </td>
   </ng-container>
 
+  <ng-container matColumnDef="preview">
+    <th mat-header-cell *matHeaderCellDef>Preview</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="preview(element.paperTitle)"
+      >
+        Preview
+      </button>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="reviews">
+    <th mat-header-cell *matHeaderCellDef>Reviews</th>
+    <td mat-cell *matCellDef="let element">
+      <button
+        *ngIf="element.paperStatus === 'waiting'"
+        mat-button
+        (click)="getReviews(element.paperTitle)"
+      >
+        <mat-icon>get_app</mat-icon>
+      </button>
+    </td>
+  </ng-container>
+
   <ng-container matColumnDef="action">
     <th mat-header-cell *matHeaderCellDef>Action</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-stroked-button [matMenuTriggerFor]="menu">Select</button>
+      <button
+        *ngIf="
+          element.paperStatus === 'waiting' || element.paperStatus === 'revised'
+        "
+        mat-button
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon>settings</mat-icon>
+      </button>
       <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="publish(element.paperTitle)">
+        <button mat-menu-item (click)="publish(element)">
           Publish
         </button>
-        <button mat-menu-item (click)="reject(element.paperTitle)">
+        <button mat-menu-item (click)="reject(element)">
           Reject
         </button>
       </mat-menu>
@@ -31,7 +65,11 @@
   <ng-container matColumnDef="reviewers">
     <th mat-header-cell *matHeaderCellDef>Reviewers</th>
     <td mat-cell *matCellDef="let element">
-      <button mat-stroked-button (click)="openDialog(element.paperTitle)">
+      <button
+        *ngIf="element.paperStatus === 'waiting'"
+        mat-stroked-button
+        (click)="openDialog(element.paperTitle)"
+      >
         Select
       </button>
     </td>

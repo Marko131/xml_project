@@ -40,7 +40,6 @@ import { PaperService } from "./_services/paper.service";
 import { CoverLetterService } from "./_services/coverLetter.service";
 import { RdfService } from "./_services/rdf.service";
 import { ReviwerProfileComponent } from "./reviwer-profile/reviwer-profile.component";
-import { AuthGuard } from "./_helpers/auth.guard";
 import { ReviewerGuard } from "./_helpers/reviewer.guard";
 import { ReviewService } from "./_services/review.service";
 import { EditorProfileComponent } from "./editor-profile/editor-profile.component";
@@ -48,6 +47,9 @@ import { EditorGuard } from "./_helpers/editor.guard";
 import { ReviewerFunctionsComponent } from "./reviewer-functions/reviewer-functions.component";
 import { EditorFunctionsComponent } from "./editor-functions/editor-functions.component";
 import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select-reviewers-dialog.component";
+import { RawInputDialogComponent } from "./raw-input-dialog/raw-input-dialog.component";
+import { XmlEditComponent } from "./xml-edit/xml-edit.component";
+import { PreviewComponent } from './preview/preview.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +62,10 @@ import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select
     EditorProfileComponent,
     ReviewerFunctionsComponent,
     EditorFunctionsComponent,
-    SelectReviewersDialogComponent
+    RawInputDialogComponent,
+    SelectReviewersDialogComponent,
+    XmlEditComponent,
+    PreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -102,7 +107,7 @@ import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select
     ReviewerGuard,
     EditorGuard
   ],
-  entryComponents: [SelectReviewersDialogComponent],
+  entryComponents: [RawInputDialogComponent, SelectReviewersDialogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

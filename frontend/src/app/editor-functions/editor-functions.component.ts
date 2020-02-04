@@ -2,7 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { PaperService } from "../_services/paper.service";
 import { EditorPaper } from "../_models/editorPaper.model";
 import { MatDialog } from "@angular/material";
+import { RawInputDialogComponent } from "../raw-input-dialog/raw-input-dialog.component";
 import { SelectReviewersDialogComponent } from "../select-reviewers-dialog/select-reviewers-dialog.component";
+import { Router } from "@angular/router";
+import { ReviewService } from "../_services/review.service";
+import { error } from "protractor";
 
 @Component({
   selector: "app-editor-functions",
@@ -11,8 +15,20 @@ import { SelectReviewersDialogComponent } from "../select-reviewers-dialog/selec
 })
 export class EditorFunctionsComponent implements OnInit {
   papers: Array<EditorPaper>;
-  displayedColumns = ["title", "status", "action", "reviewers"];
-  constructor(private paperService: PaperService, public dialog: MatDialog) {}
+  displayedColumns = [
+    "title",
+    "status",
+    "preview",
+    "reviewers",
+    "reviews",
+    "action"
+  ];
+  constructor(
+    private paperService: PaperService,
+    private reviewService: ReviewService,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.paperService
@@ -25,16 +41,25 @@ export class EditorFunctionsComponent implements OnInit {
       data: { paperTitle: paperTitle }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-    });
+    dialogRef.afterClosed().subscribe(result => {});
   }
 
-  publish(paperTitle: string) {
-    console.log(paperTitle);
+  preview(paperTitle: string) {
+    this.router.navigate(["preview", paperTitle]);
   }
 
-  reject(paperTitle: string) {
-    console.log(paperTitle);
+  getReviews(paperTitle: string) {
+    this.reviewService.getReviews(paperTitle).subscribe(
+      response => console.log(response),
+      errorResponse => console.log(errorResponse)
+    );
+  }
+
+  publish(paper: EditorPaper) {
+    paper.paperStatus = "published";
+  }
+
+  reject(paper: EditorPaper) {
+    paper.paperStatus = "rejected";
   }
 }

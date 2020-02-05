@@ -51,6 +51,7 @@ import { RawInputDialogComponent } from "./raw-input-dialog/raw-input-dialog.com
 import { XmlEditComponent } from "./xml-edit/xml-edit.component";
 import { PreviewComponent } from './preview/preview.component';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { CoverLetterComponent } from './cover-letter/cover-letter.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +67,8 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
     RawInputDialogComponent,
     SelectReviewersDialogComponent,
     XmlEditComponent,
-    PreviewComponent
+    PreviewComponent,
+    CoverLetterComponent
   ],
   imports: [
     BrowserModule,

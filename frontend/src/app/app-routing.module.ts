@@ -11,6 +11,7 @@ import { EditorProfileComponent } from "./editor-profile/editor-profile.componen
 import { EditorGuard } from "./_helpers/editor.guard";
 import { XmlEditComponent } from "./xml-edit/xml-edit.component";
 import { PreviewComponent } from "./preview/preview.component";
+import { CoverLetterComponent } from "./cover-letter/cover-letter.component";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: "editor-profile",
     component: EditorProfileComponent,
     canActivate: [EditorGuard]
+  },
+  {
+    path: "cover-letter",
+    component: CoverLetterComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "preview/:id",

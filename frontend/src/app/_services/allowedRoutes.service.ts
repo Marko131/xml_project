@@ -34,6 +34,10 @@ export class AllowedRoutes {
           label: "XML"
         });
         components.push({
+          path: "cover-letter",
+          label: "Cover letter"
+        });
+        components.push({
           path: "reviewer-profile",
           label: `Reviewer: ${decodedToken.sub}`
         });
@@ -44,6 +48,10 @@ export class AllowedRoutes {
           label: "XML"
         });
         components.push({
+          path: "cover-letter",
+          label: "Cover letter"
+        });
+        components.push({
           path: "profile",
           label: `Author: ${decodedToken.sub}`
         });
@@ -52,6 +60,10 @@ export class AllowedRoutes {
         components.push({
           path: "text-edit",
           label: "XML"
+        });
+        components.push({
+          path: "cover-letter",
+          label: "Cover letter"
         });
         components.push({
           path: "editor-profile",

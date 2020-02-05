@@ -15,27 +15,27 @@ export class PaperService {
   }
   getByUserName() {
     const papers = this.http.get<Array<EditorPaper>>(
-      `${environment.apiUrl}/api/getUserPapers`,
+      `${environment.apiUrl}/api/getUserPapers`
     );
-    papers.subscribe(response=>console.log(response));
+
     return papers;
   }
   getPapersForReview() {
     const papers = this.http.get<Array<EditorPaper>>(
-      `${environment.apiUrl}/api/getAssignments`,
+      `${environment.apiUrl}/api/getAssignments`
     );
     return papers;
   }
   getPapersForEditor(): Observable<Array<EditorPaper>> {
     const papers = this.http.get<Array<EditorPaper>>(
-      `${environment.apiUrl}/api/paper`,
+      `${environment.apiUrl}/api/paper`
     );
     return papers;
   }
   downloadXml(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/download/xml/${paperTitle}`,
-      { responseType: "text"}
+      { responseType: "text" }
     );
   }
   downloadPdf(paperTitle: string) {
@@ -44,7 +44,7 @@ export class PaperService {
   archive(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/archive/${paperTitle}`,
-      { responseType: "text"}
+      { responseType: "text" }
     );
   }
   publish(paperTitle: string) {
@@ -56,7 +56,7 @@ export class PaperService {
   preview(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/preview/${paperTitle}`,
-      { responseType: "text"}
+      { responseType: "text" }
     );
   }
   reject(paperTitle: string) {

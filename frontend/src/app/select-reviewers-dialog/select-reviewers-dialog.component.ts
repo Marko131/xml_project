@@ -24,6 +24,7 @@ export class SelectReviewersDialogComponent implements OnInit {
     this.reviewers = new Array<Reviewer>();
     this.paperTitle = data.paperTitle;
     this.displayedColumns = ["select", "id", "name", "expertise"];
+    this.reviewers = new Array<Reviewer>();
   }
   ngOnInit(): void {
     this.authService
@@ -37,6 +38,7 @@ export class SelectReviewersDialogComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.reviewers.length;
+    console.log(this.reviewers.length);
     return numSelected === numRows;
   }
 
@@ -68,7 +70,7 @@ export class SelectReviewersDialogComponent implements OnInit {
     let r = new ReviewersForPaper();
     r.paperTitle = this.paperTitle;
     r.reviewers = selectedReviewers;
-    
+
     this.authService.selectReviewersForPaper(r).subscribe(
       response => console.log(response),
       errorResponse => console.log(errorResponse)

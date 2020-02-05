@@ -2,13 +2,16 @@ package tim10.project.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.w3c.dom.Document;
 import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.ReviewRepository;
+import tim10.project.service.exceptions.InvalidSchemaException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PaperAlreadyExists;
 import tim10.project.service.exceptions.ReviewAlreadyExists;
+import tim10.project.util.XMLValidator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,13 +28,18 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     public Review uploadReview(String content, Reader reader) throws XMLDBException, JAXBException, IOException {
+        if (!XMLValidator.validate(content, "data/schema/Review.xsd")) throw new InvalidSchemaException();
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.review");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Review review = (Review) unmarshaller.unmarshal(reader);
-        Review reviewFromDatabase = reviewRepository.getById("/db/sample/library/review", review.getPaperTitle() + " - " + review.getReviewer().getName() + ".xml");
+        Review reviewFromDatabase = null;
+        try {
+            reviewFromDatabase = reviewRepository.getById("/db/sample/library/review", review.getPaperTitle() + " - " + review.getReviewer().getName() + ".xml");
+        } catch (Exception ignored) {
+        }
         if (reviewFromDatabase != null) throw new ReviewAlreadyExists();
         Reader inputReader = new StringReader(content);
-        reviewRepository.save("/db/sample/library/review", review.getPaperTitle() + " - " + review.getReviewer().getName() + ".xml", inputReader);
+        reviewRepository.save("/db/sample/library/review", review.getPaperTitle() + "-" + review.getReviewer().getName() + ".xml", inputReader);
         return review;
     }
 
@@ -45,5 +53,9 @@ public class ReviewService {
         ArrayList<Review> reviews = reviewRepository.getAll("/db/sample/library/review");
         if (reviews.isEmpty()) throw new NotFoundException("No review found");
         return reviews;
+    }
+
+    public Document mergeReviewsByPaperTitle(String paperId) throws Exception {
+        return reviewRepository.mergeReviewsByPaperTitle("/db/sample/library/review", paperId);
     }
 }

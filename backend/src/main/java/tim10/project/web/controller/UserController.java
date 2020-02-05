@@ -27,6 +27,7 @@ import tim10.project.web.dto.*;
 import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -171,5 +172,14 @@ public class UserController {
             papers.add(new PaperDTO(paper.getPaperTitle().getValue(), getStatus(paper)));
         }
         return papers;
+    }
+
+    @PreAuthorize("hasRole('ROLE_REVIEWER') or hasRole('ROLE_EDITOR')")
+    @GetMapping("/api/reject/{id}")
+    public ResponseEntity<String> rejectReview(@PathVariable("id") String id) throws XMLDBException, JAXBException, ParserConfigurationException, TransformerException, SAXException, IOException, XPathExpressionException {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        User user = userService.findUserByEmail(securityContext.getAuthentication().getName());
+        userService.removeReview(user, id);
+        return new ResponseEntity<String>("Paper review rejected", HttpStatus.OK);
     }
 }

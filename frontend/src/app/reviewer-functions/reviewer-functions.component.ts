@@ -29,11 +29,8 @@ export class ReviewerFunctionsComponent implements OnInit {
       .subscribe(response => (this.papersForReview = response));
   }
 
-  accept(paper: any) {
-    paper.status = "acepted";
-  }
   reject(paper: any) {
-    paper.status = "rejected";
+    this.paperService.reject(paper.paperTitle).subscribe(response => this.papersForReview = this.papersForReview.filter(p => p.paperTitle != paper.paperTitle));
   }
   preview(paperTitle: string) {
     this.router.navigate(["/preview", paperTitle]);

@@ -47,10 +47,22 @@ export class PaperService {
       { responseType: "text" }
     );
   }
+  publish(paperTitle: string) {
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/publish/${paperTitle}`,
+      { responseType: "text"}
+    );
+  }
   preview(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/preview/${paperTitle}`,
       { responseType: "text" }
+    );
+  }
+  reject(paperTitle: string) {
+    return this.http.get(
+      `${environment.apiUrl}/api/reject/${paperTitle}`,
+      { responseType: "text"}
     );
   }
 }

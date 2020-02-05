@@ -8,9 +8,11 @@ import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.RDFRepository;
 import tim10.project.repository.ScientificPaperRepository;
+import tim10.project.service.exceptions.InvalidSchemaException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PaperAlreadyExists;
 import tim10.project.util.DocumentUtil;
+import tim10.project.util.XMLValidator;
 
 import javax.print.Doc;
 import javax.xml.bind.JAXBContext;
@@ -27,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ScientificPaperService {
@@ -34,10 +37,12 @@ public class ScientificPaperService {
     @Autowired
     private ScientificPaperRepository scientificPaperRepository;
 
+
     @Autowired
     private RDFRepository rdfRepository;
 
     public Paper uploadPaper(String content, Reader reader) throws XMLDBException, JAXBException, IOException, TransformerException, SAXException {
+        if (!XMLValidator.validate(content, "data/schema/Scientific_Paper.xsd")) throw new InvalidSchemaException();
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Paper paper = (Paper) unmarshaller.unmarshal(reader);
@@ -85,5 +90,9 @@ public class ScientificPaperService {
 
     public void changeStatus(String documentId, DocumentStatus documentStatus) throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException, TransformerException {
         scientificPaperRepository.changeDocumentStatus("/db/sample/library/paper", documentId, documentStatus);
+    }
+
+    public List<String> searchPaperByText(String text) throws XMLDBException, JAXBException {
+        return scientificPaperRepository.searchPaperByText("/db/sample/library/paper", text);
     }
 }

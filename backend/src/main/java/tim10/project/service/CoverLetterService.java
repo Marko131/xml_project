@@ -6,8 +6,10 @@ import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.cover_letter.CoverLetter;
 import tim10.project.repository.CoverLetterRepository;
 import tim10.project.service.exceptions.CoverLetterAlreadyExists;
+import tim10.project.service.exceptions.InvalidSchemaException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PaperAlreadyExists;
+import tim10.project.util.XMLValidator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,10 +26,15 @@ public class CoverLetterService {
     private CoverLetterRepository coverLetterRepository;
 
     public CoverLetter uploadLetter(String content, Reader reader) throws XMLDBException, JAXBException, IOException {
+        if (!XMLValidator.validate(content, "data/schema/Cover_Letter.xsd")) throw new InvalidSchemaException();
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.cover_letter");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         CoverLetter letter = (CoverLetter) unmarshaller.unmarshal(reader);
-        CoverLetter letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml");
+        CoverLetter letterFromDatabase = null;
+        try{
+            letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml");
+        } catch (Exception ignored) {
+        }
         if (letterFromDatabase != null) throw new CoverLetterAlreadyExists();
         Reader inputReader = new StringReader(content);
         coverLetterRepository.save("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml", inputReader);

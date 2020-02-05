@@ -3,7 +3,7 @@
  xsi:noNamespaceSchemaLocation="file:/C:/Users/Strahinja/Desktop/xml_project/data/schema/Review.xsd">
     <paper_title>paper_title3</paper_title>
     <reviewer>
-        <name>stanicsisa</name>
+        <name>name0</name>
         <working_title>working_title0</working_title>
         <faculty>faculty0</faculty>
         <university>university0</university>

@@ -21,6 +21,7 @@ export class SelectReviewersDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<SelectReviewersDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
+    this.reviewers = new Array<Reviewer>();
     this.paperTitle = data.paperTitle;
     this.displayedColumns = ["select", "id", "name", "expertise"];
   }

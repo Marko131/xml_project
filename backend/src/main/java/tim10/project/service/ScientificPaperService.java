@@ -7,9 +7,11 @@ import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.ScientificPaperRepository;
+import tim10.project.service.exceptions.InvalidSchemaException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PaperAlreadyExists;
 import tim10.project.util.DocumentUtil;
+import tim10.project.util.XMLValidator;
 
 import javax.print.Doc;
 import javax.xml.bind.JAXBContext;
@@ -35,6 +37,7 @@ public class ScientificPaperService {
     private ScientificPaperRepository scientificPaperRepository;
 
     public Paper uploadPaper(String content, Reader reader) throws XMLDBException, JAXBException, IOException {
+        if (!XMLValidator.validate(content, "data/schema/Scientific_Paper.xsd")) throw new InvalidSchemaException();
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.scientific_paper");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Paper paper = (Paper) unmarshaller.unmarshal(reader);

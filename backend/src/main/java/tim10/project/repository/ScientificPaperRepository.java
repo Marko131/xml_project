@@ -10,11 +10,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
+import org.xmldb.api.base.*;
 import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.Database;
-import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XQueryService;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.model.scientific_paper.TAuthor;
@@ -35,12 +35,13 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 
 @Repository
 public class ScientificPaperRepository implements IScientificPaper {
-
+    private static final String TARGET_NAMESPACE = "http://www.ftn.uns.ac.rs/examples/xmldb/paper";
     private String dbUsername;
     private String dbPassword;
 
@@ -461,6 +462,51 @@ public class ScientificPaperRepository implements IScientificPaper {
             keywordsList.add(node.getTextContent());
         }
         return keywordsList;
+    }
+
+    public List<String> searchPaperByText(String collectionId, String text) throws XMLDBException, JAXBException {
+        ArrayList<String> papers = new ArrayList<>();
+
+        Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
+
+        XQueryService xQueryService = (XQueryService) col.getService("XQueryService", "1.0");
+        xQueryService.setProperty("indent", "yes");
+        xQueryService.setNamespace("b", TARGET_NAMESPACE);
+
+        String xqueryExpression1 = String.format("xquery version \"3.1\";\n" +
+                "\n" +
+                "for $paper in collection(\"/db/sample/library/paper\")//paper\n" +
+                "where $paper/status/published = \"published\"\n" +
+                "let $publishedPapers := $paper\n" +
+                "for $publishedPaper in $publishedPapers\n" +
+                "for $p in doc(concat(\"/db/sample/library/paper/\", $publishedPaper/paper_title/text(), \".xml\"))\n"+
+                "where $p/paper//*[contains(lower-case(text()[1]),lower-case('%s'))]\n" +
+                "return $p/paper/paper_title/text()", text
+        );
+        CompiledExpression compiledXquery = xQueryService.compile(xqueryExpression1);
+        ResourceSet result = xQueryService.execute(compiledXquery);
+        System.out.println("Broj: "+result.getSize());
+        ResourceIterator i = result.getIterator();
+        Resource res = null;
+
+        while(i.hasMoreResources()) {
+
+            try {
+                res = i.nextResource();
+                papers.add(res.getContent().toString());
+                //papers.add(res.getId().split("\\.")[0]+".xml");
+
+            } finally {
+
+                // don't forget to cleanup resources
+                try {
+                    ((EXistResource)res).freeResources();
+                } catch (XMLDBException xe) {
+                    xe.printStackTrace();
+                }
+            }
+        }
+        return papers;
     }
 }
 

@@ -253,7 +253,14 @@ public class Test {
 
     @org.junit.Test
     public void testGetByName() throws XMLDBException, JAXBException {
-        ArrayList<Paper> papers = scientificPaperRepository.getPapersByUserName("/db/sample/library/paper", "asd asd");
+        ArrayList<Paper> papers = scientificPaperRepository.getPapersByUserName("/db/sample/library/paper", "asd");
         System.out.println(papers.size());
+    }
+
+    @org.junit.Test
+    public void testXquery() throws XMLDBException, JAXBException {
+        List<String> papers = scientificPaperRepository.searchPaperByText("/db/sample/library/paper", "asd");
+        papers.forEach(System.out::println);
+
     }
 }

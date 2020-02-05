@@ -1,14 +1,19 @@
 package tim10.project.util;
 
+import net.sf.saxon.TransformerFactoryImpl;
+import org.apache.fop.apps.*;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 import org.xmldb.api.modules.XMLResource;
+
+
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
@@ -63,5 +68,20 @@ public class DocumentUtil {
         transformer.transform(source, result);
 
         return writer.toString();
+    }
+
+    public OutputStream generatePdfFromXmlString(String xmlString, String xsltPath) throws TransformerException, FOPException {
+        StreamSource streamSource = new StreamSource(new File(xsltPath));
+        InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes());
+        StreamSource xmlSource = new StreamSource(inputStream);
+        FopFactory factory = FopFactory.newInstance();
+        TransformerFactory transformerFactory = new TransformerFactoryImpl();
+        FOUserAgent userAgent = factory.newFOUserAgent();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        Transformer transformer = transformerFactory.newTransformer(streamSource);
+        Fop fop = factory.newFop(MimeConstants.MIME_PDF, userAgent, outputStream);
+        Result res = new SAXResult(fop.getDefaultHandler());
+        transformer.transform(xmlSource, res);
+        return outputStream;
     }
 }

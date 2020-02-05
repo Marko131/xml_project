@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.ScientificPaperRepository;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -30,7 +32,7 @@ public class ServiceTest {
     ScientificPaperService scientificPaperService;
 
     @org.junit.Test
-    public void testUpload() throws IOException, XMLDBException, JAXBException {
+    public void testUpload() throws IOException, XMLDBException, JAXBException, TransformerException, SAXException {
         byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\Woolfy\\Desktop\\xml_project\\data\\scientific_paper1.xml"));
         String content = new String(encoded, StandardCharsets.UTF_8);
         Reader reader = new StringReader(content);

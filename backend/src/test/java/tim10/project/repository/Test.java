@@ -23,6 +23,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.*;
+import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -259,7 +260,7 @@ public class Test {
 
     @org.junit.Test
     public void testXquery() throws XMLDBException, JAXBException {
-        List<String> papers = scientificPaperRepository.searchPaperByText("/db/sample/library/paper", "asd");
+        List<String> papers = scientificPaperRepository.searchPaperByText("/db/sample/library/paper", "");
         papers.forEach(System.out::println);
 
     }
@@ -271,4 +272,5 @@ public class Test {
         String result = rdfRepository.search("title4", "name", keywords);
         System.out.println(result);
     }
+
 }

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Observable, of } from "rxjs";
 import { EditorPaper } from "../_models/editorPaper.model";
@@ -50,7 +50,7 @@ export class PaperService {
   publish(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/publish/${paperTitle}`,
-      { responseType: "text"}
+      { responseType: "text" }
     );
   }
   preview(paperTitle: string) {
@@ -60,9 +60,29 @@ export class PaperService {
     );
   }
   reject(paperTitle: string) {
-    return this.http.get(
-      `${environment.apiUrl}/api/reject/${paperTitle}`,
-      { responseType: "text"}
+    return this.http.get(`${environment.apiUrl}/api/reject/${paperTitle}`, {
+      responseType: "text"
+    });
+  }
+  basicSearch(paperTitle: string) {
+    let params = new HttpParams().set("text", paperTitle);
+    return this.http.get<Array<string>>(
+      `${environment.apiUrl}/api/paper/searchByText`,
+      {
+        params: params
+      }
+    );
+  }
+  advancedSearch(request: any) {
+    let params = new HttpParams();
+    params = params.append("title", request.title);
+    params = params.append("author", request.author);
+    params = params.append("keyword", request.keyword.join(", "));
+    return this.http.get<any>(
+      `${environment.apiUrl}/api/paper/advancedSearch`,
+      {
+        params: params
+      }
     );
   }
 }

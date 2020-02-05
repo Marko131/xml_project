@@ -21,6 +21,7 @@ import javax.xml.transform.TransformerException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class RDFRepository {
@@ -67,7 +68,7 @@ public class RDFRepository {
         save(new ByteArrayInputStream(outputStream.toByteArray()));
     }
 
-    public String search(String title, String author, ArrayList<String> keywords){
+    public String search(String title, String author, List<String> keywords){
         StringBuilder stringBuilder = new StringBuilder();
         keywords.forEach(keyword -> stringBuilder.append(String.format("\nregex(str(?keyword), \"%s\", \"i\") &&", keyword)));
 

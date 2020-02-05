@@ -73,12 +73,9 @@ export class RegisterComponent implements OnInit {
     const input = event.input;
     const value = event.value;
 
-    // Add our fruit
     if ((value || "").trim()) {
       this.expertise.push(value);
     }
-
-    // Reset the input value
     if (input) {
       input.value = "";
     }

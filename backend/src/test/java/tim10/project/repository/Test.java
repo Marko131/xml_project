@@ -221,7 +221,7 @@ public class Test {
 
     @org.junit.Test
     public void testGetHTMLReviewsByPaperTitle() throws Exception {
-        Document document = reviewRepository.mergeReviewsByPaperTitle("/db/sample/library", "paper_title0");
+        Document document = reviewRepository.mergeReviewsByPaperTitle("/db/sample/library/review", "paper_title2");
         String html = DocumentUtil.generateHTMLStringFromXMLString(DocumentUtil.DocumentToString(document), "data/xsl/review.xsl");
         System.out.println(html);
     }

@@ -101,6 +101,11 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    public User removeReview(User user, String paperId){
+        user.getReviews().remove(paperId);
+        return userRepository.save(user);
+    }
+
     public List<User> getReviewers(){
         ArrayList<User> reviewers = (ArrayList<User>) userRepository.getAllByRole("reviewer");
         ArrayList<User> editors = (ArrayList<User>) userRepository.getAllByRole("editor");

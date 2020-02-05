@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ScientificPaperService {
@@ -80,5 +81,9 @@ public class ScientificPaperService {
 
     public void changeStatus(String documentId, DocumentStatus documentStatus) throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException, TransformerException {
         scientificPaperRepository.changeDocumentStatus("/db/sample/library/paper", documentId, documentStatus);
+    }
+
+    public List<String> searchPaperByText(String text) throws XMLDBException, JAXBException {
+        return scientificPaperRepository.searchPaperByText("/db/sample/library/paper", text);
     }
 }

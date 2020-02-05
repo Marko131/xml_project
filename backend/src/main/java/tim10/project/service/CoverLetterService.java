@@ -27,7 +27,11 @@ public class CoverLetterService {
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.cover_letter");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         CoverLetter letter = (CoverLetter) unmarshaller.unmarshal(reader);
-        CoverLetter letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml");
+        CoverLetter letterFromDatabase = null;
+        try{
+            letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml");
+        } catch (Exception ignored) {
+        }
         if (letterFromDatabase != null) throw new CoverLetterAlreadyExists();
         Reader inputReader = new StringReader(content);
         coverLetterRepository.save("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml", inputReader);

@@ -7,9 +7,11 @@ import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.review.Review;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.ReviewRepository;
+import tim10.project.service.exceptions.InvalidSchemaException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PaperAlreadyExists;
 import tim10.project.service.exceptions.ReviewAlreadyExists;
+import tim10.project.util.XMLValidator;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -26,6 +28,7 @@ public class ReviewService {
     private ReviewRepository reviewRepository;
 
     public Review uploadReview(String content, Reader reader) throws XMLDBException, JAXBException, IOException {
+        if (!XMLValidator.validate(content, "data/schema/Review.xsd")) throw new InvalidSchemaException();
         JAXBContext context = JAXBContext.newInstance("tim10.project.model.review");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         Review review = (Review) unmarshaller.unmarshal(reader);

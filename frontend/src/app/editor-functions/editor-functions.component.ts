@@ -50,16 +50,25 @@ export class EditorFunctionsComponent implements OnInit {
 
   getReviews(paperTitle: string) {
     this.reviewService.getReviews(paperTitle).subscribe(
-      response => console.log(response),
+      response => this.downloadFileXML(response, paperTitle),
       errorResponse => console.log(errorResponse)
     );
   }
 
   publish(paper: EditorPaper) {
-    paper.paperStatus = "published";
+    this.paperService.publish(paper.paperTitle).subscribe(response => paper.paperStatus = "published");
   }
 
   reject(paper: EditorPaper) {
-    paper.paperStatus = "rejected";
+    this.paperService.archive(paper.paperTitle).subscribe(response => paper.paperStatus = "archived");
+  }
+
+  downloadFileXML(data: string, paperTitle: string) {
+    const blob = new Blob([data], { type: 'application/xml' });
+    const url= window.URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = paperTitle+" "+"reviews.xml";
+    link.click();
   }
 }

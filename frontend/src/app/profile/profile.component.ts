@@ -126,6 +126,5 @@ export class ProfileComponent implements OnInit {
     link.href = url;
     link.download = paperTitle+".xml";
     link.click();
-    window.open(url);
   }
 }

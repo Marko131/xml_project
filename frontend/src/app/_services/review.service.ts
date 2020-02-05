@@ -16,6 +16,9 @@ export class ReviewService {
   }
 
   getReviews(paperTitle: string) {
-    return of("Downloading...");
+    return this.http.get(
+      `${environment.apiUrl}/api/merge/${paperTitle}`,
+      { responseType: "text"}
+    );
   }
 }

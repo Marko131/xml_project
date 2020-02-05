@@ -30,7 +30,7 @@ import {
   MatDialogModule,
   MatCheckboxModule
 } from "@angular/material";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { AllowedRoutes } from "./_services/allowedRoutes.service";
 import { MainComponent } from "./main/main.component";
@@ -50,6 +50,7 @@ import { SelectReviewersDialogComponent } from "./select-reviewers-dialog/select
 import { RawInputDialogComponent } from "./raw-input-dialog/raw-input-dialog.component";
 import { XmlEditComponent } from "./xml-edit/xml-edit.component";
 import { PreviewComponent } from './preview/preview.component';
+import { JwtInterceptor } from './_helpers/jwt.interceptor';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,7 +106,12 @@ import { PreviewComponent } from './preview/preview.component';
     RdfService,
     ReviewService,
     ReviewerGuard,
-    EditorGuard
+    EditorGuard,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor,
+      multi: true
+    }
   ],
   entryComponents: [RawInputDialogComponent, SelectReviewersDialogComponent],
   bootstrap: [AppComponent]

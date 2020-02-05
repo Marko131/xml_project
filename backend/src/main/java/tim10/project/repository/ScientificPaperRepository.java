@@ -99,8 +99,8 @@ public class ScientificPaperRepository implements IScientificPaper {
         return paper;
     }
 
-    public ArrayList<String> getPapersByUserName(String collectionId, String userName) throws XMLDBException, JAXBException {
-        ArrayList<String> papers = new ArrayList<>();
+    public ArrayList<Paper> getPapersByUserName(String collectionId, String userName) throws XMLDBException, JAXBException {
+        ArrayList<Paper> papers = new ArrayList<>();
 
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
@@ -117,7 +117,7 @@ public class ScientificPaperRepository implements IScientificPaper {
                 Paper paper = (Paper) unmarshaller.unmarshal(res.getContentAsDOM());
                 for (TAuthor author : paper.getAuthors().getAuthor()){
                     if (author.getName().getValue().equals(userName)){
-                        papers.add(element);
+                        papers.add(paper);
                     }
                 }
             }

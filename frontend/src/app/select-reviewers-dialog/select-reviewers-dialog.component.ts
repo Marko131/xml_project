@@ -22,7 +22,7 @@ export class SelectReviewersDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: any
   ) {
     this.paperTitle = data.paperTitle;
-    this.displayedColumns = ["select", "name", "expertise"];
+    this.displayedColumns = ["select", "id", "name", "expertise"];
   }
   ngOnInit(): void {
     this.authService
@@ -61,12 +61,13 @@ export class SelectReviewersDialogComponent implements OnInit {
   }
   selectReviewers() {
     const selectedReviewers = this.selection.selected.map(
-      reviewer => reviewer.name
+      reviewer => reviewer.id
     );
     this.dialogRef.close();
     let r = new ReviewersForPaper();
     r.paperTitle = this.paperTitle;
     r.reviewers = selectedReviewers;
+    
     this.authService.selectReviewersForPaper(r).subscribe(
       response => console.log(response),
       errorResponse => console.log(errorResponse)

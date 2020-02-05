@@ -1,5 +1,6 @@
 package tim10.project.service;
 
+import com.ibm.icu.text.ArabicShaping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -98,6 +99,15 @@ public class UserService implements UserDetailsService {
     public User addReview(User user, String paperId){
         user.getReviews().add(paperId);
         return userRepository.save(user);
+    }
+
+    public List<User> getReviewers(){
+        ArrayList<User> reviewers = (ArrayList<User>) userRepository.getAllByRole("reviewer");
+        ArrayList<User> editors = (ArrayList<User>) userRepository.getAllByRole("editor");
+        ArrayList<User> users = new ArrayList<>();
+        users.addAll(reviewers);
+        users.addAll(editors);
+        return users;
     }
 
     public List<User> getReviewersForPaper(String paperId) throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException {

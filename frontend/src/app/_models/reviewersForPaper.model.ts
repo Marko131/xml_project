@@ -1,4 +1,4 @@
 export class ReviewersForPaper {
   paperTitle: string;
-  reviewers: Array<string>;
+  reviewers: Array<number>;
 }

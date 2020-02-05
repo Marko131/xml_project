@@ -1,16 +1,71 @@
 <mat-card>
-  <form
-    [formGroup]="searchForm"
-    (ngSubmit)="onSubmit(searchForm)"
-    class="flex-center"
-  >
-    <mat-form-field>
-      <input matInput formControlName="search" placeholder="Search" />
-    </mat-form-field>
-    <button mat-fab color="primary" type="submit">
-      <mat-icon>
-        search
-      </mat-icon>
-    </button>
-  </form>
+  <mat-tab-group>
+    <mat-tab label="Basic search">
+      <form
+        [formGroup]="searchForm"
+        (ngSubmit)="onSubmit(searchForm)"
+        class="flex-center basic"
+      >
+        <mat-form-field>
+          <input matInput formControlName="search" placeholder="Search" />
+        </mat-form-field>
+        <button mat-fab color="primary" type="submit">
+          <mat-icon>
+            search
+          </mat-icon>
+        </button>
+      </form>
+    </mat-tab>
+    <mat-tab label="Advanced search">
+      <form
+        [formGroup]="advancedSearchForm"
+        (ngSubmit)="onSubmit2(advancedSearchForm)"
+        class="flex-center advanced"
+      >
+        <mat-form-field>
+          <input matInput formControlName="title" placeholder="Title" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput formControlName="author" placeholder="Author" />
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-chip-list #chipList>
+            <mat-chip
+              *ngFor="let k of keywords; index as i"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(i)"
+            >
+              {{ k }}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+            <input
+              matInput
+              placeholder="Keywords..."
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="true"
+              (matChipInputTokenEnd)="addKeyword($event)"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+
+        <button mat-fab color="primary" type="submit">
+          <mat-icon>
+            search
+          </mat-icon>
+        </button>
+      </form>
+    </mat-tab>
+  </mat-tab-group>
+</mat-card>
+
+<mat-card *ngIf="papers.length > 0">
+  <mat-chip-list>
+    <mat-chip *ngFor="let paper of papers" (click)="preview(paper)">{{
+      paper
+    }}</mat-chip>
+  </mat-chip-list>
 </mat-card>

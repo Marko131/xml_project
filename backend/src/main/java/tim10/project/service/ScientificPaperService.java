@@ -95,4 +95,8 @@ public class ScientificPaperService {
     public List<String> searchPaperByText(String text) throws XMLDBException, JAXBException {
         return scientificPaperRepository.searchPaperByText("/db/sample/library/paper", text);
     }
+    public String advancedSearch(String title, String author, List<String> keyword) {
+        return rdfRepository.search(title, author, keyword);
+    }
+
 }

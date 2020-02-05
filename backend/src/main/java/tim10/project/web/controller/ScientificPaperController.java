@@ -43,7 +43,7 @@ public class ScientificPaperController {
     }
 
     @PostMapping("/api/paper")
-    public Paper uploadPaper(@RequestParam("file") MultipartFile file) throws IOException, XMLDBException, JAXBException {
+    public Paper uploadPaper(@RequestParam("file") MultipartFile file) throws IOException, XMLDBException, JAXBException, TransformerException, SAXException {
 
         byte[] encoded = file.getBytes();
         String content = new String(encoded, StandardCharsets.UTF_8);
@@ -102,6 +102,11 @@ public class ScientificPaperController {
     @GetMapping("/api/paper/searchByText")
     public List<String> searchByText(@RequestParam String text) throws XMLDBException, JAXBException {
         return scientificPaperService.searchPaperByText(text);
+    }
+
+    @GetMapping("/api/paper/advancedSearch")
+    public String advancedSearch(@RequestParam String title, @RequestParam String author, @RequestParam List<String> keyword) throws XMLDBException, JAXBException {
+        return scientificPaperService.advancedSearch(title, author, keyword);
     }
 
 }

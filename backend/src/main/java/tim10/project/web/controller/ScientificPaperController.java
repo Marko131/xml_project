@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xml.sax.SAXException;
 import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
+import tim10.project.model.user.User;
 import tim10.project.service.ScientificPaperService;
 import tim10.project.web.dto.PaperDTO;
 
@@ -23,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -88,4 +92,16 @@ public class ScientificPaperController {
         scientificPaperService.changeStatus(id+".xml", DocumentStatus.archived);
         return new ResponseEntity<String>("Paper successfully archived", HttpStatus.OK);
     }
+
+    @GetMapping("/api/paper/publish/{id}")
+    public ResponseEntity<String> publishPaper(@PathVariable("id") String id) throws XMLDBException, JAXBException, ParserConfigurationException, TransformerException, SAXException, IOException, XPathExpressionException {
+        scientificPaperService.changeStatus(id+".xml", DocumentStatus.published);
+        return new ResponseEntity<String>("Paper successfully published", HttpStatus.OK);
+    }
+
+    @GetMapping("/api/paper/searchByText")
+    public List<String> searchByText(@RequestParam String text) throws XMLDBException, JAXBException {
+        return scientificPaperService.searchPaperByText(text);
+    }
+
 }

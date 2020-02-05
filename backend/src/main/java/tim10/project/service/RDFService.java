@@ -13,6 +13,6 @@ public class RDFService {
     private RDFRepository rdfRepository;
 
     public void uploadRDF(InputStream rdfInputStream, String documentId){
-        rdfRepository.save(rdfInputStream, documentId);
+        rdfRepository.save(rdfInputStream);
     }
 }

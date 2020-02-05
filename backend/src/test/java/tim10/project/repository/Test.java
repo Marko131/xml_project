@@ -102,7 +102,7 @@ public class Test {
                 "\n" +
                 "</rdf:RDF>";
         InputStream inputStream = new ByteArrayInputStream(rdf.getBytes());
-        rdfRepository.save(inputStream, "Document1Test");
+        rdfRepository.save(inputStream);
     }
 
 
@@ -110,11 +110,11 @@ public class Test {
     public void test2ExtractMetadata() throws IOException, SAXException, TransformerException {
         MetadataExtractor metadataExtractor = new MetadataExtractor();
 
-        Reader reader = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\paper1.xml"));
-        Reader reader2 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\paper2.xml"));
-        Reader reader3 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\paper3.xml"));
-        Reader reader4 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\paper4.xml"));
-        Reader reader5 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\paper5.xml"));
+        Reader reader = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\instance1.xml"));
+        Reader reader2 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\instance2.xml"));
+        Reader reader3 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\instance3.xml"));
+        Reader reader4 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\instance4.xml"));
+        Reader reader5 = new FileReader(new File("C:\\Users\\Marko\\Desktop\\paper_instances\\instance5.xml"));
 
         ArrayList<Reader> readers = new ArrayList<>();
         readers.add(reader);
@@ -125,11 +125,11 @@ public class Test {
 
         for (Reader r :
                 readers) {
-            int counter = 1;
+
             InputStream inputStream = new ReaderInputStream(r, StandardCharsets.UTF_8);
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             metadataExtractor.extractMetadata(inputStream, outputStream);
-            rdfRepository.save(new ByteArrayInputStream(outputStream.toByteArray()), "document"+ ++counter);
+            rdfRepository.save(new ByteArrayInputStream(outputStream.toByteArray()));
         }
     }
 
@@ -145,7 +145,7 @@ public class Test {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         metadataExtractor.extractMetadata(inputStream, outputStream);
         System.out.println(xmlString);
-        rdfRepository.save(new ByteArrayInputStream(outputStream.toByteArray()), documentId);
+        rdfRepository.save(new ByteArrayInputStream(outputStream.toByteArray()));
 
     }
 
@@ -262,5 +262,13 @@ public class Test {
         List<String> papers = scientificPaperRepository.searchPaperByText("/db/sample/library/paper", "asd");
         papers.forEach(System.out::println);
 
+    }
+
+    @org.junit.Test
+    public void testAdvancedSearch(){
+        ArrayList<String> keywords = new ArrayList<>();
+        keywords.add("keyword0");
+        String result = rdfRepository.search("title4", "name", keywords);
+        System.out.println(result);
     }
 }

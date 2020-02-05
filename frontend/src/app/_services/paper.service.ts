@@ -14,76 +14,43 @@ export class PaperService {
     return this.http.post(`${environment.apiUrl}/api/paper`, formData);
   }
   getByUserName() {
-    const paperTitleList = [
-      { title: "Paper1.xml", status: "published" },
-      { title: "Paper2.xml", status: "archived" },
-      { title: "Paper3.xml", status: "waiting" },
-      { title: "Paper4.xml", status: "published" },
-      { title: "Paper5.xml", status: "archived" },
-      { title: "Paper6.xml", status: "published" },
-      { title: "Paper7.xml", status: "waiting" },
-      { title: "Paper8.xml", status: "published" }
-    ];
-    return of(paperTitleList);
+    const papers = this.http.get<Array<EditorPaper>>(
+      `${environment.apiUrl}/api/getUserPapers`,
+    );
+    papers.subscribe(response=>console.log(response));
+    return papers;
   }
   getPapersForReview() {
-    const papersForReview = [
-      { title: "Paper1.xml", status: "acepted" },
-      { title: "Paper2.xml", status: "waiting" },
-      { title: "Paper3.xml", status: "rejected" },
-      { title: "Paper4.xml", status: "waiting" },
-      { title: "Paper5.xml", status: "waiting" }
-    ];
-    return of(papersForReview);
+    const papers = this.http.get<Array<EditorPaper>>(
+      `${environment.apiUrl}/api/getAssignments`,
+    );
+    return papers;
   }
   getPapersForEditor(): Observable<Array<EditorPaper>> {
-    const papers = [
-      { title: "Paper1.xml", status: "published" },
-      { title: "Paper2.xml", status: "waiting" },
-      { title: "Paper3.xml", status: "revised" },
-      { title: "Paper4.xml", status: "archived" },
-      { title: "Paper5.xml", status: "published" },
-      { title: "Paper6.xml", status: "waiting" },
-      { title: "Paper7.xml", status: "revised" },
-      { title: "Paper8.xml", status: "archived" },
-      { title: "Paper9.xml", status: "waiting" }
-    ];
-    const papersForEditor = papers.map(
-      paper => new EditorPaper(paper.title, paper.status)
+    const papers = this.http.get<Array<EditorPaper>>(
+      `${environment.apiUrl}/api/paper`,
     );
-    return of(papersForEditor);
+    return papers;
   }
   downloadXml(paperTitle: string) {
-    return of("XML successfully downloaded");
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/download/xml/${paperTitle}`,
+      { responseType: "text"}
+    );
   }
   downloadPdf(paperTitle: string) {
     return of("PDF successfully downloaded");
   }
   archive(paperTitle: string) {
-    return of("Paper successfully archived");
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/archive/${paperTitle}`,
+      { responseType: "text"}
+    );
   }
   preview(paperTitle: string) {
-    return of(`<!DOCTYPE html>
-    <html>
-    <body>
-    
-    <h2>An Unordered HTML List</h2>
-    
-    <ul>
-      <li>Coffee</li>
-      <li>Tea</li>
-      <li>Milk</li>
-    </ul>  
-    
-    <h2>An Ordered HTML List</h2>
-    
-    <ol>
-      <li>Coffee</li>
-      <li>Tea</li>
-      <li>Milk</li>
-    </ol> 
-    
-    </body>
-    </html>`);
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/preview/${paperTitle}`,
+      { responseType: "text"}
+    );
   }
 }

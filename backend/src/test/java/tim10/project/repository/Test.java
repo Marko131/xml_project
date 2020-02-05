@@ -250,4 +250,10 @@ public class Test {
         User user = userRepository.findByEmail("admin@gmail.com");
         System.out.println(user.getName());
     }
+
+    @org.junit.Test
+    public void testGetByName() throws XMLDBException, JAXBException {
+        ArrayList<Paper> papers = scientificPaperRepository.getPapersByUserName("/db/sample/library/paper", "asd asd");
+        System.out.println(papers.size());
+    }
 }

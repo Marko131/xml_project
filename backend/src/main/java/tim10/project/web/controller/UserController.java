@@ -22,16 +22,14 @@ import tim10.project.service.UserService;
 import tim10.project.service.exceptions.InvalidPasswordException;
 import tim10.project.service.exceptions.NotFoundException;
 import tim10.project.service.exceptions.PasswordsDoNotMatchException;
-import tim10.project.web.dto.ChangePasswordDTO;
-import tim10.project.web.dto.LoginDTO;
-import tim10.project.web.dto.RegisterDTO;
-import tim10.project.web.dto.UserDetailsDTO;
+import tim10.project.web.dto.*;
 
 import javax.validation.Valid;
 import javax.xml.bind.JAXBException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -52,6 +50,13 @@ public class UserController {
 
     @Autowired
     ScientificPaperService paperService;
+
+    private String getStatus(Paper paper){
+        if (paper.getStatus().getWaiting() != null) return paper.getStatus().getWaiting();
+        if (paper.getStatus().getArchived() != null) return paper.getStatus().getArchived();
+        if (paper.getStatus().getPublished() != null) return paper.getStatus().getPublished();
+        return null;
+    }
 
     @PostMapping("/api/login")
     public ResponseEntity<String> login(@Valid @RequestBody LoginDTO loginDTO) {
@@ -105,16 +110,25 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    @GetMapping("/api/getReviewers/{paperId}")
-    public List<User> getReviewersForPaper(@PathVariable("paperId") String paperId) throws XMLDBException, ParserConfigurationException, JAXBException, IOException, XPathExpressionException, SAXException {
-        return userService.getReviewersForPaper(paperId);
+    @GetMapping("/api/getReviewers/")
+    public List<User> getReviewers() {
+        return userService.getReviewers();
     }
 
     @PreAuthorize("hasRole('ROLE_EDITOR')")
-    @GetMapping("/api/setReviewer/{paperId}/{userId}")
-    public ResponseEntity<String> setReviewer(@PathVariable("userId") Integer userId, @PathVariable("paperId") String paperId){
-        User user = userService.findUserById(userId);
-        mailService.sendMail(user, "Review Assignment", "https://localhost:8081/api/assignment/"+paperId);
+    @GetMapping("/api/getReviewers/{paperId}")
+    public List<User> getReviewersForPaper(@PathVariable("paperId") String paperId) throws XMLDBException, ParserConfigurationException, JAXBException, IOException, XPathExpressionException, SAXException {
+        return userService.getReviewersForPaper(paperId+".xml");
+    }
+
+    @PreAuthorize("hasRole('ROLE_EDITOR')")
+    @PostMapping("/api/setReviewers/")
+    public ResponseEntity<String> setReviewer(@Valid @RequestBody SetReviewersDTO setReviewersDTO){
+        for (Integer userId: setReviewersDTO.getReviewers()) {
+            User userFromDatabase = userService.findUserById(userId);
+            mailService.sendMail(userFromDatabase, "Review Assignment", "You have a new review assignment.");
+            userService.addReview(userFromDatabase, setReviewersDTO.getPaperTitle());
+        }
         return new ResponseEntity<String>("Reviewer assignment pending", HttpStatus.OK);
     }
 
@@ -131,5 +145,31 @@ public class UserController {
         User user = userService.findUserByEmail(securityContext.getAuthentication().getName());
         userService.addReview(user, paperId);
         return new ResponseEntity<String>("Reviewer successfully set", HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_REVIEWER') or hasRole('ROLE_EDITOR')")
+    @GetMapping("/api/getAssignments")
+    public ArrayList<PaperDTO> getAssignments() throws XMLDBException, JAXBException {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        User user = userService.findUserByEmail(securityContext.getAuthentication().getName());
+        ArrayList<PaperDTO> papers = new ArrayList<>();
+        for (String paperId: user.getReviews()) {
+            Paper paperFromDatabase = paperService.getById(paperId+".xml");
+            papers.add(new PaperDTO(paperFromDatabase.getPaperTitle().getValue(), getStatus(paperFromDatabase)));
+        }
+        return papers;
+    }
+
+    @PreAuthorize("hasRole('ROLE_AUTHOR') or hasRole('ROLE_REVIEWER') or hasRole('ROLE_EDITOR')")
+    @GetMapping("/api/getUserPapers")
+    public ArrayList<PaperDTO> getUserPapers() throws XMLDBException, JAXBException {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        User user = userService.findUserByEmail(securityContext.getAuthentication().getName());
+        ArrayList<PaperDTO> papers = new ArrayList<>();
+        ArrayList<Paper> papersFromDatabase = paperService.getPapersByUserName(user.getName() + " " + user.getLastName());
+        for (Paper paper: papersFromDatabase) {
+            papers.add(new PaperDTO(paper.getPaperTitle().getValue(), getStatus(paper)));
+        }
+        return papers;
     }
 }

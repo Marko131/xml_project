@@ -6,7 +6,7 @@
     <status>
         <waiting>waiting</waiting>
     </status>
-    <paper_title property="pred:title">paper_title0</paper_title>
+    <paper_title property="pred:title">paper_title2</paper_title>
     <authors>
         <author about="about0">
             <name property="pred:name">name0</name>

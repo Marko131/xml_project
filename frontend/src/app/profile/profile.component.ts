@@ -6,6 +6,7 @@ import { PaperService } from "../_services/paper.service";
 import { MatSnackBar } from "@angular/material";
 import { CoverLetterService } from "../_services/coverLetter.service";
 import { RdfService } from "../_services/rdf.service";
+import "rxjs" ;
 
 @Component({
   selector: "app-profile",
@@ -95,10 +96,10 @@ export class ProfileComponent implements OnInit {
   }
   archive(paper: any) {
     this.paperService
-      .archive(paper.title)
+      .archive(paper.paperTitle)
       .subscribe(
         response => (
-          (paper.status = "archived"),
+          (paper.paperStatus = "archived"),
           errorResponse => console.log(errorResponse)
         )
       );
@@ -108,7 +109,7 @@ export class ProfileComponent implements OnInit {
   }
   downloadXml(paperTitle: string) {
     this.paperService.downloadXml(paperTitle).subscribe(
-      response => console.log(response),
+      response => this.downloadFileXML(response, paperTitle),
       errorResponse => console.log(errorResponse)
     );
   }
@@ -117,5 +118,14 @@ export class ProfileComponent implements OnInit {
       response => console.log(response),
       errorResponse => console.log(errorResponse)
     );
+  }
+  downloadFileXML(data: string, paperTitle: string) {
+    const blob = new Blob([data], { type: 'application/xml' });
+    const url= window.URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = paperTitle+".xml";
+    link.click();
+    window.open(url);
   }
 }

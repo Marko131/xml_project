@@ -144,7 +144,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         OutputStream os = new ByteArrayOutputStream();
         Collection col = DatabaseManager.getCollection(this.getUri() + collectionId);
         col.setProperty(OutputKeys.INDENT, "yes");
-        XMLResource res = (XMLResource) col.getResource(documentId);
+        XMLResource res = (XMLResource) col.getResource(documentId+".xml");
 
         DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
         DocumentBuilder b = f.newDocumentBuilder();
@@ -156,7 +156,7 @@ public class ScientificPaperRepository implements IScientificPaper {
 
         // Write to temp file
         BufferedWriter out = new BufferedWriter(new FileWriter(temp));
-        out.write(getXMLResourceById(collectionId, documentId));
+        out.write(getXMLResourceById(collectionId, documentId+".xml"));
         out.close();
 
         Document document = b.parse(temp);

@@ -10,16 +10,26 @@ import { PaperService } from "../_services/paper.service";
 export class PreviewComponent implements OnInit {
   documentId: string;
   content: string;
+  type: string;
   constructor(
     private route: ActivatedRoute,
     private paperService: PaperService
   ) {
-    this.route.params.subscribe(params => (this.documentId = params["id"]));
+    this.route.params.subscribe(params => {
+      this.documentId = params["id"];
+      this.type = params["type"];
+    });
   }
 
   ngOnInit() {
-    this.paperService
-      .preview(this.documentId)
-      .subscribe(response => (this.content = response));
+    if (this.type === "anonymous") {
+      this.paperService
+        .previewAnonymous(this.documentId)
+        .subscribe(response => (this.content = response));
+    } else {
+      this.paperService
+        .preview(this.documentId)
+        .subscribe(response => (this.content = response));
+    }
   }
 }

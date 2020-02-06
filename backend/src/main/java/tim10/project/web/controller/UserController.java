@@ -86,15 +86,15 @@ public class UserController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User u = userService.findUserByEmail(email);
         if (u == null) throw new NotFoundException("Invalid user");
-        System.out.println(u.getEmail());
+
         return new UserDetailsDTO(u.getName(), u.getLastName(), u.getEmail());
     }
 
     @PreAuthorize("hasRole('ROLE_AUTHOR') or hasRole('ROLE_REVIEWER') or hasRole('ROLE_EDITOR')")
     @PutMapping("/api/reset")
     public UserDetailsDTO changePassword(@Valid @RequestBody ChangePasswordDTO changePasswordDTO) throws Exception {
-        System.out.println(changePasswordDTO.getPassword1());
-        System.out.println(changePasswordDTO.getPassword2());
+
+
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User u = userService.findUserByEmail(email);
         User updatedUser = userService.changePassword(u, changePasswordDTO.getPassword1(), changePasswordDTO.getPassword2());

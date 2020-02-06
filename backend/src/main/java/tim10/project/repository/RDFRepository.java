@@ -49,7 +49,7 @@ public class RDFRepository {
 
         System.out.println("[INFO] Writing the triples to a named graph \"" + SCIENTIFIC_PAPER_NAMED_GRAPH_URI + "\".");
         String sparqlUpdate = SparqlUtil.insertData( this.dataEndpoint + "/metadata", new String(out.toByteArray()));
-        System.out.println(sparqlUpdate);
+
 
         // UpdateRequest represents a unit of execution
         UpdateRequest update = UpdateFactory.create(sparqlUpdate);

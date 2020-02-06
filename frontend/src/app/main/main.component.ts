@@ -78,7 +78,7 @@ export class MainComponent implements OnInit {
   }
 
   preview(paperTitle: string) {
-    this.router.navigate(["/preview", paperTitle]);
+    this.router.navigate(["/preview", paperTitle, "text"]);
   }
 
   addKeyword(event: MatChipInputEvent): void {

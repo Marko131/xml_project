@@ -14,7 +14,9 @@ import tim10.project.model.scientific_paper.Paper;
 import tim10.project.repository.ScientificPaperRepository;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
+import javax.xml.xpath.XPathExpressionException;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -32,7 +34,7 @@ public class ServiceTest {
     ScientificPaperService scientificPaperService;
 
     @org.junit.Test
-    public void testUpload() throws IOException, XMLDBException, JAXBException, TransformerException, SAXException {
+    public void testUpload() throws IOException, XMLDBException, JAXBException, TransformerException, SAXException, XPathExpressionException, ParserConfigurationException {
         byte[] encoded = Files.readAllBytes(Paths.get("C:\\Users\\Woolfy\\Desktop\\xml_project\\data\\scientific_paper1.xml"));
         String content = new String(encoded, StandardCharsets.UTF_8);
         Reader reader = new StringReader(content);

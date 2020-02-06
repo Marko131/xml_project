@@ -1,5 +1,8 @@
 package tim10.project.util;
 
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 import net.sf.saxon.TransformerFactoryImpl;
 import org.apache.fop.apps.*;
 import org.w3c.dom.Document;
@@ -47,7 +50,7 @@ public class DocumentUtil {
         tf.setOutputProperty(OutputKeys.INDENT, "yes");
         Writer out = new StringWriter();
         tf.transform(new DOMSource(xml), new StreamResult(out));
-        System.out.println(out.toString());
+
     }
 
     public static String generateHTMLStringFromXMLString(String xmlString, String xsltPath) throws TransformerException, IOException, SAXException, ParserConfigurationException {
@@ -70,18 +73,22 @@ public class DocumentUtil {
         return writer.toString();
     }
 
-    public OutputStream generatePdfFromXmlString(String xmlString, String xsltPath) throws TransformerException, FOPException {
-        StreamSource streamSource = new StreamSource(new File(xsltPath));
-        InputStream inputStream = new ByteArrayInputStream(xmlString.getBytes());
-        StreamSource xmlSource = new StreamSource(inputStream);
-        FopFactory factory = FopFactory.newInstance();
-        TransformerFactory transformerFactory = new TransformerFactoryImpl();
-        FOUserAgent userAgent = factory.newFOUserAgent();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        Transformer transformer = transformerFactory.newTransformer(streamSource);
-        Fop fop = factory.newFop(MimeConstants.MIME_PDF, userAgent, outputStream);
-        Result res = new SAXResult(fop.getDefaultHandler());
-        transformer.transform(xmlSource, res);
-        return outputStream;
+
+
+    public static ByteArrayOutputStream generatePdfFromHTMLString(String html) throws TransformerException, FOPException, IOException, DocumentException {
+
+        com.itextpdf.text.Document document = new com.itextpdf.text.Document();
+
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+        PdfWriter writer = PdfWriter.getInstance(document, os);
+
+        document.open();
+
+        InputStream inputStream = new ByteArrayInputStream(html.getBytes());
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, inputStream);
+
+        document.close();
+        return os;
     }
 }

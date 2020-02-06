@@ -34,7 +34,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "preview/:id",
+    path: "preview/:id/:type",
     component: PreviewComponent
   },
   { path: "", component: MainComponent, pathMatch: "full" }

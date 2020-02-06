@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
 import { Observable, of } from "rxjs";
 import { EditorPaper } from "../_models/editorPaper.model";
@@ -39,7 +39,12 @@ export class PaperService {
     );
   }
   downloadPdf(paperTitle: string) {
-    return of("PDF successfully downloaded");
+    let headers = new HttpHeaders();
+    headers = headers.set("Accept", "application/pdf");
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/download/pdf/${paperTitle}`,
+      { headers: headers, responseType: "blob" }
+    );
   }
   archive(paperTitle: string) {
     return this.http.get(
@@ -56,6 +61,12 @@ export class PaperService {
   preview(paperTitle: string) {
     return this.http.get(
       `${environment.apiUrl}/api/paper/preview/${paperTitle}`,
+      { responseType: "text" }
+    );
+  }
+  previewAnonymous(paperTitle: string) {
+    return this.http.get(
+      `${environment.apiUrl}/api/paper/anonymous/${paperTitle}`,
       { responseType: "text" }
     );
   }

@@ -11,4 +11,8 @@ export class CoverLetterService {
     formData.append("file", coverLetter, coverLetter.name);
     return this.http.post(`${environment.apiUrl}/api/letter`, formData);
   }
+  
+  save(letter: string) {
+    return this.http.post(`${environment.apiUrl}/api/letterForm`, letter);
+  }
 }

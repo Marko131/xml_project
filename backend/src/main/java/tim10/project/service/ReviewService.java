@@ -34,7 +34,7 @@ public class ReviewService {
         Review review = (Review) unmarshaller.unmarshal(reader);
         Review reviewFromDatabase = null;
         try {
-            reviewFromDatabase = reviewRepository.getById("/db/sample/library/review", review.getPaperTitle() + " - " + review.getReviewer().getName() + ".xml");
+            reviewFromDatabase = reviewRepository.getById("/db/sample/library/review", review.getPaperTitle() + "-" + review.getReviewer().getName() + ".xml");
         } catch (Exception ignored) {
         }
         if (reviewFromDatabase != null) throw new ReviewAlreadyExists();

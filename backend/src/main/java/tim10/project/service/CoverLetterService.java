@@ -32,12 +32,12 @@ public class CoverLetterService {
         CoverLetter letter = (CoverLetter) unmarshaller.unmarshal(reader);
         CoverLetter letterFromDatabase = null;
         try{
-            letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml");
+            letterFromDatabase = coverLetterRepository.getById("/db/sample/library/cover_letter", letter.getSender().getName() + "-" + letter.getReceiver().getName() + ".xml");
         } catch (Exception ignored) {
         }
         if (letterFromDatabase != null) throw new CoverLetterAlreadyExists();
         Reader inputReader = new StringReader(content);
-        coverLetterRepository.save("/db/sample/library/cover_letter", letter.getSender().getName() + " - " + letter.getReceiver().getName() + ".xml", inputReader);
+        coverLetterRepository.save("/db/sample/library/cover_letter", letter.getSender().getName() + "-" + letter.getReceiver().getName() + ".xml", inputReader);
         return letter;
     }
 

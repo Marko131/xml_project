@@ -48,7 +48,7 @@ public class ScientificPaperController {
     }
 
     @PostMapping("/api/paperForm")
-    public Paper uploadPaperFromForm(@RequestBody String content) throws XMLDBException, JAXBException, IOException {
+    public Paper uploadPaperFromForm(@RequestBody String content) throws XMLDBException, JAXBException, IOException, ParserConfigurationException, SAXException, XPathExpressionException, TransformerException {
         Reader reader = new StringReader(content);
         return scientificPaperService.uploadPaper(content, reader);
     }

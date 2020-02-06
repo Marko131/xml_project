@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialog } from "@angular/material";
 import { RawInputDialogComponent } from "../raw-input-dialog/raw-input-dialog.component";
+import { letterSpec } from "../_helpers/coverLetterSpec";
+import { CoverLetterService } from '../_services/coverLetter.service';
 declare let Xonomy: any;
 @Component({
   selector: "app-cover-letter",
@@ -10,7 +12,9 @@ declare let Xonomy: any;
 export class CoverLetterComponent implements OnInit {
   xml: string;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private coverLetterService: CoverLetterService) {}
 
   openDialog(): void {
     const dialogRef = this.dialog.open(RawInputDialogComponent, {
@@ -27,33 +31,17 @@ export class CoverLetterComponent implements OnInit {
     this.xonomy();
   }
 
+  save() {
+    let editor = document.getElementById("editor");
+    let text = Xonomy.harvest();
+    console.log(text);
+    this.coverLetterService.save(text).subscribe(response => console.log(response));
+  }
+
   xonomy() {
     let editor = document.getElementById("editor");
-    const docSpec = {
-      elements: {
-        xml: {
-          menu: [
-            {
-              caption: "Raw edit",
-              action: Xonomy.editRaw,
-              actionParameter: {
-                fromJs: function(jsElement) {
-                  return jsElement.getText();
-                },
-                toJs: function(txt, origElement) {
-                  origElement.addText(txt);
-                  return origElement;
-                }
-              },
-              hideIf: function(jsElement) {
-                return jsElement.getText() !== "";
-              }
-            }
-          ]
-        }
-      }
-    };
-    if (!this.xml) this.xml = `<cover_letter></cover_letter>`;
-    Xonomy.render(this.xml, editor, docSpec);
+    if (!this.xml) this.xml = '<cover_letter><sender><name></name><email></email><phone_number></phone_number><institution></institution><address></address></sender><receiver><name></name><email></email><phone_number></phone_number><institution></institution><address></address></receiver><paragraphs><paragraph></paragraph></paragraphs><signature></signature></cover_letter>';
+    console.log(letterSpec);
+    Xonomy.render(this.xml, editor, letterSpec);
   }
 }

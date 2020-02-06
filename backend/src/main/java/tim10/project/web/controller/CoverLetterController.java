@@ -29,6 +29,12 @@ public class CoverLetterController {
         return coverLetterService.uploadLetter(content, reader);
     }
 
+    @PostMapping("/api/letterForm")
+    public CoverLetter uploadLetterFromForm(@RequestBody String content) throws XMLDBException, JAXBException, IOException {
+        Reader reader = new StringReader(content);
+        return coverLetterService.uploadLetter(content, reader);
+    }
+
     @GetMapping("/api/letter/{id}")
     public CoverLetter getById(@PathVariable("id") String id) throws XMLDBException, JAXBException {
         return coverLetterService.getById(id);

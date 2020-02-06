@@ -45,7 +45,7 @@ export class EditorFunctionsComponent implements OnInit {
   }
 
   preview(paperTitle: string) {
-    this.router.navigate(["preview", paperTitle]);
+    this.router.navigate(["preview", paperTitle, "text"]);
   }
 
   getReviews(paperTitle: string) {
@@ -56,19 +56,23 @@ export class EditorFunctionsComponent implements OnInit {
   }
 
   publish(paper: EditorPaper) {
-    this.paperService.publish(paper.paperTitle).subscribe(response => paper.paperStatus = "published");
+    this.paperService
+      .publish(paper.paperTitle)
+      .subscribe(response => (paper.paperStatus = "published"));
   }
 
   reject(paper: EditorPaper) {
-    this.paperService.archive(paper.paperTitle).subscribe(response => paper.paperStatus = "archived");
+    this.paperService
+      .archive(paper.paperTitle)
+      .subscribe(response => (paper.paperStatus = "archived"));
   }
 
   downloadFileXML(data: string, paperTitle: string) {
-    const blob = new Blob([data], { type: 'application/xml' });
-    const url= window.URL.createObjectURL(blob);
-    var link = document.createElement('a');
+    const blob = new Blob([data], { type: "application/xml" });
+    const url = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
     link.href = url;
-    link.download = paperTitle+" "+"reviews.xml";
+    link.download = paperTitle + " " + "reviews.xml";
     link.click();
   }
 }

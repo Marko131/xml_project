@@ -6,7 +6,7 @@ import { PaperService } from "../_services/paper.service";
 import { MatSnackBar } from "@angular/material";
 import { CoverLetterService } from "../_services/coverLetter.service";
 import { RdfService } from "../_services/rdf.service";
-import "rxjs" ;
+import "rxjs";
 
 @Component({
   selector: "app-profile",
@@ -105,7 +105,7 @@ export class ProfileComponent implements OnInit {
       );
   }
   preview(paperTitle: string) {
-    this.router.navigate(["/preview", paperTitle]);
+    this.router.navigate(["/preview", paperTitle, "text"]);
   }
   downloadXml(paperTitle: string) {
     this.paperService.downloadXml(paperTitle).subscribe(
@@ -115,16 +115,24 @@ export class ProfileComponent implements OnInit {
   }
   downloadPdf(paperTitle: string) {
     this.paperService.downloadPdf(paperTitle).subscribe(
-      response => console.log(response),
+      response => this.downloadFilePDF(response, paperTitle),
       errorResponse => console.log(errorResponse)
     );
   }
   downloadFileXML(data: string, paperTitle: string) {
-    const blob = new Blob([data], { type: 'application/xml' });
-    const url= window.URL.createObjectURL(blob);
-    var link = document.createElement('a');
+    const blob = new Blob([data], { type: "application/xml" });
+    const url = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
     link.href = url;
-    link.download = paperTitle+".xml";
+    link.download = paperTitle + ".xml";
+    link.click();
+  }
+  downloadFilePDF(data: Blob, paperTitle: string) {
+    const blob = new Blob([data], { type: "application/pdf" });
+    const url = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    link.download = paperTitle + ".pdf";
     link.click();
   }
 }

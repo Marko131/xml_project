@@ -1,5 +1,6 @@
 package tim10.project.web.controller;
 
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
@@ -11,6 +12,7 @@ import org.xmldb.api.base.XMLDBException;
 import tim10.project.model.DocumentStatus;
 import tim10.project.model.scientific_paper.Paper;
 import tim10.project.service.ScientificPaperService;
+import tim10.project.util.DocumentUtil;
 import tim10.project.web.dto.PaperDTO;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -84,6 +87,23 @@ public class ScientificPaperController {
         return new ResponseEntity<>(contents, headers, HttpStatus.OK);
     }
 
+    @GetMapping("/api/paper/download/pdf/{id}")
+    public ResponseEntity<Object> getPDFResourceById(@PathVariable("id") String id, HttpServletResponse response) throws XMLDBException, JAXBException, IOException, TransformerException, SAXException, ParserConfigurationException, DocumentException {
+        String htmlString = scientificPaperService.getHTMLPaper(id+".xml");
+        ByteArrayOutputStream byteArrayOutputStream = DocumentUtil.generatePdfFromHTMLString(htmlString);
+        byte[] contents = byteArrayOutputStream.toByteArray();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        String filename = id+".pdf";
+        ContentDisposition contentDisposition = ContentDisposition
+                .builder("inline")
+                .filename(filename)
+                .build();
+        headers.setContentDisposition(contentDisposition);
+        headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+        return new ResponseEntity<>(contents, headers, HttpStatus.OK);
+    }
+
     @GetMapping("/api/paper/preview/{id}")
     public String getHTMLResourceById(@PathVariable("id") String id) throws XMLDBException, JAXBException, ParserConfigurationException, TransformerException, SAXException, IOException {
         return scientificPaperService.getHTMLPaper(id+".xml");
@@ -98,5 +118,24 @@ public class ScientificPaperController {
     public ResponseEntity<String> archivePaper(@PathVariable("id") String id) throws XMLDBException, JAXBException, ParserConfigurationException, TransformerException, SAXException, IOException, XPathExpressionException {
         scientificPaperService.changeStatus(id+".xml", DocumentStatus.archived);
         return new ResponseEntity<String>("Paper successfully archived", HttpStatus.OK);
+    }
+
+    @GetMapping("/api/paper/publish/{id}")
+    public ResponseEntity<String> publishPaper(@PathVariable("id") String id) throws XMLDBException, JAXBException, ParserConfigurationException, TransformerException, SAXException, IOException, XPathExpressionException {
+        scientificPaperService.changeStatus(id+".xml", DocumentStatus.published);
+        return new ResponseEntity<String>("Paper successfully published", HttpStatus.OK);
+    }
+
+    @GetMapping("/api/paper/searchByText")
+    public List<String> searchByText(@RequestParam String text) throws XMLDBException, JAXBException {
+        return scientificPaperService.searchPaperByText(text);
+    }
+
+    @GetMapping("/api/paper/advancedSearch")
+    public String advancedSearch(@RequestParam String title, @RequestParam String author, @RequestParam List<String> keyword) throws XMLDBException, JAXBException {
+        System.out.println(title);
+        System.out.println(author);
+        System.out.println(keyword);
+        return scientificPaperService.advancedSearch(title, author, keyword);
     }
 }

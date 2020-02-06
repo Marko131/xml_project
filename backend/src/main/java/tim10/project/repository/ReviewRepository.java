@@ -85,7 +85,7 @@ public class ReviewRepository {
             review = (Review) unmarshaller.unmarshal(res.getContentAsDOM());
 
             System.out.println("[INFO] Showing the document as JAXB instance: ");
-            System.out.println(review);
+
         }
 
         try {
@@ -234,8 +234,6 @@ public class ReviewRepository {
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer = tf.newTransformer();
         transformer.transform(domSource, result);
-
-        System.out.println(writer.toString());
 
         Reader reader = new StringReader(writer.toString());
         save("/db/sample/library/anonymous", "anonymous_" + documentId, reader);

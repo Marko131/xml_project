@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <review xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="file:/C:/Users/Strahinja/Desktop/xml_project/data/schema/Review.xsd">
-    <paper_title>paper_title2</paper_title>
+    <paper_title>DNA</paper_title>
     <reviewer>
         <name>name0</name>
         <working_title>working_title0</working_title>

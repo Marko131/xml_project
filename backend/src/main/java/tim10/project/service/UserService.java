@@ -116,12 +116,12 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getReviewersForPaper(String paperId) throws SAXException, ParserConfigurationException, XPathExpressionException, IOException, JAXBException, XMLDBException {
-        ArrayList<String> keywords = (ArrayList<String>) paperRepository.getKeywordsFromPaper("/db/sample/library/paper", paperId);
-        ArrayList<User> users = (ArrayList<User>) userRepository.findAll();
+        ArrayList<String> keywords = (ArrayList<String>) paperRepository.getKeywordsFromPaper("/db/sample/library/paper", paperId.replace(" ", ""));
+        ArrayList<User> users = (ArrayList<User>) getReviewers();
         ArrayList<User> reviewers = new ArrayList<>();
         for (User user: users) {
             for (String keyword: keywords) {
-                if (user.getExpertise().contains(keyword) && (user.getRole().equals("reviewer") || user.getRole().equals("editor"))) {
+                if (user.getExpertise().contains(keyword)) {
                     reviewers.add(user);
                 }
             }

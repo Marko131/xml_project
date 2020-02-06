@@ -71,7 +71,7 @@ public class CoverLetterRepository {
             coverLetter = (CoverLetter) unmarshaller.unmarshal(res.getContentAsDOM());
 
             System.out.println("[INFO] Showing the document as JAXB instance: ");
-            System.out.println(coverLetter);
+
         }
 
         try {

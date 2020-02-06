@@ -38,7 +38,6 @@ export class SelectReviewersDialogComponent implements OnInit {
   isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.reviewers.length;
-    console.log(this.reviewers.length);
     return numSelected === numRows;
   }
 

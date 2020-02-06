@@ -86,9 +86,8 @@ public class ScientificPaperRepository implements IScientificPaper {
             paper = (Paper) unmarshaller.unmarshal(res.getContentAsDOM());
 
             System.out.println("[INFO] Showing the document as JAXB instance: ");
-            System.out.println(paper);
-            //List<XMLResource> lista = col.listResources();
-            System.out.println(Arrays.toString(col.listResources()));
+
+
         }
 
         try {
@@ -165,7 +164,7 @@ public class ScientificPaperRepository implements IScientificPaper {
 
         Node node;
 
-        System.out.println(authors.getLength());
+
 
         for (int i = 0; i < authors.getLength(); i++) {
             authors.item(i).setTextContent("Anonymous");
@@ -178,7 +177,7 @@ public class ScientificPaperRepository implements IScientificPaper {
         Transformer transformer = tf.newTransformer();
         transformer.transform(domSource, result);
 
-        System.out.println(writer.toString());
+
 
         Reader reader = new StringReader(writer.toString());
         save("/db/sample/library/anonymous", documentId + "_anonymous.xml", reader);
@@ -479,7 +478,7 @@ public class ScientificPaperRepository implements IScientificPaper {
                 "where $paper/status/published = \"published\"\n" +
                 "let $publishedPapers := $paper\n" +
                 "for $publishedPaper in $publishedPapers\n" +
-                "for $p in doc(concat(\"/db/sample/library/paper/\", $publishedPaper/paper_title/text(), \".xml\"))\n"+
+                "for $p in doc(concat(\"/db/sample/library/paper/\", replace($publishedPaper/paper_title/text(), ' ', ''), \".xml\"))\n"+
                 "where $p/paper//*[contains(lower-case(text()[1]),lower-case('%s'))]\n" +
                 "return $p/paper/paper_title/text()", text
         );

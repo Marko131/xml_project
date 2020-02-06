@@ -2,7 +2,7 @@
 <cover_letter xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xsi:noNamespaceSchemaLocation="file:/C:/Users/Strahinja/Desktop/xml_project/data/schema/Cover_Letter.xsd">
     <sender>
-        <name>name0</name>
+        <name>Petar Petrovic</name>
         <email>email0</email>
         <phone_number>phone_number0</phone_number>
         <institution>institution0</institution>

@@ -30,10 +30,17 @@ export class ReviewerFunctionsComponent implements OnInit {
   }
 
   reject(paper: any) {
-    this.paperService.reject(paper.paperTitle).subscribe(response => this.papersForReview = this.papersForReview.filter(p => p.paperTitle != paper.paperTitle));
+    this.paperService
+      .reject(paper.paperTitle)
+      .subscribe(
+        response =>
+          (this.papersForReview = this.papersForReview.filter(
+            p => p.paperTitle != paper.paperTitle
+          ))
+      );
   }
   preview(paperTitle: string) {
-    this.router.navigate(["/preview", paperTitle]);
+    this.router.navigate(["/preview", paperTitle, "anonymous"]);
   }
 
   handleReviewInput(files: FileList) {

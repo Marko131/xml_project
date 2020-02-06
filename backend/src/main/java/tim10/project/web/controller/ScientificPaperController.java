@@ -47,6 +47,12 @@ public class ScientificPaperController {
         return scientificPaperService.uploadPaper(content, reader);
     }
 
+    @PostMapping("/api/paperForm")
+    public Paper uploadPaperFromForm(@RequestBody String content) throws XMLDBException, JAXBException, IOException {
+        Reader reader = new StringReader(content);
+        return scientificPaperService.uploadPaper(content, reader);
+    }
+
     @GetMapping("/api/paper/{id}")
     public Paper getById(@PathVariable("id") String id) throws XMLDBException, JAXBException {
         return scientificPaperService.getById(id+".xml");

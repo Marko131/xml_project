@@ -13,6 +13,9 @@ export class PaperService {
     formData.append("file", paper, paper.name);
     return this.http.post(`${environment.apiUrl}/api/paper`, formData);
   }
+  save(paper: string) {
+    return this.http.post(`${environment.apiUrl}/api/paperForm`, paper);
+  }
   getByUserName() {
     const papers = this.http.get<Array<EditorPaper>>(
       `${environment.apiUrl}/api/getUserPapers`
